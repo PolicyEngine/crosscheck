@@ -94,3 +94,33 @@ __all__ = [
     "to_dict",
     "validate",
 ]
+
+# Store, tolerance, lineage and cell status (unit B).
+from crosscheck.lineage import lineage_tokens, lineages, same_lineage, share_directly  # noqa: E402
+from crosscheck.status import CellReport, cell_status  # noqa: E402
+from crosscheck.store import StoreError, check_manifest, read_store, write_store  # noqa: E402
+from crosscheck.tolerance import (  # noqa: E402
+    Comparison,
+    ToleranceError,
+    agree,
+    compare_runs,
+    rule_for,
+)
+
+__all__ += [
+    "CellReport",
+    "Comparison",
+    "StoreError",
+    "ToleranceError",
+    "agree",
+    "cell_status",
+    "check_manifest",
+    "compare_runs",
+    "lineage_tokens",
+    "lineages",
+    "read_store",
+    "rule_for",
+    "same_lineage",
+    "share_directly",
+    "write_store",
+]
