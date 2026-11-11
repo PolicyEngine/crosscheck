@@ -1,0 +1,120 @@
+{
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/value.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One run's answer for one cell. Key: (case_set, case_id, policy_world, quantity, entity, run).\n\nRules: the status is `answered` exactly when `value` is not None, and an answered value\nkeeps the source's `raw` text. A value carries no tolerance.",
+  "properties": {
+    "case_id": {
+      "description": "The case id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "case_set": {
+      "description": "The case set.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+      "type": "string"
+    },
+    "entity": {
+      "default": "",
+      "description": "Which person or unit in the case; \"\" means the case's single unit.",
+      "pattern": "^(?:\\S(?:[\\s\\S]*\\S)?)?$",
+      "type": "string"
+    },
+    "policy_world": {
+      "description": "The PolicyWorld id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "producer": {
+      "default": "model",
+      "description": "\"model\", or \"harness:<formula>\" when harness code computed the value from model outputs.",
+      "pattern": "^(?:model$|harness:[\\s\\S]*\\S)",
+      "type": "string"
+    },
+    "quantity": {
+      "description": "The Quantity id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "raw": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The answer as the source holds it, as text."
+    },
+    "run": {
+      "description": "The Run id.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+      "type": "string"
+    },
+    "source_status": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The source tool's own status word, kept as written."
+    },
+    "status": {
+      "description": "What the run returned for the cell.",
+      "enum": [
+        "answered",
+        "not_covered",
+        "error",
+        "refused",
+        "unparsed"
+      ],
+      "type": "string"
+    },
+    "status_detail": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "More about the status, such as error text."
+    },
+    "value": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The answer as parsed; null unless the status is answered."
+    }
+  },
+  "required": [
+    "case_set",
+    "case_id",
+    "policy_world",
+    "quantity",
+    "run",
+    "status"
+  ],
+  "title": "Value",
+  "type": "object"
+}

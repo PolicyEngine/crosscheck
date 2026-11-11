@@ -1,0 +1,246 @@
+{
+  "$defs": {
+    "EngineLink": {
+      "additionalProperties": false,
+      "description": "An engine behind a run's values beyond the model's own, with the role it played.",
+      "properties": {
+        "engine": {
+          "description": "The engine family.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "role": {
+          "description": "How the engine stands behind the values.",
+          "enum": [
+            "host",
+            "tool",
+            "gate"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "engine",
+        "role"
+      ],
+      "title": "EngineLink",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "description": "The file a run's rows came from.",
+      "properties": {
+        "schema_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The file's own schema version."
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The file's sha256 as 64 lowercase hexadecimal digits."
+        },
+        "tool": {
+          "description": "The tool that produced the file (\"axiom-oracles\", \"policybench-key-check\").",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Where the file lives (repo@commit:path or a URL); \"\" when unknown.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "uri"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "Switch": {
+      "additionalProperties": false,
+      "description": "One setting that makes a run repeatable.",
+      "properties": {
+        "name": {
+          "description": "The setting's name.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "value": {
+          "description": "The setting's value, as text.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "title": "Switch",
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One run of a model over cases. Key: id.\n\nA run never derives from itself, and its switch names are unique. A run carries no\ntolerance.",
+  "properties": {
+    "batch": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The batch the run belongs to, when stated."
+    },
+    "convention_files": {
+      "default": [],
+      "description": "Convention files the run applied.",
+      "items": {
+        "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "derives_from": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The Run id this run derives from, when it derives from one."
+    },
+    "engines": {
+      "default": [],
+      "description": "Engines behind the values beyond the model's own.",
+      "items": {
+        "$ref": "#/$defs/EngineLink"
+      },
+      "type": "array"
+    },
+    "id": {
+      "description": "The run's id; it names a file.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+      "type": "string"
+    },
+    "model": {
+      "description": "The Model id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "note": {
+      "default": "",
+      "description": "Anything else about the run.",
+      "type": "string"
+    },
+    "produced_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "When the run was produced, as the source states."
+    },
+    "release": {
+      "anyOf": [
+        {
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The model release; null when the source records none."
+    },
+    "rows_complete": {
+      "default": true,
+      "description": "False when the source kept only some of the run's values (for example only disagreements).",
+      "type": "boolean"
+    },
+    "sample": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The sample the run drew, when stated."
+    },
+    "seed": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The random seed, when the run used one."
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Source"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The file the run's rows came from."
+    },
+    "switches": {
+      "default": [],
+      "description": "The settings that make the run repeatable; names are unique.",
+      "items": {
+        "$ref": "#/$defs/Switch"
+      },
+      "type": "array"
+    },
+    "view": {
+      "default": "",
+      "description": "The named configuration both runs of a joint comparison carry; \"\" means the model's default.",
+      "pattern": "^(?:\\S(?:[\\s\\S]*\\S)?)?$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "model"
+  ],
+  "title": "Run",
+  "type": "object"
+}

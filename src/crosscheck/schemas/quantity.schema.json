@@ -1,0 +1,80 @@
+{
+  "$defs": {
+    "Alias": {
+      "additionalProperties": false,
+      "description": "One tool's own name for a quantity.",
+      "properties": {
+        "name": {
+          "description": "The tool's name for the quantity.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "tool": {
+          "description": "The tool that uses the name.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "name"
+      ],
+      "title": "Alias",
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/quantity.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A quantity models answer, such as a tax or a benefit amount. Key: id.\n\nA quantity carries no tolerance: tolerance is a named profile applied on read.",
+  "properties": {
+    "aliases": {
+      "default": [],
+      "description": "Each tool's own name for the quantity.",
+      "items": {
+        "$ref": "#/$defs/Alias"
+      },
+      "type": "array"
+    },
+    "description": {
+      "default": "",
+      "description": "What the quantity is, in words.",
+      "type": "string"
+    },
+    "entity": {
+      "default": "",
+      "description": "The entity type (\"tax_unit\", \"household\", \"person\"); \"\" when not stated.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The quantity's id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "period": {
+      "default": "",
+      "description": "The period (\"year\", \"month\"); \"\" when not stated.",
+      "type": "string"
+    },
+    "unit": {
+      "default": "",
+      "description": "The unit (\"currency:USD\"); \"\" when the source does not state it.",
+      "type": "string"
+    },
+    "value_type": {
+      "default": "amount",
+      "description": "The type of the quantity's answers.",
+      "enum": [
+        "amount",
+        "boolean",
+        "category"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "title": "Quantity",
+  "type": "object"
+}

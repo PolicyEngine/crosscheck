@@ -1,0 +1,90 @@
+{
+  "$defs": {
+    "Fact": {
+      "additionalProperties": false,
+      "description": "One stated fact of a case. A case states each (concept, entity) pair at most once.",
+      "properties": {
+        "concept": {
+          "description": "The fact's concept id.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "entity": {
+          "default": "",
+          "description": "The person or unit in the case; \"\" means the case as a whole.",
+          "pattern": "^(?:\\S(?:[\\s\\S]*\\S)?)?$",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The fact's value: a number, true or false, text, or null."
+        }
+      },
+      "required": [
+        "concept",
+        "value"
+      ],
+      "title": "Fact",
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/case.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A case in a case set under one policy world. Key: (case_set, case_id, policy_world).\n\nThe (concept, entity) pairs of `facts` are unique within the case.",
+  "properties": {
+    "case_id": {
+      "description": "The case's id within its case set.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "case_set": {
+      "description": "The case set; it names a file.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+      "type": "string"
+    },
+    "facts": {
+      "default": [],
+      "description": "The case's stated facts.",
+      "items": {
+        "$ref": "#/$defs/Fact"
+      },
+      "type": "array"
+    },
+    "facts_complete": {
+      "default": false,
+      "description": "True only when every fact a model needs is stated in facts.",
+      "type": "boolean"
+    },
+    "policy_world": {
+      "description": "The PolicyWorld id the case is answered under.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "source": {
+      "default": "",
+      "description": "Where the case came from.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_set",
+    "case_id",
+    "policy_world"
+  ],
+  "title": "Case",
+  "type": "object"
+}

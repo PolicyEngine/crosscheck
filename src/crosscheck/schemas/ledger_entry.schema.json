@@ -1,0 +1,245 @@
+{
+  "$defs": {
+    "LedgerCell": {
+      "additionalProperties": false,
+      "description": "One cell a ledger entry covers, with the difference the entry predicts there.",
+      "properties": {
+        "basis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "How the prediction was made."
+        },
+        "case_id": {
+          "description": "The case id.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "case_set": {
+          "description": "The case set.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+          "type": "string"
+        },
+        "entity": {
+          "default": "",
+          "description": "Which person or unit in the case; \"\" means the case's single unit.",
+          "pattern": "^(?:\\S(?:[\\s\\S]*\\S)?)?$",
+          "type": "string"
+        },
+        "policy_world": {
+          "description": "The PolicyWorld id.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "predicted_size": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The predicted difference for this cell, in the quantity's unit."
+        },
+        "quantity": {
+          "description": "The Quantity id.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_set",
+        "case_id",
+        "policy_world",
+        "quantity"
+      ],
+      "title": "LedgerCell",
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/ledger_entry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One explained (or not yet explained) cause of differences between runs. Key: id.\n\nRules: `runs` names at least one run and repeats none; `who_errs` names only runs in\n`runs`, and naming anyone needs grounds (`law` or `issue`); cell keys are unique. An open\nentry has no closer. Only a person closes an entry: an AI author may open a ledger entry\nand may not close one.",
+  "properties": {
+    "author": {
+      "description": "Who opened the entry.",
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "author_kind": {
+      "description": "What kind of author opened the entry.",
+      "enum": [
+        "person",
+        "ai_model",
+        "rules_model",
+        "harness",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "cells": {
+      "default": [],
+      "description": "The cells the cause covers; cell keys are unique.",
+      "items": {
+        "$ref": "#/$defs/LedgerCell"
+      },
+      "type": "array"
+    },
+    "closed_by": {
+      "anyOf": [
+        {
+          "pattern": "\\S",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Who closed the entry."
+    },
+    "closed_by_kind": {
+      "anyOf": [
+        {
+          "enum": [
+            "person",
+            "ai_model",
+            "rules_model",
+            "harness",
+            "unknown"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "What kind of author closed the entry; only a person may."
+    },
+    "id": {
+      "description": "The entry's id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "issue": {
+      "anyOf": [
+        {
+          "pattern": "\\S",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "A link to an issue or a published erratum."
+    },
+    "kind": {
+      "description": "The kind of cause.",
+      "enum": [
+        "model_error",
+        "law_reading",
+        "convention",
+        "input_map",
+        "scope",
+        "policy_world",
+        "rounding",
+        "explained_other",
+        "unexplained"
+      ],
+      "type": "string"
+    },
+    "law": {
+      "default": [],
+      "description": "Citations to law.",
+      "items": {
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "note": {
+      "default": "",
+      "description": "Anything else about the entry.",
+      "type": "string"
+    },
+    "predicted_size_rule": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "A rule that predicts the size of the difference, in words."
+    },
+    "runs": {
+      "description": "The Run ids the entry bears on.",
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "source_kind": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The source tool's own label, kept as written."
+    },
+    "status": {
+      "default": "open",
+      "description": "Open until a person closes the entry.",
+      "enum": [
+        "open",
+        "closed"
+      ],
+      "type": "string"
+    },
+    "summary": {
+      "description": "The cause, in words.",
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "who_errs": {
+      "default": [],
+      "description": "Run ids judged to err; a subset of runs; empty when nobody is named.",
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "summary",
+    "runs",
+    "author",
+    "author_kind"
+  ],
+  "title": "LedgerEntry",
+  "type": "object"
+}
