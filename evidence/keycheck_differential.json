@@ -1,0 +1,254 @@
+{
+  "answers_identical": true,
+  "bindings_identical": null,
+  "bindings_path": "runs.csv input_map",
+  "cell_status": {
+    "by_run": {
+      "pb-reference-2.60.0": {
+        "rests_on_one_model": 400
+      },
+      "pe-2.116.15-board-2026": {
+        "rests_on_one_model": 600
+      },
+      "pe-2.116.15-none-2026": {
+        "rests_on_one_model": 600
+      },
+      "pe-2.60.0-board-2025": {
+        "rests_on_one_model": 600
+      },
+      "pe-2.60.0-board-2026": {
+        "rests_on_one_model": 600
+      },
+      "taxcalc-6.9.0-2025": {
+        "rests_on_one_model": 400
+      },
+      "taxcalc-6.9.0-2026": {
+        "rests_on_one_model": 400
+      },
+      "taxsim-cd2026110117-2025": {
+        "rests_on_one_model": 400
+      },
+      "taxsim-cd2026110117-2026": {
+        "rests_on_one_model": 400
+      }
+    },
+    "candidates": "the runs with values in the cell's policy world",
+    "profile": "keycheck.within-one-dollar",
+    "profile_rule": "absolute 1.0, relative 0.0, isclose"
+  },
+  "crosscheck_version": "0.1.0",
+  "difference_count": 0,
+  "differences_by_column": {},
+  "lineage": {
+    "all_runs": [
+      [
+        "pb-reference-2.60.0",
+        "pe-2.116.15-board-2026",
+        "pe-2.116.15-none-2026",
+        "pe-2.60.0-board-2025",
+        "pe-2.60.0-board-2026",
+        "taxcalc-6.9.0-2025",
+        "taxcalc-6.9.0-2026",
+        "taxsim-cd2026110117-2025",
+        "taxsim-cd2026110117-2026"
+      ]
+    ],
+    "by_policy_world": {
+      "us.2025": {
+        "per_case": [
+          {
+            "cases": 100,
+            "partition": [
+              [
+                "pe-2.60.0-board-2025",
+                "taxcalc-6.9.0-2025",
+                "taxsim-cd2026110117-2025"
+              ]
+            ]
+          }
+        ],
+        "runs": [
+          "pe-2.60.0-board-2025",
+          "taxcalc-6.9.0-2025",
+          "taxsim-cd2026110117-2025"
+        ],
+        "unscoped": [
+          [
+            "pe-2.60.0-board-2025",
+            "taxcalc-6.9.0-2025",
+            "taxsim-cd2026110117-2025"
+          ]
+        ]
+      },
+      "us.2026": {
+        "per_case": [
+          {
+            "cases": 100,
+            "partition": [
+              [
+                "pb-reference-2.60.0",
+                "pe-2.116.15-board-2026",
+                "pe-2.116.15-none-2026",
+                "pe-2.60.0-board-2026",
+                "taxcalc-6.9.0-2026",
+                "taxsim-cd2026110117-2026"
+              ]
+            ]
+          }
+        ],
+        "runs": [
+          "pb-reference-2.60.0",
+          "pe-2.116.15-board-2026",
+          "pe-2.116.15-none-2026",
+          "pe-2.60.0-board-2026",
+          "taxcalc-6.9.0-2026",
+          "taxsim-cd2026110117-2026"
+        ],
+        "unscoped": [
+          [
+            "pb-reference-2.60.0",
+            "pe-2.116.15-board-2026",
+            "pe-2.116.15-none-2026",
+            "pe-2.60.0-board-2026",
+            "taxcalc-6.9.0-2026",
+            "taxsim-cd2026110117-2026"
+          ]
+        ]
+      }
+    },
+    "links": [
+      {
+        "runs": [
+          "pe-2.60.0-board-2025",
+          "taxcalc-6.9.0-2025"
+        ],
+        "shared": [
+          "run:pe-2.60.0-board-2025"
+        ]
+      },
+      {
+        "runs": [
+          "pe-2.60.0-board-2025",
+          "taxsim-cd2026110117-2025"
+        ],
+        "shared": [
+          "run:pe-2.60.0-board-2025"
+        ]
+      },
+      {
+        "runs": [
+          "pe-2.60.0-board-2026",
+          "taxcalc-6.9.0-2026"
+        ],
+        "shared": [
+          "run:pe-2.60.0-board-2026"
+        ]
+      },
+      {
+        "runs": [
+          "pe-2.60.0-board-2026",
+          "taxsim-cd2026110117-2026"
+        ],
+        "shared": [
+          "run:pe-2.60.0-board-2026"
+        ]
+      },
+      {
+        "runs": [
+          "taxcalc-6.9.0-2025",
+          "taxsim-cd2026110117-2025"
+        ],
+        "shared": [
+          "map:keycheck/unit.py 2026-11-10.2",
+          "run:pe-2.60.0-board-2025"
+        ]
+      },
+      {
+        "runs": [
+          "taxcalc-6.9.0-2025",
+          "taxsim-cd2026110117-2026"
+        ],
+        "shared": [
+          "map:keycheck/unit.py 2026-11-10.2"
+        ]
+      },
+      {
+        "runs": [
+          "taxcalc-6.9.0-2026",
+          "taxsim-cd2026110117-2025"
+        ],
+        "shared": [
+          "map:keycheck/unit.py 2026-11-10.2"
+        ]
+      },
+      {
+        "runs": [
+          "taxcalc-6.9.0-2026",
+          "taxsim-cd2026110117-2026"
+        ],
+        "shared": [
+          "map:keycheck/unit.py 2026-11-10.2",
+          "run:pe-2.60.0-board-2026"
+        ]
+      }
+    ]
+  },
+  "models": 3,
+  "models_identical": true,
+  "pyarrow_version": "21.0.0",
+  "row_order_identical": {
+    "answers.csv": false,
+    "models.csv": true,
+    "runs.csv": false
+  },
+  "rows": 5400,
+  "runs": 9,
+  "runs_identical": true,
+  "schema": "crosscheck.evidence.keycheck_differential.v1",
+  "schema_gaps": [
+    "Not stated: Value.producer. answers.csv does not record which values harness code computed from several model outputs (the key-check's runners and build_answers.py compute some answer columns that way); the schema has no 'not stated' producer, so every row carries the default 'model'.",
+    "Stretched: answers.csv unexpressed_facts becomes Binding.facts_not_taken, but the key-check's README defines the column more widely (facts a model took with a side effect, and readings of unstated facts the answer rests on, as well as facts it could not take), and the key-check also writes scope notes there for rows a model does not cover.",
+    "Stretched: runs.csv conventions is prose that describes the conventions and settings a run applied; Run.convention_files holds the whole text as one entry, so lineage reads each distinct text as one convention file, and a text that says no convention applies still yields a convention token.",
+    "Derived: runs.csv period. Run has no policy world field, so the exporter keeps the period only on the run's values and bindings (as the policy world us.<period>) and project_runs reads it back from them.",
+    "Derived: runs.csv input_map. Run has no input map field, so the exporter spreads the run-level text over every binding of the run (layers as Binding.input_maps, 'shared from' parts as BorrowedInput) and project_runs rebuilds it from the run's bindings.",
+    "One source per run: Run.source holds the run's own source file as written in runs.csv (a path inside the key-check repository, or another repository's path), with tool 'policybench-key-check' and no sha256, which runs.csv does not state; the answers.csv that crosscheck read has no place on the run, so the differential's evidence records its hash.",
+    "Not held: the row order of answers.csv. The table sorts records by key; the differential compares rows by key.",
+    "Not held: the row order of runs.csv. The table sorts records by key; the differential compares rows by key."
+  ],
+  "source": {
+    "commit": "0dbfa64b69cc99cc2637d8da66d18498f7dac828",
+    "files": {
+      "answers.csv": {
+        "bytes": 1017597,
+        "rows": 5400,
+        "sha256": "cd305f2366927adfae5d36057824c15e8e14c24c59278ec32f5f999250a10438"
+      },
+      "models.csv": {
+        "bytes": 472,
+        "rows": 3,
+        "sha256": "98b5e320679bc9f43185d7951cd5994e59ea55f395a02bcea83f4e8b19714355"
+      },
+      "runs.csv": {
+        "bytes": 3395,
+        "rows": 9,
+        "sha256": "f3695ec046271aba9816df80b568e731de1e5b6ef89b552b02ee674c9fb5d432"
+      }
+    },
+    "ref": "key-check-v1",
+    "repository": "PolicyEngine/policybench-key-check"
+  },
+  "store_identical": true,
+  "table_counts": {
+    "bindings": 900,
+    "cases": 200,
+    "ledger": 0,
+    "models": 3,
+    "policy_worlds": 2,
+    "quantities": 6,
+    "runs": 9,
+    "tolerance_profiles": 0,
+    "values": 5400
+  },
+  "table_sha256": "009262cf0952e45798e0d0af44747c937380ae05636272d59dcb361bf06cd411",
+  "written_by": "scripts/keycheck_differential.py"
+}

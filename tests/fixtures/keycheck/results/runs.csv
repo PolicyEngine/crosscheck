@@ -1,0 +1,4 @@
+run,model,release,period,conventions,input_map,source,note
+alpha-1.0-2026,alpha-model,1.0,2026,Alpha's invented conventions (conv/alpha.py),Alpha's own builder,Example/invented@0000000:out/alpha_2026.csv,The invented key
+beta-2.0-2026,beta-model,2.0,2026,Beta's current law; exact=True,maps/map_beta.py 2026-01-01.1 on maps/unit.py 2026-01-01.1; an invented deduction shared from alpha-1.0-2026,results/beta/beta_2026.csv,"Two passes, the second with ""quotes"""
+alpha-1.1-2025,alpha-model,1.1,2025,,maps/map_alpha.py 2026-01-01.1 on maps/unit.py 2026-01-01.1,results/alpha/alpha_2025.csv,

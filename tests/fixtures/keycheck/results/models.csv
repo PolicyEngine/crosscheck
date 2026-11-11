@@ -1,0 +1,3 @@
+model,kind,maintainer,lineage,note
+alpha-model,rules model,Invented Alpha maintainers,alpha-engine,"An invented model, for tests."
+beta-model,rules model,Invented Beta group,beta-engine,

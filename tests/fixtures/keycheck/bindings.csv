@@ -1,0 +1,10 @@
+case_set,case_id,run,model,release,period,input_map,input_map_version,input_map_author,records_sent,model_itemizes,inputs_from_other_runs,input_from_other_run_bears_on_answer,unexpressed_facts,map_computed
+invented-3,case_a,alpha-1.0-2026,alpha-model,1.0,2026,Alpha's own builder,Invented c0ffee0,,one invented situation,,,false,,
+invented-3,case_b,alpha-1.0-2026,alpha-model,1.0,2026,Alpha's own builder,Invented c0ffee0,,one invented situation,,,false,,
+invented-3,case_c,alpha-1.0-2026,alpha-model,1.0,2026,Alpha's own builder,Invented c0ffee0,,one invented situation,,,false,,
+invented-3,case_a,beta-2.0-2026,beta-model,2.0,2026,maps/map_beta.py on maps/unit.py,2026-01-01.1 on 2026-01-01.1,,one invented record,true,"an invented deduction = 10.00, computed by alpha-1.0-2026",true,income: invented fact B,
+invented-3,case_b,beta-2.0-2026,beta-model,2.0,2026,maps/map_beta.py on maps/unit.py,2026-01-01.1 on 2026-01-01.1,,one invented record,false,"an invented deduction = 20.00, computed by alpha-1.0-2026",false,,
+invented-3,case_c,beta-2.0-2026,beta-model,2.0,2026,maps/map_beta.py on maps/unit.py,2026-01-01.1 on 2026-01-01.1,,one invented record,false,,false,,
+invented-3,case_a,alpha-1.1-2025,alpha-model,1.1,2025,maps/map_alpha.py on maps/unit.py,2026-01-01.1 on 2026-01-01.1,,one invented record,false,,false,,
+invented-3,case_b,alpha-1.1-2025,alpha-model,1.1,2025,maps/map_alpha.py on maps/unit.py,2026-01-01.1 on 2026-01-01.1,,one invented record,false,,false,,
+invented-3,case_c,alpha-1.1-2025,alpha-model,1.1,2025,maps/map_alpha.py on maps/unit.py,2026-01-01.1 on 2026-01-01.1,,one invented record,false,,false,,
