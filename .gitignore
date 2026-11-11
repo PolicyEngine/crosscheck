@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+# Rows live outside git; manifests of their hashes live inside it.
+*.parquet
+/rows/
