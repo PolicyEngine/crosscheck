@@ -2,7 +2,7 @@
   "$id": "https://github.com/PolicyEngine/crosscheck/schemas/value.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
-  "description": "One run's answer for one cell. Key: (case_set, case_id, policy_world, quantity, entity, run).\n\nRules: the status is `answered` exactly when `value` is not None, and an answered value\nkeeps the source's `raw` text. A value carries no tolerance.",
+  "description": "One run's answer for one cell. Key: (case_set, case_id, policy_world, quantity, entity, run).\n\nRules: the status is `answered` exactly when `value` is not None, and an answered value\nkeeps the source's `raw` text. A value carries no tolerance. `producer` defaults to\n\"not_stated\"; \"model\" asserts that the source says the model itself produced the value.",
   "properties": {
     "case_id": {
       "description": "The case id.",
@@ -26,9 +26,9 @@
       "type": "string"
     },
     "producer": {
-      "default": "model",
-      "description": "\"model\", or \"harness:<formula>\" when harness code computed the value from model outputs.",
-      "pattern": "^(?:model$|harness:[\\s\\S]*\\S)",
+      "default": "not_stated",
+      "description": "What produced the value: \"not_stated\" when the source does not say; \"model\" when the source says the model itself produced it; \"harness:<formula>\" when harness code computed it from model outputs.",
+      "pattern": "^(?:not_stated$|model$|harness:[\\s\\S]*\\S)",
       "type": "string"
     },
     "quantity": {

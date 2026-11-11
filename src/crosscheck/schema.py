@@ -8,11 +8,13 @@ text rules (ids, file ids, sha256 digests) become patterns.
 
 JSON Schema cannot state the rules that tie fields together. An answered value carries a
 value and keeps its raw text; only a person closes a ledger entry and an open entry has no
-closer; `who_errs` names only runs in `runs` and needs `law` or `issue`; keys are unique
-within a case's facts, a run's switches, a ledger entry's cells and a profile's rules. Those
-rules live in each record's checks in `crosscheck.records`, so a document that passes
-`validate` can still fail `from_dict`. Referential integrity across records (a value's run
-exists) lives in `crosscheck.table.Table.problems`.
+closer; `who_errs` names only runs in `runs` and needs `law` or `issue`; a ledger cell that
+names a run names one of its entry's `runs`; keys are unique within a case's facts, a run's
+switches, a run's sources (by uri and role), a ledger entry's cells and a profile's rules.
+Those rules live in each record's checks in `crosscheck.records`, so a document that passes
+`validate` can still fail `from_dict`. A record also stores a model's `releases` sorted,
+which the schema does not require of a document. Referential integrity across records (a
+value's run exists) lives in `crosscheck.table.Table.problems`.
 
 The committed files under `src/crosscheck/schemas/` are the output of `export_schemas`; a
 test regenerates them and compares byte for byte.

@@ -28,8 +28,14 @@
     },
     "Source": {
       "additionalProperties": false,
-      "description": "The file a run's rows came from.",
+      "description": "A file behind a run's rows, and what the file is to the run.",
       "properties": {
+        "role": {
+          "default": "",
+          "description": "What the file is to the run, in words (\"the report crosscheck read\", \"the run's own output file\"); \"\" when not stated.",
+          "pattern": "^(?:\\S(?:[\\s\\S]*\\S)?)?$",
+          "type": "string"
+        },
         "schema_version": {
           "anyOf": [
             {
@@ -97,7 +103,7 @@
   "$id": "https://github.com/PolicyEngine/crosscheck/schemas/run.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
-  "description": "One run of a model over cases. Key: id.\n\nA run never derives from itself, and its switch names are unique. A run carries no\ntolerance.",
+  "description": "One run of a model over cases. Key: id.\n\nA run never derives from itself, its switch names are unique, and its sources' (uri,\nrole) pairs are unique. A run carries no tolerance.",
   "properties": {
     "batch": {
       "anyOf": [
@@ -210,17 +216,13 @@
       "default": null,
       "description": "The random seed, when the run used one."
     },
-    "source": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/Source"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "description": "The file the run's rows came from."
+    "sources": {
+      "default": [],
+      "description": "The files behind the run's rows, each with its role; (uri, role) pairs are unique.",
+      "items": {
+        "$ref": "#/$defs/Source"
+      },
+      "type": "array"
     },
     "switches": {
       "default": [],

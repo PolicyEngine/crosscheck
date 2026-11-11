@@ -9,6 +9,7 @@ raises when there are any.
 
 from __future__ import annotations
 
+import dataclasses
 import hashlib
 import json
 from collections.abc import Iterable, Mapping
@@ -83,6 +84,16 @@ def _case_key(record: Any) -> tuple[str, str, str]:
     return (record.case_set, record.case_id, record.policy_world)
 
 
+def _join_releases(held: Any, record: Any) -> Model | None:
+    """Return one Model listing both records' releases, or None unless both are Models that
+    differ only in `releases`."""
+    if type(held) is not Model or type(record) is not Model:
+        return None
+    if dataclasses.replace(held, releases=()) != dataclasses.replace(record, releases=()):
+        return None
+    return dataclasses.replace(held, releases=tuple(set(held.releases) | set(record.releases)))
+
+
 @dataclass(frozen=True)
 class Table:
     """Every record of one comparison set, each section sorted by key."""
@@ -123,7 +134,9 @@ class Table:
         the quantity's type (a number for an amount, true or false for a boolean, text for a
         category); the quantities that notes, borrowed inputs and ledger cells name exist; a
         borrowed input's run exists; a ledger entry's runs exist and its cells name existing
-        cases; a tolerance rule names "*" or an existing quantity.
+        cases (a cell that names a run must name one of its entry's runs, a rule the entry
+        itself enforces, so the check of the entry's runs covers the cell's run); a tolerance
+        rule names "*" or an existing quantity.
         """
         found: list[str] = []
         found += self._repeated_keys()
@@ -266,9 +279,11 @@ class Table:
     def merge(*tables: Table) -> Table:
         """Return the union of the tables.
 
-        Identical records collapse into one; two different records with one key raise
-        `IntegrityError` naming every such key. `Table.merge()` with no tables returns an
-        empty table.
+        Identical records collapse into one. Two Model records with one id that differ only
+        in `releases` become one Model that lists the union of their releases (each tool
+        lists the releases its own runs name). Any other two different records with one key
+        raise `IntegrityError` naming every such key. `Table.merge()` with no tables returns
+        an empty table. The result does not depend on the order of the tables.
         """
         merged: dict[str, dict[tuple, Any]] = {name: {} for name, _, _ in _SECTIONS}
         conflicts: list[str] = []
@@ -283,9 +298,13 @@ class Table:
                     if held is None:
                         section[key] = record
                     elif held != record:
-                        conflicts.append(
-                            f"{label} {_show(key)} differs between the merged records."
-                        )
+                        joined = _join_releases(held, record)
+                        if joined is None:
+                            conflicts.append(
+                                f"{label} {_show(key)} differs between the merged records."
+                            )
+                        else:
+                            section[key] = joined
         if conflicts:
             raise IntegrityError("\n".join(dict.fromkeys(conflicts)))
         return Table(**{name: tuple(section.values()) for name, section in merged.items()})

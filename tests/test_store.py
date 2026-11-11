@@ -128,7 +128,16 @@ def sample_table() -> Table:
                 engines=(EngineLink(engine="eng-host", role="host"),),
                 convention_files=("conv/v1.yaml",),
                 switches=(Switch(name="year", value="2024"), Switch(name="empty", value="")),
-                source=Source(tool="tool-x", uri="repo@abc:r.json", sha256=SHA, schema_version="1"),
+                sources=(
+                    Source(
+                        tool="tool-x",
+                        uri="repo@abc:r.json",
+                        sha256=SHA,
+                        schema_version="1",
+                        role="the report crosscheck read",
+                    ),
+                    Source(tool="tool-x", uri="repo@abc:out.json", role="the run's own output"),
+                ),
                 produced_at="2026-01-02T03:04:05Z",
             ),
             Run(id="run-b", model="model-b", rows_complete=False),
@@ -163,7 +172,7 @@ def sample_table() -> Table:
             ),
         ),
         values=(
-            val("c1", "income_tax", "run-a", 100.25),
+            val("c1", "income_tax", "run-a", 100.25, producer="model"),
             val("c1", "eligible", "run-a", True),
             val("c1", "filing", "run-a", "joint", entity="p1"),
             val("c2", "income_tax", "run-a", None, status="not_covered", source_status="missing"),
@@ -194,6 +203,15 @@ def sample_table() -> Table:
                         policy_world="w2024",
                         quantity="income_tax",
                         predicted_size=-0.0,
+                    ),
+                    LedgerCell(
+                        case_set="cs-a",
+                        case_id="c1",
+                        policy_world="w2024",
+                        quantity="income_tax",
+                        run="run-b",
+                        predicted_size=-100.25,
+                        basis="the dropped credit",
                     ),
                 ),
                 law=("26 USC 24",),
@@ -272,6 +290,24 @@ def test_empty_text_and_null_stay_apart(tmp_path):
     assert ai.source_status == "" and ai.status_detail is None
     assert back.binding("cs-a", "c1", "w2024", "run-a").rendered_input == ""
     assert back.binding("cs-a", "c1", "w2024", "run-b").rendered_input.endswith('"Jürgen"}')
+
+
+def test_sources_cell_runs_and_producers_survive(tmp_path):
+    table = sample_table()
+    write_store(table, tmp_path)
+    back = read_store(tmp_path)
+    assert [(s.uri, s.role) for s in back.run("run-a").sources] == [
+        ("repo@abc:r.json", "the report crosscheck read"),
+        ("repo@abc:out.json", "the run's own output"),
+    ]
+    assert back.run("run-b").sources == ()
+    assert [c.run for c in back.ledger_entry("e1").cells] == [None, "run-b"]
+    producers = {(v.run, v.quantity, v.case_id): v.producer for v in back.values}
+    assert producers[("run-a", "income_tax", "c1")] == "model"
+    assert producers[("run-b", "filing", "c1")] == "harness:a+b"
+    assert producers[("run-b", "income_tax", "c1")] == "not_stated"
+    column = pq.read_table(tmp_path / "values" / "run-b.parquet").column("producer").to_pylist()
+    assert "not_stated" in column and "harness:a+b" in column
 
 
 def test_writing_twice_gives_identical_bytes(tmp_path):

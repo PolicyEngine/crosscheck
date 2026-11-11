@@ -124,3 +124,22 @@ __all__ += [
     "share_directly",
     "write_store",
 ]
+
+# Model registry (fix round 1).
+from crosscheck.registry import (  # noqa: E402
+    KNOWN_MODELS,
+    NOT_RECORDED,
+    TOOL_NAMES,
+    known_model,
+    registry_id,
+    tool_name,
+)
+
+__all__ += [
+    "KNOWN_MODELS",
+    "NOT_RECORDED",
+    "TOOL_NAMES",
+    "known_model",
+    "registry_id",
+    "tool_name",
+]

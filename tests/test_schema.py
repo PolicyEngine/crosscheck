@@ -139,11 +139,38 @@ def test_nested_records_sit_under_defs():
     schema = json_schema(Run)
     assert sorted(schema["$defs"]) == ["EngineLink", "Source", "Switch"]
     assert schema["properties"]["engines"]["items"] == {"$ref": "#/$defs/EngineLink"}
-    assert schema["properties"]["source"]["anyOf"] == [
-        {"$ref": "#/$defs/Source"},
+    assert "source" not in schema["properties"]
+    assert schema["properties"]["sources"]["type"] == "array"
+    assert schema["properties"]["sources"]["items"] == {"$ref": "#/$defs/Source"}
+    assert schema["properties"]["sources"]["default"] == []
+    assert schema["$defs"]["Source"]["additionalProperties"] is False
+    role = schema["$defs"]["Source"]["properties"]["role"]
+    assert role["default"] == "" and role["pattern"] == TEXT_PATTERNS["id_or_empty"]
+
+
+def test_new_fields_of_fix_round_1_reach_the_schema():
+    value_props = json_schema(Value)["properties"]
+    assert value_props["producer"]["default"] == "not_stated"
+    assert value_props["producer"]["pattern"] == TEXT_PATTERNS["producer"]
+    cell = json_schema(LedgerEntry)["$defs"]["LedgerCell"]["properties"]
+    assert list(cell)[:6] == ["case_set", "case_id", "policy_world", "quantity", "entity", "run"]
+    assert cell["run"]["anyOf"] == [
+        {"type": "string", "pattern": FILE_ID_PATTERN},
         {"type": "null"},
     ]
-    assert schema["$defs"]["Source"]["additionalProperties"] is False
+    kinds = json_schema(LedgerEntry)["properties"]["kind"]["enum"]
+    assert "missing_provision" in kinds and "fact_reading" in kinds
+
+
+@pytest.mark.parametrize("producer", ["not_stated", "model", "harness:a+b"])
+def test_schema_accepts_every_producer_form(producer):
+    validate({**to_dict(value()), "producer": producer}, Value)
+
+
+@pytest.mark.parametrize("producer", ["", "not stated", "Model", "harness:"])
+def test_schema_refuses_other_producers(producer):
+    with pytest.raises(SchemaError, match=r"\$\.producer:"):
+        validate({**to_dict(value()), "producer": producer}, Value)
 
 
 def test_schema_maps_types():
@@ -346,6 +373,10 @@ TRICKY = [
     "é",
     "*",
     "model",
+    "not_stated",
+    "not_stated\n",
+    "Not_stated",
+    "not stated",
     "harness:",
     "harness:x",
     "harness: ",

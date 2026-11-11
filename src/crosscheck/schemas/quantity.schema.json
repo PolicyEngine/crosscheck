@@ -2,15 +2,15 @@
   "$defs": {
     "Alias": {
       "additionalProperties": false,
-      "description": "One tool's own name for a quantity.",
+      "description": "One model's or tool's own name for a quantity.",
       "properties": {
         "name": {
-          "description": "The tool's name for the quantity.",
+          "description": "That model's or tool's name for the quantity.",
           "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
           "type": "string"
         },
         "tool": {
-          "description": "The tool that uses the name.",
+          "description": "The model or tool that uses the name; a registry model id where a model uses it.",
           "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
           "type": "string"
         }

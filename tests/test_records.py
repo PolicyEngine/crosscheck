@@ -141,6 +141,7 @@ def valid_examples():
         EngineLink(engine="engine-b", role="host"),
         Switch(name="dataset", value="sample-1"),
         Source(tool="tool-x", uri="repo@abc:path/report.json", sha256=SHA, schema_version="v1"),
+        Source(tool="tool-x", uri="", role="the report crosscheck read"),
         Run(
             id="run-a",
             model="model-a",
@@ -154,7 +155,11 @@ def valid_examples():
             convention_files=("conv/v1.yaml",),
             switches=(Switch(name="year", value="2024"), Switch(name="dataset", value="")),
             rows_complete=False,
-            source=Source(tool="tool-x", uri=""),
+            sources=(
+                Source(tool="tool-x", uri=""),
+                Source(tool="tool-x", uri="repo@abc:r.json", sha256=SHA, role="the report"),
+                Source(tool="tool-y", uri="repo@abc:r.json", role="the run's own output file"),
+            ),
             produced_at="2026-01-02T03:04:05Z",
             note="n",
         ),
@@ -180,6 +185,7 @@ def valid_examples():
         value(status="error", raw='"boom"', value=None, status_detail="engine failed"),
         value(quantity="eligible", raw="true", value=True, entity="p1"),
         value(quantity="filing", raw='"joint"', value="joint", producer="harness:a+b"),
+        value(producer="model"),
         value(raw="1e308", value=1e308),
         value(raw="5e-324", value=5e-324),
         value(raw="-0", value=-0.0),
@@ -191,8 +197,21 @@ def valid_examples():
             predicted_size=-12.5,
             basis="phase-out arithmetic",
         ),
+        LedgerCell(case_set="cs-a", case_id="c1", policy_world="w2024", quantity="q", run="run-b"),
         entry(),
         entry(
+            kind="missing_provision",
+            cells=(
+                LedgerCell(
+                    case_set="cs-a", case_id="c1", policy_world="w2024", quantity="q", run="run-a"
+                ),
+                LedgerCell(
+                    case_set="cs-a", case_id="c1", policy_world="w2024", quantity="q", run="run-b"
+                ),
+            ),
+        ),
+        entry(
+            kind="fact_reading",
             cells=(
                 LedgerCell(case_set="cs-a", case_id="c1", policy_world="w2024", quantity="q"),
                 LedgerCell(
@@ -250,7 +269,9 @@ def test_enum_values_match_the_spec():
     ]
     assert [m.value for m in CauseKind] == [
         "model_error",
+        "missing_provision",
         "law_reading",
+        "fact_reading",
         "convention",
         "input_map",
         "scope",
@@ -262,7 +283,25 @@ def test_enum_values_match_the_spec():
     assert [m.value for m in EntryStatus] == ["open", "closed"]
     assert [m.value for m in EngineRole] == ["host", "tool", "gate"]
     assert [m.value for m in ToleranceMethod] == ["isclose", "abs_or_ratio"]
-    assert [m.value for m in CellStatus] == ["reproduced", "contested", "rests_on_one_model"]
+    assert [m.value for m in CellStatus] == ["reproduced", "contested", "resting_on_one_model"]
+
+
+def test_the_old_status_word_is_gone():
+    with pytest.raises(ValueError):
+        CellStatus("rests_on_one_model")
+    assert not hasattr(CellStatus, "rests_on_one_model")
+
+
+def test_cause_kind_docstring_states_the_new_causes_in_the_rulings_words():
+    doc = " ".join(CauseKind.__doc__.split())
+    assert (
+        "`missing_provision`: a model has no input for a stated fact, or no provision for the "
+        "law of the year, so its answer leaves the provision out." in doc
+    )
+    assert (
+        "`fact_reading`: the answer turns on how a fact of the case, stated or unstated, was "
+        "read or filled in." in doc
+    )
 
 
 def test_enums_are_str_valued():
@@ -330,11 +369,22 @@ def test_record_field_order_matches_the_spec():
         "convention_files",
         "switches",
         "rows_complete",
-        "source",
+        "sources",
         "produced_at",
         "note",
     ]
     assert names(LedgerEntry)[:6] == ["id", "kind", "summary", "runs", "author", "author_kind"]
+    assert names(Source) == ["tool", "uri", "sha256", "schema_version", "role"]
+    assert names(LedgerCell) == [
+        "case_set",
+        "case_id",
+        "policy_world",
+        "quantity",
+        "entity",
+        "run",
+        "predicted_size",
+        "basis",
+    ]
 
 
 # Field checks
@@ -432,8 +482,15 @@ def test_seed_is_a_whole_number():
 def test_nested_record_must_be_a_record():
     with pytest.raises(RecordError, match=r"Case\.facts\[0\]: must be a Fact; got dict"):
         Case(case_set="cs", case_id="c", policy_world="w", facts=[{"concept": "a", "value": 1}])
-    with pytest.raises(RecordError, match=r"Run\.source: must be a Source or null"):
-        Run(id="r", model="m", source="tool-x")
+    with pytest.raises(RecordError, match=r"Run\.sources\[0\]: must be a Source; got str"):
+        Run(id="r", model="m", sources=("tool-x",))
+    with pytest.raises(RecordError, match=r"Run\.sources: must be a sequence"):
+        Run(id="r", model="m", sources=Source(tool="t", uri=""))
+
+
+def test_run_no_longer_takes_a_single_source():
+    with pytest.raises(TypeError, match="source"):
+        Run(id="r", model="m", source=Source(tool="t", uri=""))
 
 
 ID_FIELDS = [
@@ -489,6 +546,10 @@ FILE_ID_FIELDS = [
         lambda v: LedgerCell(case_set=v, case_id="c", policy_world="w", quantity="q"),
         "LedgerCell.case_set",
     ),
+    (
+        lambda v: LedgerCell(case_set="c", case_id="c", policy_world="w", quantity="q", run=v),
+        "LedgerCell.run",
+    ),
 ]
 
 
@@ -512,6 +573,7 @@ def test_file_id_fields_accept_the_pattern(build, where):
         lambda v: LedgerCell(case_set="c", case_id="c", policy_world="w", quantity="q", entity=v),
         lambda v: Run(id="r", model="m", view=v),
         lambda v: PolicyWorld(id="w", jurisdiction=v),
+        lambda v: Source(tool="t", uri="", role=v),
     ],
 )
 def test_entity_like_fields_take_empty_or_unpadded_text(build):
@@ -546,15 +608,33 @@ def test_sha256_must_be_64_lowercase_hex():
             Source(tool="t", uri="", sha256=bad)
 
 
-@pytest.mark.parametrize("good", ["model", "harness:a+b", "harness:sum(x)", "harness: x "])
-def test_producer_accepts_model_or_harness_formula(good):
+@pytest.mark.parametrize(
+    "good", ["not_stated", "model", "harness:a+b", "harness:sum(x)", "harness: x "]
+)
+def test_producer_accepts_not_stated_model_or_harness_formula(good):
     assert value(producer=good).producer == good
 
 
-@pytest.mark.parametrize("bad", ["", "Model", "harness:", "harness:  ", "harness", "ai"])
+def test_producer_defaults_to_not_stated():
+    """A value says "model" only when its source says so; the default claims nothing."""
+    assert value().producer == "not_stated"
+    bare = Value(
+        case_set="c", case_id="c", policy_world="w", quantity="q", run="r", status="not_covered"
+    )
+    assert bare.producer == "not_stated"
+    data = to_dict(value())
+    del data["producer"]
+    assert from_dict(Value, data).producer == "not_stated"
+
+
+@pytest.mark.parametrize(
+    "bad",
+    ["", "Model", "harness:", "harness:  ", "harness", "ai", "not stated", "Not_stated", "none"],
+)
 def test_producer_refuses_other_words(bad):
     with pytest.raises(
-        RecordError, match=r'Value\.producer: must be "model" or "harness:<formula>"'
+        RecordError,
+        match=r'Value\.producer: must be "not_stated", "model" or "harness:<formula>"',
     ):
         value(producer=bad)
 
@@ -603,6 +683,68 @@ def test_run_cannot_derive_from_itself():
 def test_model_releases_are_unique():
     with pytest.raises(RecordError, match=r"Model\.releases: must not repeat an item"):
         Model(id="m", name="M", kind="rules_model", maintainer="x", engine="m", releases=("1", "1"))
+
+
+def model_with(releases):
+    return Model(
+        id="m", name="M", kind="rules_model", maintainer="x", engine="m", releases=releases
+    )
+
+
+def test_model_releases_are_stored_in_plain_string_order():
+    assert model_with(("b", "a", "10", "9", "1.10", "1.9")).releases == (
+        "1.10",
+        "1.9",
+        "10",
+        "9",
+        "a",
+        "b",
+    )
+    assert model_with(["2.0", "1.0"]) == model_with(("1.0", "2.0"))
+    data = to_dict(model_with(("2.0", "1.0")))
+    assert data["releases"] == ["1.0", "2.0"]
+    assert from_dict(Model, {**data, "releases": ["2.0", "1.0"]}).releases == ("1.0", "2.0")
+
+
+@settings(max_examples=50, deadline=None)
+@given(st.lists(st.text(min_size=1).filter(lambda t: t == t.strip()), unique=True, max_size=6))
+def test_model_releases_sort_whatever_the_order(releases):
+    model = model_with(releases)
+    assert model.releases == tuple(sorted(releases))
+    assert model == model_with(list(reversed(releases)))
+
+
+def test_run_sources_are_unique_by_uri_and_role():
+    a = Source(tool="t", uri="repo@1:a.json", role="the report crosscheck read")
+    same_pair = Source(tool="other", uri="repo@1:a.json", sha256=SHA, role=a.role)
+    with pytest.raises(RecordError, match=r"Run\.sources: \(uri, role\) pairs must be unique"):
+        Run(id="r", model="m", sources=(a, same_pair))
+    other_role = Source(tool="t", uri=a.uri, role="the run's own output file")
+    other_uri = Source(tool="t", uri="repo@1:b.json", role=a.role)
+    run = Run(id="r", model="m", sources=[a, other_role, other_uri])
+    assert run.sources == (a, other_role, other_uri)
+    with pytest.raises(RecordError, match=r"\('', ''\) appears more than once"):
+        Run(id="r", model="m", sources=(Source(tool="t", uri=""), Source(tool="u", uri="")))
+
+
+def test_a_ledger_cell_names_a_run_of_its_entry():
+    cell = LedgerCell(case_set="cs", case_id="c", policy_world="w", quantity="q", run="run-b")
+    assert entry(cells=(cell,)).cells[0].run == "run-b"
+    with pytest.raises(
+        RecordError, match=r"LedgerEntry\.cells\[1\]\.run: a cell must name a run listed in runs"
+    ):
+        entry(cells=(dataclasses.replace(cell, run="run-a"), dataclasses.replace(cell, run="x")))
+
+
+def test_a_ledger_cell_key_includes_its_run():
+    cell = LedgerCell(case_set="cs", case_id="c", policy_world="w", quantity="q", entity="p")
+    assert key_of(cell) == ("cs", "c", "w", "q", "p", None)
+    named = dataclasses.replace(cell, run="run-a")
+    assert key_of(named) == ("cs", "c", "w", "q", "p", "run-a")
+    both = entry(cells=(cell, named, dataclasses.replace(cell, run="run-b")))
+    assert len(both.cells) == 3
+    with pytest.raises(RecordError, match=r"LedgerEntry\.cells: cell keys must be unique"):
+        entry(cells=(named, dataclasses.replace(named, predicted_size=2.0)))
 
 
 def test_binding_cannot_borrow_from_its_own_run():
@@ -754,14 +896,21 @@ def test_to_dict_is_plain_json_data():
     data = to_dict(next(e for e in EXAMPLES if isinstance(e, Run)))
     assert data["engines"] == [{"engine": "engine-b", "role": "tool"}]
     assert data["switches"][0] == {"name": "year", "value": "2024"}
-    assert data["source"] == {"tool": "tool-x", "uri": "", "sha256": None, "schema_version": None}
+    assert data["sources"][0] == {
+        "tool": "tool-x",
+        "uri": "",
+        "sha256": None,
+        "schema_version": None,
+        "role": "",
+    }
+    assert [s["role"] for s in data["sources"]] == ["", "the report", "the run's own output file"]
     assert list(data) == [f.name for f in dataclasses.fields(Run)]
     assert json.loads(json.dumps(data)) == data
 
 
 def test_to_dict_keeps_none_and_every_field():
     data = to_dict(Run(id="r", model="m"))
-    assert data["release"] is None and data["source"] is None and data["engines"] == []
+    assert data["release"] is None and data["sources"] == [] and data["engines"] == []
     assert len(data) == len(dataclasses.fields(Run))
 
 
@@ -817,8 +966,10 @@ def test_from_dict_wrong_types_raise():
         from_dict(Value, [data])
     with pytest.raises(RecordError, match=r"Run\.engines: must be an array; got str"):
         from_dict(Run, {"id": "r", "model": "m", "engines": "engine-a"})
-    with pytest.raises(RecordError, match=r"Run\.source: must be a Source or null; got str"):
-        from_dict(Run, {"id": "r", "model": "m", "source": "tool"})
+    with pytest.raises(RecordError, match=r"Run\.sources: must be an array; got str"):
+        from_dict(Run, {"id": "r", "model": "m", "sources": "tool"})
+    with pytest.raises(RecordError, match=r"Run: unknown field\(s\) 'source'"):
+        from_dict(Run, {"id": "r", "model": "m", "source": None})
 
 
 def test_from_dict_nested_errors_name_their_place():
@@ -847,6 +998,9 @@ def test_key_of():
     assert key_of(entry()) == ("e1",)
     assert key_of(ToleranceProfile(id="p")) == ("p",)
     assert key_of(Fact(concept="a", value=1, entity="p")) == ("a", "p")
+    assert key_of(
+        LedgerCell(case_set="cs", case_id="c", policy_world="w", quantity="q", run="r")
+    ) == ("cs", "c", "w", "q", "", "r")
     with pytest.raises(TypeError):
         key_of(Alias(tool="t", name="n"))
     with pytest.raises(TypeError):

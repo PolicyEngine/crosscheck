@@ -2,15 +2,15 @@
   "$defs": {
     "Alias": {
       "additionalProperties": false,
-      "description": "One tool's own name for a quantity.",
+      "description": "One model's or tool's own name for a quantity.",
       "properties": {
         "name": {
-          "description": "The tool's name for the quantity.",
+          "description": "That model's or tool's name for the quantity.",
           "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
           "type": "string"
         },
         "tool": {
-          "description": "The tool that uses the name.",
+          "description": "The model or tool that uses the name; a registry model id where a model uses it.",
           "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
           "type": "string"
         }
@@ -280,7 +280,7 @@
     },
     "LedgerCell": {
       "additionalProperties": false,
-      "description": "One cell a ledger entry covers, with the difference the entry predicts there.",
+      "description": "One cell a ledger entry covers, with the difference the entry predicts there.\n\nKey: (case_set, case_id, policy_world, quantity, entity, run). `run` names the run whose\nanswer the predicted size moves; null means the size is the difference between the\nentry's runs. The entry checks that a named run is one of its own `runs`.",
       "properties": {
         "basis": {
           "anyOf": [
@@ -331,6 +331,19 @@
           "description": "The Quantity id.",
           "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
           "type": "string"
+        },
+        "run": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Run id whose answer the predicted size moves; null when the size is the difference between the entry's runs."
         }
       },
       "required": [
@@ -344,7 +357,7 @@
     },
     "LedgerEntry": {
       "additionalProperties": false,
-      "description": "One explained (or not yet explained) cause of differences between runs. Key: id.\n\nRules: `runs` names at least one run and repeats none; `who_errs` names only runs in\n`runs`, and naming anyone needs grounds (`law` or `issue`); cell keys are unique. An open\nentry has no closer. Only a person closes an entry: an AI author may open a ledger entry\nand may not close one.",
+      "description": "One explained (or not yet explained) cause of differences between runs. Key: id.\n\nRules: `runs` names at least one run and repeats none; `who_errs` names only runs in\n`runs`, and naming anyone needs grounds (`law` or `issue`); cell keys are unique, and a\ncell that names a run names one of `runs`. An open entry has no closer. Only a person\ncloses an entry: an AI author may open a ledger entry and may not close one.",
       "properties": {
         "author": {
           "description": "Who opened the entry.",
@@ -424,7 +437,9 @@
           "description": "The kind of cause.",
           "enum": [
             "model_error",
+            "missing_provision",
             "law_reading",
+            "fact_reading",
             "convention",
             "input_map",
             "scope",
@@ -521,7 +536,7 @@
     },
     "Model": {
       "additionalProperties": false,
-      "description": "A model that answers cases: a rules engine, an AI model, a calculator. Key: id.\n\n`engine` names the engine family that lineage reads; a run's release must be one of\n`releases`.",
+      "description": "A model that answers cases: a rules engine, an AI model, a calculator. Key: id.\n\n`engine` names the engine family that lineage reads; a run's release must be one of\n`releases`. The record stores `releases` sorted in plain string order, whatever order it\nwas given in, so two tools that list the same releases build equal records and\n`Table.merge` can join their lists.",
       "properties": {
         "engine": {
           "description": "The engine family, used for lineage; often equal to the model id.",
@@ -561,7 +576,7 @@
         },
         "releases": {
           "default": [],
-          "description": "Known releases; a run's release must be listed here.",
+          "description": "Known releases, stored sorted in plain string order and without repeats; a run's release must be listed here.",
           "items": {
             "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
             "type": "string"
@@ -685,7 +700,7 @@
     },
     "Run": {
       "additionalProperties": false,
-      "description": "One run of a model over cases. Key: id.\n\nA run never derives from itself, and its switch names are unique. A run carries no\ntolerance.",
+      "description": "One run of a model over cases. Key: id.\n\nA run never derives from itself, its switch names are unique, and its sources' (uri,\nrole) pairs are unique. A run carries no tolerance.",
       "properties": {
         "batch": {
           "anyOf": [
@@ -798,17 +813,13 @@
           "default": null,
           "description": "The random seed, when the run used one."
         },
-        "source": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Source"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "The file the run's rows came from."
+        "sources": {
+          "default": [],
+          "description": "The files behind the run's rows, each with its role; (uri, role) pairs are unique.",
+          "items": {
+            "$ref": "#/$defs/Source"
+          },
+          "type": "array"
         },
         "switches": {
           "default": [],
@@ -859,8 +870,14 @@
     },
     "Source": {
       "additionalProperties": false,
-      "description": "The file a run's rows came from.",
+      "description": "A file behind a run's rows, and what the file is to the run.",
       "properties": {
+        "role": {
+          "default": "",
+          "description": "What the file is to the run, in words (\"the report crosscheck read\", \"the run's own output file\"); \"\" when not stated.",
+          "pattern": "^(?:\\S(?:[\\s\\S]*\\S)?)?$",
+          "type": "string"
+        },
         "schema_version": {
           "anyOf": [
             {
@@ -992,7 +1009,7 @@
     },
     "Value": {
       "additionalProperties": false,
-      "description": "One run's answer for one cell. Key: (case_set, case_id, policy_world, quantity, entity, run).\n\nRules: the status is `answered` exactly when `value` is not None, and an answered value\nkeeps the source's `raw` text. A value carries no tolerance.",
+      "description": "One run's answer for one cell. Key: (case_set, case_id, policy_world, quantity, entity, run).\n\nRules: the status is `answered` exactly when `value` is not None, and an answered value\nkeeps the source's `raw` text. A value carries no tolerance. `producer` defaults to\n\"not_stated\"; \"model\" asserts that the source says the model itself produced the value.",
       "properties": {
         "case_id": {
           "description": "The case id.",
@@ -1016,9 +1033,9 @@
           "type": "string"
         },
         "producer": {
-          "default": "model",
-          "description": "\"model\", or \"harness:<formula>\" when harness code computed the value from model outputs.",
-          "pattern": "^(?:model$|harness:[\\s\\S]*\\S)",
+          "default": "not_stated",
+          "description": "What produced the value: \"not_stated\" when the source does not say; \"model\" when the source says the model itself produced it; \"harness:<formula>\" when harness code computed it from model outputs.",
+          "pattern": "^(?:not_stated$|model$|harness:[\\s\\S]*\\S)",
           "type": "string"
         },
         "quantity": {

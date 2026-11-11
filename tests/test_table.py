@@ -411,6 +411,31 @@ def test_ledger_entry_runs_and_cells_must_exist():
     ]
 
 
+def test_a_ledger_cells_run_must_exist():
+    """A cell's run is one of its entry's runs, so the check of the entry's runs covers it."""
+
+    def cell_on(run):
+        return LedgerCell(
+            case_set="cs-a", case_id="c1", policy_world="w2024", quantity="income_tax", run=run
+        )
+
+    def entry_with(*runs, cell_run):
+        return LedgerEntry(
+            id="e9",
+            kind="fact_reading",
+            summary="s",
+            runs=runs,
+            author="a",
+            author_kind="person",
+            cells=(cell_on(cell_run),),
+        )
+
+    assert with_extra("ledger", entry_with("run-a", "run-b", cell_run="run-b")).problems() == []
+    assert one_problem(
+        with_extra("ledger", entry_with("run-a", "run-gone", cell_run="run-gone"))
+    ) == ("Ledger entry 'e9' names run 'run-gone', which the table does not hold.")
+
+
 def test_tolerance_rule_names_star_or_an_existing_quantity():
     stray = ToleranceProfile(
         id="p-x", rules=(ToleranceRule(quantity="*"), ToleranceRule(quantity="q-x"))
@@ -464,6 +489,68 @@ def test_merge_refuses_two_records_with_one_key():
     model = dataclasses.replace(t.model("model-b"), note="different")
     with pytest.raises(IntegrityError, match="Model 'model-b' differs"):
         Table.merge(t, Table(models=(model,)))
+
+
+def _tool_table(run_id, release, *, note=""):
+    """A table that passes check(): one model, at one release, with one run answering one case."""
+    return Table(
+        policy_worlds=(PolicyWorld(id="w2024", jurisdiction="us"),),
+        cases=(Case(case_set="cs-a", case_id="c1", policy_world="w2024"),),
+        quantities=(Quantity(id="income_tax"),),
+        models=(
+            Model(
+                id="model-a",
+                name="Model A",
+                kind="rules_model",
+                maintainer="Maintainers A",
+                engine="engine-a",
+                releases=(release,),
+                note=note,
+            ),
+        ),
+        runs=(Run(id=run_id, model="model-a", release=release),),
+        values=(val("c1", "income_tax", run_id, 100.0),),
+    ).check()
+
+
+def test_merge_joins_the_releases_of_one_model():
+    left, right = _tool_table("run-x", "2.0"), _tool_table("run-y", "1.0")
+    merged = Table.merge(left, right).check()
+    assert merged.model("model-a").releases == ("1.0", "2.0")
+    assert [r.release for r in merged.runs] == ["2.0", "1.0"]
+    assert Table.merge(right, left) == merged
+    assert left.merge(right).content_sha256() == merged.content_sha256()
+
+
+def test_merge_joins_releases_across_three_tables_whatever_the_order():
+    tables = [_tool_table("run-x", "2.0"), _tool_table("run-y", "1.0"), _tool_table("run-z", "10")]
+    first = Table.merge(*tables)
+    assert first.model("model-a").releases == ("1.0", "10", "2.0")
+    assert Table.merge(*reversed(tables)) == first
+    assert Table.merge(Table.merge(tables[0], tables[1]), tables[2]) == first
+    assert Table.merge(tables[0], Table.merge(tables[1], tables[2])) == first
+    assert first.check() is first
+
+
+def test_merge_joins_a_model_with_no_releases_and_one_with_some():
+    bare = Table(models=(dataclasses.replace(_tool_table("run-x", "2.0").models[0], releases=()),))
+    merged = Table.merge(bare, _tool_table("run-x", "2.0"))
+    assert merged.model("model-a").releases == ("2.0",)
+    assert merged.check() is merged
+
+
+def test_merge_still_refuses_models_that_differ_beyond_releases():
+    with pytest.raises(IntegrityError, match="Model 'model-a' differs"):
+        Table.merge(_tool_table("run-x", "2.0"), _tool_table("run-y", "1.0", note="other"))
+    with pytest.raises(IntegrityError, match="Model 'model-a' differs"):
+        Table.merge(_tool_table("run-x", "2.0"), _tool_table("run-y", "2.0", note="other"))
+
+
+def test_merge_joins_releases_only_for_models():
+    t = table()
+    other = dataclasses.replace(t.run("run-a"), release="1.1")
+    with pytest.raises(IntegrityError, match="Run 'run-a' differs"):
+        Table.merge(t, Table(runs=(other,)))
 
 
 def test_merge_refuses_non_tables():

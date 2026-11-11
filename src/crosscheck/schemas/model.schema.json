@@ -2,7 +2,7 @@
   "$id": "https://github.com/PolicyEngine/crosscheck/schemas/model.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
-  "description": "A model that answers cases: a rules engine, an AI model, a calculator. Key: id.\n\n`engine` names the engine family that lineage reads; a run's release must be one of\n`releases`.",
+  "description": "A model that answers cases: a rules engine, an AI model, a calculator. Key: id.\n\n`engine` names the engine family that lineage reads; a run's release must be one of\n`releases`. The record stores `releases` sorted in plain string order, whatever order it\nwas given in, so two tools that list the same releases build equal records and\n`Table.merge` can join their lists.",
   "properties": {
     "engine": {
       "description": "The engine family, used for lineage; often equal to the model id.",
@@ -42,7 +42,7 @@
     },
     "releases": {
       "default": [],
-      "description": "Known releases; a run's release must be listed here.",
+      "description": "Known releases, stored sorted in plain string order and without repeats; a run's release must be listed here.",
       "items": {
         "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
         "type": "string"

@@ -141,7 +141,11 @@ class CauseKind(str, Enum):
     """Why two models differ on a cell, as a ledger entry records it.
 
     - `model_error`: a model departs from the law it sets out to apply.
+    - `missing_provision`: a model has no input for a stated fact, or no provision for the
+      law of the year, so its answer leaves the provision out.
     - `law_reading`: the law supports more than one reading and the models take different ones.
+    - `fact_reading`: the answer turns on how a fact of the case, stated or unstated, was read
+      or filled in.
     - `convention`: the models apply different stated conventions (take-up, uprating, a
       rounding rule).
     - `input_map`: the difference arises where a case's facts become a model's inputs.
@@ -154,7 +158,9 @@ class CauseKind(str, Enum):
     """
 
     model_error = "model_error"
+    missing_provision = "missing_provision"
     law_reading = "law_reading"
+    fact_reading = "fact_reading"
     convention = "convention"
     input_map = "input_map"
     scope = "scope"
@@ -199,14 +205,20 @@ class ToleranceMethod(str, Enum):
 class CellStatus(str, Enum):
     """The status of one run's answer in one cell, computed on read and never stored in a row.
 
-    - `reproduced`: a run of another lineage (not an AI model) agrees and none disagrees.
-    - `contested`: a run of another lineage (not an AI model) disagrees.
-    - `rests_on_one_model`: no run of another lineage (not an AI model) answered.
+    - `reproduced`: a run of another lineage (not an AI model) agrees, and none disagrees
+      other than runs a closed ledger entry sets aside.
+    - `contested`: a run of another lineage (not an AI model) disagrees and no closed ledger
+      entry sets it aside, or a closed ledger entry on the cell names the subject run as
+      erring.
+    - `resting_on_one_model`: no run of another lineage (not an AI model) answered, other
+      than runs a closed ledger entry sets aside.
+
+    `crosscheck.status.cell_status` states the full rule.
     """
 
     reproduced = "reproduced"
     contested = "contested"
-    rests_on_one_model = "rests_on_one_model"
+    resting_on_one_model = "resting_on_one_model"
 
 
 AI_MODEL_KINDS = frozenset({ModelKind.ai_model, ModelKind.ai_model_with_tools})
@@ -242,12 +254,14 @@ TEXT_PATTERNS = {
     "id_or_empty": r"^(?:\S(?:[\s\S]*\S)?)?$",
     "nonblank": r"\S",
     "sha256": "^[0-9a-f]{64}$",
-    "producer": r"^(?:model$|harness:[\s\S]*\S)",
+    "producer": r"^(?:not_stated$|model$|harness:[\s\S]*\S)",
 }
 
 
 def _is_producer(text: str) -> bool:
-    return text == "model" or (text.startswith("harness:") and text[8:].strip() != "")
+    return text in ("not_stated", "model") or (
+        text.startswith("harness:") and text[8:].strip() != ""
+    )
 
 
 _TEXT_CHECKS = {
@@ -268,7 +282,7 @@ _TEXT_CHECKS = {
         lambda t: _SHA256_RE.fullmatch(t) is not None,
         "must be 64 lowercase hexadecimal digits",
     ),
-    "producer": (_is_producer, 'must be "model" or "harness:<formula>"'),
+    "producer": (_is_producer, 'must be "not_stated", "model" or "harness:<formula>"'),
 }
 
 
@@ -651,10 +665,13 @@ class Case(_Record):
 
 @dataclass(frozen=True, eq=False)
 class Alias(_Record):
-    """One tool's own name for a quantity."""
+    """One model's or tool's own name for a quantity."""
 
-    tool: str = _field(doc="The tool that uses the name.", text="id")
-    name: str = _field(doc="The tool's name for the quantity.", text="id")
+    tool: str = _field(
+        doc="The model or tool that uses the name; a registry model id where a model uses it.",
+        text="id",
+    )
+    name: str = _field(doc="That model's or tool's name for the quantity.", text="id")
 
 
 @dataclass(frozen=True, eq=False)
@@ -680,7 +697,9 @@ class Model(_Record):
     """A model that answers cases: a rules engine, an AI model, a calculator. Key: id.
 
     `engine` names the engine family that lineage reads; a run's release must be one of
-    `releases`.
+    `releases`. The record stores `releases` sorted in plain string order, whatever order it
+    was given in, so two tools that list the same releases build equal records and
+    `Table.merge` can join their lists.
     """
 
     id: str = _field(doc="The model's id.", text="id")
@@ -691,9 +710,18 @@ class Model(_Record):
         doc="The engine family, used for lineage; often equal to the model id.", text="id"
     )
     releases: tuple[str, ...] = _field(
-        (), doc="Known releases; a run's release must be listed here.", text="id", unique=True
+        (),
+        doc="Known releases, stored sorted in plain string order and without repeats; a run's "
+        "release must be listed here.",
+        text="id",
+        unique=True,
     )
     note: str = _field("", doc="Anything else about the model.")
+
+    def _check_rules(self) -> None:
+        ordered = tuple(sorted(self.releases))
+        if ordered != self.releases:
+            object.__setattr__(self, "releases", ordered)
 
 
 @dataclass(frozen=True, eq=False)
@@ -714,7 +742,7 @@ class Switch(_Record):
 
 @dataclass(frozen=True, eq=False)
 class Source(_Record):
-    """The file a run's rows came from."""
+    """A file behind a run's rows, and what the file is to the run."""
 
     tool: str = _field(
         doc='The tool that produced the file ("axiom-oracles", "policybench-key-check").',
@@ -725,14 +753,20 @@ class Source(_Record):
         None, doc="The file's sha256 as 64 lowercase hexadecimal digits.", text="sha256"
     )
     schema_version: str | None = _field(None, doc="The file's own schema version.")
+    role: str = _field(
+        "",
+        doc='What the file is to the run, in words ("the report crosscheck read", "the run\'s '
+        'own output file"); "" when not stated.',
+        text="id_or_empty",
+    )
 
 
 @dataclass(frozen=True, eq=False)
 class Run(_Record):
     """One run of a model over cases. Key: id.
 
-    A run never derives from itself, and its switch names are unique. A run carries no
-    tolerance.
+    A run never derives from itself, its switch names are unique, and its sources' (uri,
+    role) pairs are unique. A run carries no tolerance.
     """
 
     id: str = _field(doc="The run's id; it names a file.", text="file_id")
@@ -766,12 +800,20 @@ class Run(_Record):
         doc="False when the source kept only some of the run's values (for example only "
         "disagreements).",
     )
-    source: Source | None = _field(None, doc="The file the run's rows came from.")
+    sources: tuple[Source, ...] = _field(
+        (),
+        doc="The files behind the run's rows, each with its role; (uri, role) pairs are unique.",
+    )
     produced_at: str | None = _field(None, doc="When the run was produced, as the source states.")
     note: str = _field("", doc="Anything else about the run.")
 
     def _check_rules(self) -> None:
         _check_unique((s.name for s in self.switches), "Run.switches", "names must be unique")
+        _check_unique(
+            ((s.uri, s.role) for s in self.sources),
+            "Run.sources",
+            "(uri, role) pairs must be unique",
+        )
         if self.derives_from == self.id:
             raise RecordError(f"Run.derives_from: a run cannot derive from itself ({self.id!r})")
 
@@ -848,7 +890,8 @@ class Value(_Record):
     """One run's answer for one cell. Key: (case_set, case_id, policy_world, quantity, entity, run).
 
     Rules: the status is `answered` exactly when `value` is not None, and an answered value
-    keeps the source's `raw` text. A value carries no tolerance.
+    keeps the source's `raw` text. A value carries no tolerance. `producer` defaults to
+    "not_stated"; "model" asserts that the source says the model itself produced the value.
     """
 
     case_set: str = _field(doc="The case set.", text="file_id")
@@ -869,9 +912,10 @@ class Value(_Record):
     )
     status_detail: str | None = _field(None, doc="More about the status, such as error text.")
     producer: str = _field(
-        "model",
-        doc='"model", or "harness:<formula>" when harness code computed the value from model '
-        "outputs.",
+        "not_stated",
+        doc='What produced the value: "not_stated" when the source does not say; "model" when '
+        'the source says the model itself produced it; "harness:<formula>" when harness code '
+        "computed it from model outputs.",
         text="producer",
     )
 
@@ -890,7 +934,12 @@ class Value(_Record):
 
 @dataclass(frozen=True, eq=False)
 class LedgerCell(_Record):
-    """One cell a ledger entry covers, with the difference the entry predicts there."""
+    """One cell a ledger entry covers, with the difference the entry predicts there.
+
+    Key: (case_set, case_id, policy_world, quantity, entity, run). `run` names the run whose
+    answer the predicted size moves; null means the size is the difference between the
+    entry's runs. The entry checks that a named run is one of its own `runs`.
+    """
 
     case_set: str = _field(doc="The case set.", text="file_id")
     case_id: str = _field(doc="The case id.", text="id")
@@ -900,6 +949,12 @@ class LedgerCell(_Record):
         "",
         doc='Which person or unit in the case; "" means the case\'s single unit.',
         text="id_or_empty",
+    )
+    run: str | None = _field(
+        None,
+        doc="The Run id whose answer the predicted size moves; null when the size is the "
+        "difference between the entry's runs.",
+        text="file_id",
     )
     predicted_size: float | None = _field(
         None, doc="The predicted difference for this cell, in the quantity's unit."
@@ -912,9 +967,9 @@ class LedgerEntry(_Record):
     """One explained (or not yet explained) cause of differences between runs. Key: id.
 
     Rules: `runs` names at least one run and repeats none; `who_errs` names only runs in
-    `runs`, and naming anyone needs grounds (`law` or `issue`); cell keys are unique. An open
-    entry has no closer. Only a person closes an entry: an AI author may open a ledger entry
-    and may not close one.
+    `runs`, and naming anyone needs grounds (`law` or `issue`); cell keys are unique, and a
+    cell that names a run names one of `runs`. An open entry has no closer. Only a person
+    closes an entry: an AI author may open a ledger entry and may not close one.
     """
 
     id: str = _field(doc="The entry's id.", text="id")
@@ -953,6 +1008,12 @@ class LedgerEntry(_Record):
         _check_unique(
             (key_of(c) for c in self.cells), "LedgerEntry.cells", "cell keys must be unique"
         )
+        for i, cell in enumerate(self.cells):
+            if cell.run is not None and cell.run not in self.runs:
+                raise RecordError(
+                    f"LedgerEntry.cells[{i}].run: a cell must name a run listed in runs; "
+                    f"{cell.run!r} is not"
+                )
         outside = [r for r in self.who_errs if r not in self.runs]
         if outside:
             raise RecordError(
@@ -1031,7 +1092,7 @@ _KEY_FIELDS: dict[type, tuple[str, ...]] = {
     LedgerEntry: ("id",),
     ToleranceProfile: ("id",),
     Fact: ("concept", "entity"),
-    LedgerCell: ("case_set", "case_id", "policy_world", "quantity", "entity"),
+    LedgerCell: ("case_set", "case_id", "policy_world", "quantity", "entity", "run"),
     ToleranceRule: ("quantity",),
     Switch: ("name",),
 }
@@ -1047,7 +1108,8 @@ def key_of(record: Any) -> tuple:
     id; Case by (case_set, case_id, policy_world); Binding by (case_set, case_id,
     policy_world, run); Value by (case_set, case_id, policy_world, quantity, entity, run).
     Nested records with keys: Fact (concept, entity), LedgerCell (case_set, case_id,
-    policy_world, quantity, entity), ToleranceRule (quantity,) and Switch (name,).
+    policy_world, quantity, entity, run), ToleranceRule (quantity,) and Switch (name,). A
+    LedgerCell's run may be None, so its keys do not always sort against each other.
     """
     names = _KEY_FIELDS.get(type(record))
     if names is None:

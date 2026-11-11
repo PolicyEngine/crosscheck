@@ -2,7 +2,7 @@
   "$defs": {
     "LedgerCell": {
       "additionalProperties": false,
-      "description": "One cell a ledger entry covers, with the difference the entry predicts there.",
+      "description": "One cell a ledger entry covers, with the difference the entry predicts there.\n\nKey: (case_set, case_id, policy_world, quantity, entity, run). `run` names the run whose\nanswer the predicted size moves; null means the size is the difference between the\nentry's runs. The entry checks that a named run is one of its own `runs`.",
       "properties": {
         "basis": {
           "anyOf": [
@@ -53,6 +53,19 @@
           "description": "The Quantity id.",
           "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
           "type": "string"
+        },
+        "run": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Run id whose answer the predicted size moves; null when the size is the difference between the entry's runs."
         }
       },
       "required": [
@@ -68,7 +81,7 @@
   "$id": "https://github.com/PolicyEngine/crosscheck/schemas/ledger_entry.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
-  "description": "One explained (or not yet explained) cause of differences between runs. Key: id.\n\nRules: `runs` names at least one run and repeats none; `who_errs` names only runs in\n`runs`, and naming anyone needs grounds (`law` or `issue`); cell keys are unique. An open\nentry has no closer. Only a person closes an entry: an AI author may open a ledger entry\nand may not close one.",
+  "description": "One explained (or not yet explained) cause of differences between runs. Key: id.\n\nRules: `runs` names at least one run and repeats none; `who_errs` names only runs in\n`runs`, and naming anyone needs grounds (`law` or `issue`); cell keys are unique, and a\ncell that names a run names one of `runs`. An open entry has no closer. Only a person\ncloses an entry: an AI author may open a ledger entry and may not close one.",
   "properties": {
     "author": {
       "description": "Who opened the entry.",
@@ -148,7 +161,9 @@
       "description": "The kind of cause.",
       "enum": [
         "model_error",
+        "missing_provision",
         "law_reading",
+        "fact_reading",
         "convention",
         "input_map",
         "scope",
