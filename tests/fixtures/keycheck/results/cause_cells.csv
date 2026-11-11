@@ -1,0 +1,5 @@
+cause_id,case_id,quantity,table,answerer,run,amount,basis
+beta-no-invented-limit,case_a,credit_line,2026,taxcalc,beta-2.0-2026,1.50,invented: the limit the beta model lacks
+key-invented-decided-value,case_a,income_tax_line,2026,policybench-key,alpha-1.0-2026,0.40,invented: the earlier board value
+alpha-invented-default,case_c,income_tax_line,2025,policyengine-us,alpha-1.1-2025,-10.00,
+beta-invented-map-limit,case_c,income_tax_line,2026,taxcalc,beta-2.0-2026,-65.43,invented: the map drops fact D

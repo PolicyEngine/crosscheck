@@ -1,44 +1,453 @@
 {
   "answers_identical": true,
-  "bindings_identical": null,
-  "bindings_path": "runs.csv input_map",
+  "bindings_identical": false,
+  "bindings_path": "bindings.csv",
   "cell_status": {
     "by_run": {
       "pb-reference-2.60.0": {
-        "rests_on_one_model": 400
+        "contested": 25,
+        "reproduced": 248,
+        "resting_on_one_model": 127
       },
       "pe-2.116.15-board-2026": {
-        "rests_on_one_model": 600
+        "contested": 22,
+        "reproduced": 342,
+        "resting_on_one_model": 236
       },
       "pe-2.116.15-none-2026": {
-        "rests_on_one_model": 600
+        "contested": 22,
+        "reproduced": 342,
+        "resting_on_one_model": 236
       },
       "pe-2.60.0-board-2025": {
-        "rests_on_one_model": 600
+        "contested": 14,
+        "reproduced": 342,
+        "resting_on_one_model": 244
       },
       "pe-2.60.0-board-2026": {
-        "rests_on_one_model": 600
+        "contested": 22,
+        "reproduced": 342,
+        "resting_on_one_model": 236
       },
       "taxcalc-6.9.0-2025": {
-        "rests_on_one_model": 400
+        "contested": 2,
+        "reproduced": 354,
+        "resting_on_one_model": 44
       },
       "taxcalc-6.9.0-2026": {
-        "rests_on_one_model": 400
+        "contested": 7,
+        "reproduced": 357,
+        "resting_on_one_model": 36
       },
       "taxsim-cd2026110117-2025": {
-        "rests_on_one_model": 400
+        "contested": 14,
+        "reproduced": 342,
+        "resting_on_one_model": 44
       },
       "taxsim-cd2026110117-2026": {
-        "rests_on_one_model": 400
+        "contested": 25,
+        "reproduced": 339,
+        "resting_on_one_model": 36
       }
     },
     "candidates": "the runs with values in the cell's policy world",
     "profile": "keycheck.within-one-dollar",
-    "profile_rule": "absolute 1.0, relative 0.0, isclose"
+    "profile_rule": "absolute 1.0, relative 0.0, isclose",
+    "table": "registry"
   },
+  "cell_status_comparison": {
+    "agreeing_runs_match_without_borrowed_links": 500,
+    "candidates": "crosscheck's default: the runs with an answered value in the cell",
+    "cells": 500,
+    "cells_a_closed_entry_covers": 0,
+    "cells_an_open_entry_covers": 50,
+    "cells_by_rule": {
+      "apart_run_counts": 16,
+      "borrowed_input_lineage": 36,
+      "open_entry_contests": 5
+    },
+    "cells_with_an_answered_subject": 500,
+    "classes": [
+      {
+        "by_contested_reason": {},
+        "by_hand_built_detail": {
+          "no_input_from_key_run": 16
+        },
+        "by_reproduction_scope": {
+          "one_run_other_map_limit": 1,
+          "one_run_other_model_gap": 15
+        },
+        "cells": 16,
+        "computed": "contested",
+        "hand_built": "reproduced",
+        "rules": [
+          "apart_run_counts"
+        ]
+      },
+      {
+        "by_contested_reason": {},
+        "by_hand_built_detail": {
+          "key_salt_amount_itemized": 10,
+          "no_input_from_key_run": 19
+        },
+        "by_reproduction_scope": {
+          "both_runs_one_lineage": 29
+        },
+        "cells": 29,
+        "computed": "resting_on_one_model",
+        "hand_built": "reproduced",
+        "rules": [
+          "borrowed_input_lineage"
+        ]
+      },
+      {
+        "by_contested_reason": {
+          "turns_on_unstated_fact": 4
+        },
+        "by_hand_built_detail": {
+          "turns_on_unstated_fact": 4
+        },
+        "by_reproduction_scope": {},
+        "cells": 4,
+        "computed": "reproduced",
+        "hand_built": "contested",
+        "rules": [
+          "open_entry_contests"
+        ]
+      },
+      {
+        "by_contested_reason": {
+          "key_decided_value_unscored": 2,
+          "key_not_supported_by_law": 1,
+          "turns_on_unstated_fact": 6
+        },
+        "by_hand_built_detail": {
+          "key_not_supported_by_law": 1,
+          "turns_on_unstated_fact": 5
+        },
+        "by_reproduction_scope": {},
+        "cells": 6,
+        "computed": "resting_on_one_model",
+        "hand_built": "contested",
+        "rules": [
+          "borrowed_input_lineage"
+        ]
+      },
+      {
+        "by_contested_reason": {
+          "turns_on_unstated_fact": 1
+        },
+        "by_hand_built_detail": {
+          "turns_on_unstated_fact": 1
+        },
+        "by_reproduction_scope": {},
+        "cells": 1,
+        "computed": "resting_on_one_model",
+        "hand_built": "contested",
+        "rules": [
+          "borrowed_input_lineage",
+          "open_entry_contests"
+        ]
+      }
+    ],
+    "confusion": {
+      "contested": {
+        "contested": 9,
+        "no_status": 0,
+        "reproduced": 4,
+        "resting_on_one_model": 7
+      },
+      "reproduced": {
+        "contested": 16,
+        "no_status": 0,
+        "reproduced": 335,
+        "resting_on_one_model": 29
+      },
+      "resting_on_one_model": {
+        "contested": 0,
+        "no_status": 0,
+        "reproduced": 0,
+        "resting_on_one_model": 100
+      }
+    },
+    "different_status": 56,
+    "every_difference_has_a_named_rule": true,
+    "other_lineage_runs_match_without_borrowed_links": 500,
+    "profile": "keycheck.within-one-dollar",
+    "profile_rule": "absolute 1.0, relative 0.0, isclose",
+    "rules": {
+      "apart_run_counts": "The key-check calls a cell reproduced when a run of another lineage gives the key's answer and no rule 2 reason holds, whatever a run that stands apart answers (docs/coverage.md rule 3; reproduction_scope says why the other run stands apart). crosscheck calls the cell contested while a run of another lineage disagrees, unless a closed ledger entry names that run in who_errs.",
+      "apart_runs_without_agreement": "Where runs of another lineage answer, none gives the key's answer and no entry disputes the key, the key-check leaves the cell resting on one model (docs/coverage.md rule 4). crosscheck calls it contested: a run of another lineage disagrees and no closed ledger entry sets it aside.",
+      "borrowed_input_lineage": "crosscheck joins two runs' lineages where one takes an input that the other computed, unless the binding says the input does not bear on the answer (crosscheck.lineage); bindings.csv names no quantity for the input, so the join holds for every quantity of the case. The key-check joins runs only on a shared engine, convention file or input-map file (scripts/make_cell_status.py lineage_groups) and marks a reproduction that rests on the key run's state and local tax amount instead (status_detail key_salt_amount_itemized, on the income tax lines only).",
+      "no_named_rule": "No rule above accounts for the difference.",
+      "open_entry_contests": "The key-check contests a cell on its cause entries and on the board's exclusion records (docs/coverage.md rule 2) even where a run of another lineage gives the key's answer, and every cause entry is open. crosscheck changes a status only on a closed ledger entry and holds no board record, so the agreeing runs reproduce the cell.",
+      "subject_not_answered": "crosscheck gives no status where the subject run holds no answered value (crosscheck.status); the key-check gives every cell a status."
+    },
+    "same_status": 444,
+    "subject": "the run the key-check's agreement table names in key_run for the cells of each key_source word",
+    "subject_holds_key_value": 500,
+    "subjects": {
+      "committed_key": "pb-reference-2.60.0",
+      "committed_payroll_tax_split_by_engine_rerun": "pe-2.60.0-board-2026"
+    }
+  },
+  "columns_not_held": [
+    "bindings.csv:map_computed",
+    "bindings.csv:model_itemizes",
+    "bindings.csv:records_sent",
+    "bindings.csv:unexpressed_facts",
+    "runs.csv:input_map",
+    "runs.csv:inputs_from_other_runs",
+    "runs.csv:shares_with_other_runs"
+  ],
   "crosscheck_version": "0.1.0",
-  "difference_count": 0,
-  "differences_by_column": {},
+  "difference_count": 1893,
+  "differences_by_column": {
+    "bindings.csv:map_computed": 220,
+    "bindings.csv:model_itemizes": 400,
+    "bindings.csv:records_sent": 900,
+    "bindings.csv:unexpressed_facts": 351,
+    "runs.csv:input_map": 9,
+    "runs.csv:inputs_from_other_runs": 4,
+    "runs.csv:shares_with_other_runs": 9
+  },
+  "differences_only_in_columns_not_held": true,
+  "ledger": {
+    "author_kinds": {
+      "ai_model": 31
+    },
+    "cause_cells.csv": {
+      "columns": {
+        "amount": {
+          "field": "LedgerCell.predicted_size, a number; the amount's text is not held",
+          "fit": "another_form",
+          "rows_back_exactly": 51,
+          "rows_in_another_form": 86,
+          "rows_not_held": 0,
+          "rows_with_text": 86
+        },
+        "answerer": {
+          "field": null,
+          "fit": "no_home",
+          "rows_back_exactly": 0,
+          "rows_not_held": 86,
+          "rows_with_text": 86
+        },
+        "basis": {
+          "field": "LedgerCell.basis",
+          "fit": "exact",
+          "rows_back_exactly": 86,
+          "rows_not_held": 0,
+          "rows_with_text": 86
+        },
+        "case_id": {
+          "field": "LedgerCell.case_id",
+          "fit": "exact",
+          "rows_back_exactly": 86,
+          "rows_not_held": 0,
+          "rows_with_text": 86
+        },
+        "cause_id": {
+          "field": "the LedgerEntry that holds the cell",
+          "fit": "exact",
+          "rows_back_exactly": 86,
+          "rows_not_held": 0,
+          "rows_with_text": 86
+        },
+        "quantity": {
+          "field": "LedgerCell.quantity",
+          "fit": "exact",
+          "rows_back_exactly": 86,
+          "rows_not_held": 0,
+          "rows_with_text": 86
+        },
+        "run": {
+          "field": "LedgerCell.run",
+          "fit": "exact",
+          "rows_back_exactly": 86,
+          "rows_not_held": 0,
+          "rows_with_text": 86
+        },
+        "table": {
+          "field": "LedgerCell.policy_world (us.<table>)",
+          "fit": "exact",
+          "rows_back_exactly": 86,
+          "rows_not_held": 0,
+          "rows_with_text": 86
+        }
+      },
+      "rows": 86,
+      "rows_missing_from_the_table": 0,
+      "rows_the_file_lacks": 0
+    },
+    "causes.csv": {
+      "columns": {
+        "answerer": {
+          "field": "LedgerEntry.runs: the run of each answerer in each law-year table, as cause_cells.csv pairs answerers with runs",
+          "fit": "another_form",
+          "rows_back_exactly": 0,
+          "rows_in_another_form": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "cause_id": {
+          "field": "LedgerEntry.id",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "entry_status": {
+          "field": "LedgerEntry.status",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "evidence": {
+          "field": null,
+          "fit": "no_home",
+          "rows_back_exactly": 0,
+          "rows_not_held": 31,
+          "rows_with_text": 31
+        },
+        "existing_report": {
+          "field": "LedgerEntry.issue, when the cell is a link",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 4
+        },
+        "fixed_in": {
+          "field": null,
+          "fit": "no_home",
+          "rows_back_exactly": 28,
+          "rows_not_held": 3,
+          "rows_with_text": 3
+        },
+        "households": {
+          "field": "the case ids of the LedgerEntry.cells that name a run",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 19
+        },
+        "households_shared": {
+          "field": "LedgerEntry.cells that name no run and predict no size; the order of the households is not held",
+          "fit": "another_form",
+          "rows_back_exactly": 17,
+          "rows_in_another_form": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 14
+        },
+        "kind": {
+          "field": "LedgerEntry.source_kind, as written; LedgerEntry.kind holds crosscheck's word for it",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "law": {
+          "field": "LedgerEntry.law, split at '; ' outside parentheses",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "law_figure": {
+          "field": null,
+          "fit": "no_home",
+          "rows_back_exactly": 14,
+          "rows_not_held": 17,
+          "rows_with_text": 17
+        },
+        "law_years": {
+          "field": "the policy worlds of LedgerEntry.runs",
+          "fit": "another_form",
+          "rows_back_exactly": 0,
+          "rows_in_another_form": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "opened_by": {
+          "field": "LedgerEntry.author; LedgerEntry.author_kind comes from the text",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "quantities": {
+          "field": "the quantities of LedgerEntry.cells",
+          "fit": "another_form",
+          "rows_back_exactly": 0,
+          "rows_in_another_form": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "release_or_build": {
+          "field": null,
+          "fit": "no_home",
+          "rows_back_exactly": 0,
+          "rows_not_held": 31,
+          "rows_with_text": 31
+        },
+        "summary": {
+          "field": "LedgerEntry.summary",
+          "fit": "exact",
+          "rows_back_exactly": 31,
+          "rows_not_held": 0,
+          "rows_with_text": 31
+        },
+        "who_is_right": {
+          "field": null,
+          "fit": "no_home",
+          "rows_back_exactly": 0,
+          "rows_not_held": 31,
+          "rows_with_text": 31
+        }
+      },
+      "rows": 31,
+      "rows_missing_from_the_table": 0,
+      "rows_the_file_lacks": 0
+    },
+    "cells_naming_a_run": 86,
+    "cells_naming_no_run": 91,
+    "differences_by_column": {},
+    "entries": 31,
+    "entries_naming_who_errs": 0,
+    "entry_statuses": {
+      "open": 31
+    },
+    "every_another_form_column_held": true,
+    "every_exact_column_back": true,
+    "kinds": {
+      "key-decided-value": {
+        "entries": 2,
+        "kind": "explained_other"
+      },
+      "map-limit": {
+        "entries": 2,
+        "kind": "input_map"
+      },
+      "model-law-departure": {
+        "entries": 6,
+        "kind": "model_error"
+      },
+      "model-no-provision": {
+        "entries": 5,
+        "kind": "missing_provision"
+      },
+      "pe-default-unstated-fact": {
+        "entries": 2,
+        "kind": "fact_reading"
+      },
+      "shared-reading": {
+        "entries": 14,
+        "kind": "fact_reading"
+      }
+    }
+  },
+  "ledger_held": true,
   "lineage": {
     "all_runs": [
       [
@@ -57,7 +466,19 @@
       "us.2025": {
         "per_case": [
           {
-            "cases": 100,
+            "cases": 89,
+            "partition": [
+              [
+                "pe-2.60.0-board-2025"
+              ],
+              [
+                "taxcalc-6.9.0-2025",
+                "taxsim-cd2026110117-2025"
+              ]
+            ]
+          },
+          {
+            "cases": 11,
             "partition": [
               [
                 "pe-2.60.0-board-2025",
@@ -83,7 +504,22 @@
       "us.2026": {
         "per_case": [
           {
-            "cases": 100,
+            "cases": 91,
+            "partition": [
+              [
+                "pb-reference-2.60.0",
+                "pe-2.116.15-board-2026",
+                "pe-2.116.15-none-2026",
+                "pe-2.60.0-board-2026"
+              ],
+              [
+                "taxcalc-6.9.0-2026",
+                "taxsim-cd2026110117-2026"
+              ]
+            ]
+          },
+          {
+            "cases": 9,
             "partition": [
               [
                 "pb-reference-2.60.0",
@@ -122,106 +558,200 @@
           "pe-2.60.0-board-2025",
           "taxcalc-6.9.0-2025"
         ],
-        "shared": [
-          "run:pe-2.60.0-board-2025"
-        ]
+        "shared_runs": [
+          "pe-2.60.0-board-2025"
+        ],
+        "shared_tokens": {
+          "run": 1
+        }
       },
       {
         "runs": [
           "pe-2.60.0-board-2025",
           "taxsim-cd2026110117-2025"
         ],
-        "shared": [
-          "run:pe-2.60.0-board-2025"
-        ]
+        "shared_runs": [
+          "pe-2.60.0-board-2025"
+        ],
+        "shared_tokens": {
+          "run": 1
+        }
       },
       {
         "runs": [
           "pe-2.60.0-board-2026",
           "taxcalc-6.9.0-2026"
         ],
-        "shared": [
-          "run:pe-2.60.0-board-2026"
-        ]
+        "shared_runs": [
+          "pe-2.60.0-board-2026"
+        ],
+        "shared_tokens": {
+          "run": 1
+        }
       },
       {
         "runs": [
           "pe-2.60.0-board-2026",
           "taxsim-cd2026110117-2026"
         ],
-        "shared": [
-          "run:pe-2.60.0-board-2026"
-        ]
+        "shared_runs": [
+          "pe-2.60.0-board-2026"
+        ],
+        "shared_tokens": {
+          "run": 1
+        }
       },
       {
         "runs": [
           "taxcalc-6.9.0-2025",
           "taxsim-cd2026110117-2025"
         ],
-        "shared": [
-          "map:keycheck/unit.py 2026-11-10.2",
-          "run:pe-2.60.0-board-2025"
-        ]
+        "shared_runs": [
+          "pe-2.60.0-board-2025"
+        ],
+        "shared_tokens": {
+          "map": 1,
+          "run": 1
+        }
       },
       {
         "runs": [
           "taxcalc-6.9.0-2025",
           "taxsim-cd2026110117-2026"
         ],
-        "shared": [
-          "map:keycheck/unit.py 2026-11-10.2"
-        ]
+        "shared_runs": [],
+        "shared_tokens": {
+          "map": 1
+        }
       },
       {
         "runs": [
           "taxcalc-6.9.0-2026",
           "taxsim-cd2026110117-2025"
         ],
-        "shared": [
-          "map:keycheck/unit.py 2026-11-10.2"
-        ]
+        "shared_runs": [],
+        "shared_tokens": {
+          "map": 1
+        }
       },
       {
         "runs": [
           "taxcalc-6.9.0-2026",
           "taxsim-cd2026110117-2026"
         ],
-        "shared": [
-          "map:keycheck/unit.py 2026-11-10.2",
-          "run:pe-2.60.0-board-2026"
-        ]
+        "shared_runs": [
+          "pe-2.60.0-board-2026"
+        ],
+        "shared_tokens": {
+          "map": 1,
+          "run": 1
+        }
       }
-    ]
+    ],
+    "same_partitions_in_both_model_modes": true,
+    "table": "registry"
   },
   "models": 3,
   "models_identical": true,
+  "models_mode": "as_written",
   "pyarrow_version": "21.0.0",
+  "registry": {
+    "answers_identical": true,
+    "bindings_identical": false,
+    "difference_count": 1897,
+    "differences_by_column": {
+      "bindings.csv:map_computed": 220,
+      "bindings.csv:model_itemizes": 400,
+      "bindings.csv:records_sent": 900,
+      "bindings.csv:unexpressed_facts": 351,
+      "models.csv:maintainer": 1,
+      "models.csv:note": 3,
+      "runs.csv:input_map": 9,
+      "runs.csv:inputs_from_other_runs": 4,
+      "runs.csv:shares_with_other_runs": 9
+    },
+    "exported": true,
+    "model_fields_worded_differently": {
+      "engine": 0,
+      "id": 1,
+      "kind": 0,
+      "maintainer": 1,
+      "name": 3,
+      "note": 3
+    },
+    "models_identical": false,
+    "models_with_another_id": 1,
+    "runs_identical": false,
+    "store_identical": true,
+    "table_sha256": "a12fe1f00ffbaaa320e34f885373ef255a24dab399d1b41a668b32e7d216dab8"
+  },
   "row_order_identical": {
     "answers.csv": false,
+    "bindings.csv": false,
     "models.csv": true,
     "runs.csv": false
   },
   "rows": 5400,
   "runs": 9,
-  "runs_identical": true,
-  "schema": "crosscheck.evidence.keycheck_differential.v1",
+  "runs_identical": false,
+  "schema": "crosscheck.evidence.keycheck_differential.v3",
   "schema_gaps": [
-    "Not stated: Value.producer. answers.csv does not record which values harness code computed from several model outputs (the key-check's runners and build_answers.py compute some answer columns that way); the schema has no 'not stated' producer, so every row carries the default 'model'.",
+    "Not stated: Value.producer. answers.csv does not say which values the model produced and which code outside the model computed, so every value carries 'not_stated'.",
     "Stretched: answers.csv unexpressed_facts becomes Binding.facts_not_taken, but the key-check's README defines the column more widely (facts a model took with a side effect, and readings of unstated facts the answer rests on, as well as facts it could not take), and the key-check also writes scope notes there for rows a model does not cover.",
     "Stretched: runs.csv conventions is prose that describes the conventions and settings a run applied; Run.convention_files holds the whole text as one entry, so lineage reads each distinct text as one convention file, and a text that says no convention applies still yields a convention token.",
+    "Stretched: Binding.input_map_author_kind holds one kind, while the key-check's input_map_author text can name several authors in several roles (who wrote the map, who reviewed it, who applied fixes). The exporter writes ai_model when the text names an AI model and unknown otherwise; it never infers a person from the text.",
     "Derived: runs.csv period. Run has no policy world field, so the exporter keeps the period only on the run's values and bindings (as the policy world us.<period>) and project_runs reads it back from them.",
-    "Derived: runs.csv input_map. Run has no input map field, so the exporter spreads the run-level text over every binding of the run (layers as Binding.input_maps, 'shared from' parts as BorrowedInput) and project_runs rebuilds it from the run's bindings.",
-    "One source per run: Run.source holds the run's own source file as written in runs.csv (a path inside the key-check repository, or another repository's path), with tool 'policybench-key-check' and no sha256, which runs.csv does not state; the answers.csv that crosscheck read has no place on the run, so the differential's evidence records its hash.",
+    "Derived: runs.csv input_map and input_map_author. Run has no input map field, so the exporter spreads the run-level text over every binding of the run (layers as Binding.input_maps, 'shared from' parts as BorrowedInput, the author as Binding.input_map_author) and project_runs rebuilds them from the run's bindings.",
+    "Not on the run: Run.sources holds the source file runs.csv names for the run (with no sha256, which runs.csv does not state) and answers.csv with its sha256; runs.csv, models.csv and bindings.csv, which crosscheck also reads, have no place on the run, so the differential's evidence records their hashes.",
     "Not held: the row order of answers.csv. The table sorts records by key; the differential compares rows by key.",
-    "Not held: the row order of runs.csv. The table sorts records by key; the differential compares rows by key."
+    "Not held: the row order of runs.csv. The table sorts records by key; the differential compares rows by key.",
+    "Not held: the row order of bindings.csv. The table sorts records by key; the differential compares rows by key.",
+    "Not held: runs.csv inputs_from_other_runs. A BorrowedInput holds one description of the input (the input_map part that names the lending run, or bindings.csv's own text when bindings.csv is read); the exporter checks that this column names the same lending run, so only its wording is lost.",
+    "Not held: runs.csv shares_with_other_runs. crosscheck computes lineage from engines, convention files, map layers and borrowed inputs, and holds no run's own statement of what it shares with other runs.",
+    "Not held: runs.csv input_map, when bindings.csv is read. The bindings give each case's layers and borrowed input, and the run-level text has no field.",
+    "Not held: bindings.csv records_sent, model_itemizes, unexpressed_facts, map_computed. The schema has no field for what a binding sent or whether the model itemized, and the notes come from answers.csv without bindings.csv's group tags.",
+    "No fitting word: causes.csv kind 'key-decided-value' becomes explained_other, since crosscheck's cause vocabulary has no word for it; LedgerEntry.source_kind keeps the key-check's word.",
+    "Not held: causes.csv who_is_right. LedgerEntry.who_errs names the runs judged to err, and the exporter never infers runs from prose, so who_errs stays empty and the entry's position on who is right has no field.",
+    "Not held: causes.csv release_or_build, fixed_in, law_figure, evidence. LedgerEntry has no field for where a cause holds, where it is fixed, the figure the law gives or the evidence behind the entry.",
+    "Another form: causes.csv answerer and law_years become LedgerEntry.runs (the run of each answerer in each law-year table, as cause_cells.csv pairs answerers with runs); neither the answerer words nor the law-year word comes back as text, and an answerer has no run in a table where cause_cells.csv never pairs it.",
+    "Another form: causes.csv quantities and households_shared become ledger cells. A household where every answer moves alike becomes one cell per quantity and law-year table that names no run and predicts no size, so the schema cannot say that the answers there move alike, and the order of the households is not held.",
+    "Not held: cause_cells.csv answerer. LedgerCell.run names the run, and the key-check's answerer word, which for the committed key is not a model name, has no field.",
+    "Another form: cause_cells.csv amount becomes LedgerCell.predicted_size, a number; the amount's text is not held.",
+    "Derived: neither cause table names a case set; each ledger cell takes the one case set of the tables that holds its case in its world.",
+    "Not exported: cell_status.csv. crosscheck stores no status (it computes one on read); compare_cell_status sets the key-check's statuses beside crosscheck's."
   ],
   "source": {
-    "commit": "0dbfa64b69cc99cc2637d8da66d18498f7dac828",
+    "commit": "127804602d9e8e9ec5fd70839111cb3aa45dfc28",
     "files": {
+      "agreement/board100_2026_key.csv": {
+        "bytes": 269885,
+        "rows": 400,
+        "sha256": "fbf2bd9b3a702add35b6dd369626f7397152b85acfac889c0c366764f48a9f0e"
+      },
       "answers.csv": {
         "bytes": 1017597,
         "rows": 5400,
         "sha256": "cd305f2366927adfae5d36057824c15e8e14c24c59278ec32f5f999250a10438"
+      },
+      "bindings.csv": {
+        "bytes": 611926,
+        "rows": 900,
+        "sha256": "15ffa756161fce31d8624c9db6be67dcb1c03d6871d3e3b144b4cad6809cedb9"
+      },
+      "cause_cells.csv": {
+        "bytes": 22629,
+        "rows": 86,
+        "sha256": "b1b2406e15f85e7f33e021e3ed988c3c5ded1871e81733b5cfb7813395af4adc"
+      },
+      "causes.csv": {
+        "bytes": 42534,
+        "rows": 31,
+        "sha256": "cc946ae64ea47b3e09a257e77ba67905db8acc226f85c3a33d79863a5fff5893"
+      },
+      "cell_status.csv": {
+        "bytes": 361225,
+        "rows": 500,
+        "sha256": "be58714f5af1e3cc7221e0c71541d3d61a5db001aa9aaf2be468a28208060f33"
       },
       "models.csv": {
         "bytes": 472,
@@ -229,11 +759,13 @@
         "sha256": "98b5e320679bc9f43185d7951cd5994e59ea55f395a02bcea83f4e8b19714355"
       },
       "runs.csv": {
-        "bytes": 3395,
+        "bytes": 6174,
         "rows": 9,
-        "sha256": "f3695ec046271aba9816df80b568e731de1e5b6ef89b552b02ee674c9fb5d432"
+        "sha256": "4706edc54b76fd27e49217c735c40e235f3fcbcb5fbc27c01fa7dabc90a06dff"
       }
     },
+    "interim": true,
+    "interim_note": "Interim tables: the key-check's docs/coverage.md at this commit calls every status interim, and the key-check session described every table here as interim and due to change. These counts hold for this commit only.",
     "ref": "key-check-v1",
     "repository": "PolicyEngine/policybench-key-check"
   },
@@ -241,7 +773,7 @@
   "table_counts": {
     "bindings": 900,
     "cases": 200,
-    "ledger": 0,
+    "ledger": 31,
     "models": 3,
     "policy_worlds": 2,
     "quantities": 6,
@@ -249,6 +781,6 @@
     "tolerance_profiles": 0,
     "values": 5400
   },
-  "table_sha256": "009262cf0952e45798e0d0af44747c937380ae05636272d59dcb361bf06cd411",
+  "table_sha256": "29f94c038848858495c4b09968062abe3f6e098b5f15aa8a9b9519213668358f",
   "written_by": "scripts/keycheck_differential.py"
 }

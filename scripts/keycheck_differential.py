@@ -3,21 +3,31 @@
     python scripts/keycheck_differential.py RESULTS_DIR \
         [--out evidence/keycheck_differential.json] \
         [--source-repository PolicyEngine/policybench-key-check] [--source-ref key-check-v1] \
-        [--source-commit SHA] [--work-dir DIR]
+        [--source-commit SHA] [--interim] [--work-dir DIR]
 
 The script exports the key-check tables in RESULTS_DIR, writes them to a store under
 `--work-dir` (a temporary directory when not given), reads the store back, projects it to
 the tables' columns and compares the projection with the files cell by cell
-(`crosscheck.exporters.keycheck.differential`). It then reports the lineage partition of the
-exported runs and, for each run, how many of its answered cells each cell status covers
-under the key-check's own agreement rule (its README: two answers agree when they differ by
-no more than $1).
+(`crosscheck.exporters.keycheck.differential`), once with models.csv's own words
+(`models="as_written"`, the exactness pass) and once with the registry's (`models="registry"`,
+the default export). When RESULTS_DIR holds the cause tables (causes.csv and cause_cells.csv),
+the differential also reports, for each of their columns, whether it comes back exactly, comes
+back in another form or has no home in the schema (`ledger`). The script then reports, over the
+default export, the lineage partition of the runs per policy world and per case, and for each
+run how many of its answered cells each cell status covers under the key-check's own agreement
+rule (its README: two answers agree when they differ by no more than $1). When RESULTS_DIR holds
+cell_status.csv, it sets the key-check's own statuses beside the ones crosscheck computes for
+the same cells (`crosscheck.exporters.keycheck.compare_cell_status`) and records the confusion
+table, each class of difference with its count and the rule behind it.
 
-The evidence holds counts, hashes, booleans, ids (runs, models, map layers, engines) and the
-schema gaps. It holds no household values and no cell text: the differential's own
-`differences` list quotes cells, so the script records only how many differences there are
-and in which columns. The source commit comes from `--source-commit`, else from
-`git rev-parse HEAD` run in RESULTS_DIR, else it is recorded as null.
+The evidence holds counts, hashes, booleans, run ids, column names and the schema gaps. It
+holds no household values and no cell text: the differential's `differences` lists quote
+cells, so the script records only how many differences there are and in which columns, the
+lineage section names runs and counts tokens by kind without their text, and the status
+comparison counts cells by the key-check's status words and leaves out case, cause and
+quantity ids. The source commit comes from `--source-commit`, else from `git rev-parse HEAD`
+run in RESULTS_DIR, else it is recorded as null. `--interim` records that the tables at that
+commit are interim.
 """
 
 from __future__ import annotations
@@ -36,22 +46,49 @@ from typing import Any
 import pyarrow
 
 import crosscheck
-from crosscheck.exporters.keycheck import differential, export_keycheck, lineage_report
-from crosscheck.records import ToleranceProfile, ToleranceRule, ValueStatus, key_of
+from crosscheck.exporters.keycheck import (
+    AGREEMENT_TABLE,
+    WITHIN_ONE_DOLLAR,
+    compare_cell_status,
+    differential,
+    export_keycheck,
+    lineage_report,
+)
+from crosscheck.records import ToleranceProfile, ValueStatus, key_of
 from crosscheck.status import cell_status
 from crosscheck.table import Table
 
-EVIDENCE_SCHEMA = "crosscheck.evidence.keycheck_differential.v1"
+EVIDENCE_SCHEMA = "crosscheck.evidence.keycheck_differential.v3"
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUT = ROOT / "evidence" / "keycheck_differential.json"
-TABLE_FILES = ("answers.csv", "runs.csv", "models.csv", "bindings.csv")
+TABLE_FILES = (
+    "answers.csv",
+    "runs.csv",
+    "models.csv",
+    "bindings.csv",
+    "causes.csv",
+    "cause_cells.csv",
+    "cell_status.csv",
+    AGREEMENT_TABLE,
+)
+INTERIM_NOTE = (
+    "Interim tables: the key-check's docs/coverage.md at this commit calls every status "
+    "interim, and the key-check session described every table here as interim and due to "
+    "change. These counts hold for this commit only."
+)
 
-# The key-check README's agreement rule, as a profile applied on read.
-WITHIN_ONE_DOLLAR = ToleranceProfile(
-    id="keycheck.within-one-dollar",
-    method="isclose",
-    rules=(ToleranceRule(quantity="*", absolute=1.0, relative=0.0),),
-    description="Two answers agree when they differ by no more than $1 (the key-check README).",
+# The registry pass's keys that hold counts, hashes and booleans only.
+REGISTRY_KEYS = (
+    "exported",
+    "answers_identical",
+    "runs_identical",
+    "models_identical",
+    "bindings_identical",
+    "store_identical",
+    "difference_count",
+    "differences_by_column",
+    "model_fields_worded_differently",
+    "table_sha256",
 )
 
 
@@ -105,6 +142,33 @@ def _status_counts(table: Table, profile: ToleranceProfile) -> dict[str, dict[st
     return {run: dict(sorted(c.items())) for run, c in sorted(counts.items())}
 
 
+def _registry_evidence(registry: dict[str, Any]) -> dict[str, Any]:
+    """The registry pass in counts, hashes and booleans (no cell text, no model words)."""
+    if not registry["exported"]:
+        return {"exported": False}
+    evidence = {key: registry[key] for key in REGISTRY_KEYS}
+    evidence["models_with_another_id"] = sum(
+        1 for name, model_id in registry["model_ids"].items() if name != model_id
+    )
+    return evidence
+
+
+def _status_comparison(results: Path, table: Table) -> dict[str, Any] | None:
+    """The key-check's statuses beside crosscheck's, without case, cause or quantity ids."""
+    if not (results / "cell_status.csv").is_file():
+        return None
+    comparison = compare_cell_status(results, table=table, profile=WITHIN_ONE_DOLLAR)
+    for item in comparison["classes"]:
+        del item["by_quantity"]
+    return {
+        **comparison,
+        "profile_rule": "absolute 1.0, relative 0.0, isclose",
+        "candidates": "crosscheck's default: the runs with an answered value in the cell",
+        "subject": "the run the key-check's agreement table names in key_run for the cells "
+        "of each key_source word",
+    }
+
+
 def build_evidence(
     results: Path,
     *,
@@ -112,27 +176,38 @@ def build_evidence(
     repository: str,
     ref: str | None,
     commit: str | None,
+    interim: bool = False,
 ) -> dict[str, Any]:
     """Run the differential and the lineage pass; return the evidence (no household values)."""
     result = differential(results, work_dir=work_dir)
-    table = export_keycheck(results)
-    if table.content_sha256() != result["table_sha256"]:
+    as_written = export_keycheck(results, models="as_written")
+    if as_written.content_sha256() != result["table_sha256"]:
         raise RuntimeError("the export is not deterministic: two exports hash differently")
+    registry = result["registry"]
+    table = export_keycheck(results) if registry["exported"] else as_written
+    lineage = lineage_report(table)
+    written_lineage = lineage_report(as_written)
+    ledger = result["ledger"]
+    source: dict[str, Any] = {
+        "repository": repository,
+        "ref": ref,
+        "commit": commit if commit is not None else _git_commit(results),
+        "interim": interim,
+        "files": _file_facts(results),
+    }
+    if interim:
+        source["interim_note"] = INTERIM_NOTE
     return {
         "schema": EVIDENCE_SCHEMA,
         "written_by": "scripts/keycheck_differential.py",
         "crosscheck_version": crosscheck.__version__,
         "pyarrow_version": pyarrow.__version__,
-        "source": {
-            "repository": repository,
-            "ref": ref,
-            "commit": commit if commit is not None else _git_commit(results),
-            "files": _file_facts(results),
-        },
+        "source": source,
         "bindings_path": result["bindings_path"],
         "rows": result["rows"],
         "runs": result["runs"],
         "models": result["models"],
+        "models_mode": result["models_mode"],
         "answers_identical": result["answers_identical"],
         "runs_identical": result["runs_identical"],
         "models_identical": result["models_identical"],
@@ -141,16 +216,33 @@ def build_evidence(
         "row_order_identical": result["row_order"],
         "difference_count": result["difference_count"],
         "differences_by_column": result["differences_by_column"],
+        "columns_not_held": result["columns_not_held"],
+        "differences_only_in_columns_not_held": all(
+            column in result["columns_not_held"] for column in result["differences_by_column"]
+        ),
+        "ledger": ledger,
+        "ledger_held": ledger is None
+        or (ledger["every_exact_column_back"] and ledger["every_another_form_column_held"]),
         "table_sha256": result["table_sha256"],
-        "table_counts": {name: len(rows) for name, rows in table.to_json().items()},
+        "table_counts": {name: len(rows) for name, rows in as_written.to_json().items()},
         "schema_gaps": result["schema_gaps"],
-        "lineage": lineage_report(table),
+        "registry": _registry_evidence(registry),
+        "lineage": {
+            "table": "registry" if registry["exported"] else "as_written",
+            "same_partitions_in_both_model_modes": (
+                lineage["all_runs"] == written_lineage["all_runs"]
+                and lineage["by_policy_world"] == written_lineage["by_policy_world"]
+            ),
+            **lineage,
+        },
         "cell_status": {
+            "table": "registry" if registry["exported"] else "as_written",
             "profile": WITHIN_ONE_DOLLAR.id,
             "profile_rule": "absolute 1.0, relative 0.0, isclose",
             "candidates": "the runs with values in the cell's policy world",
             "by_run": _status_counts(table, WITHIN_ONE_DOLLAR),
         },
+        "cell_status_comparison": _status_comparison(results, table),
     }
 
 
@@ -161,39 +253,42 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--source-repository", default="PolicyEngine/policybench-key-check")
     parser.add_argument("--source-ref", default=None)
     parser.add_argument("--source-commit", default=None)
+    parser.add_argument(
+        "--interim", action="store_true", help="Record that the tables at the commit are interim."
+    )
     parser.add_argument("--work-dir", type=Path, default=None)
     args = parser.parse_args(argv)
 
+    options = {
+        "repository": args.source_repository,
+        "ref": args.source_ref,
+        "commit": args.source_commit,
+        "interim": args.interim,
+    }
     if args.work_dir is None:
         with tempfile.TemporaryDirectory(prefix="crosscheck-keycheck-") as temporary:
-            evidence = build_evidence(
-                args.results_dir,
-                work_dir=Path(temporary),
-                repository=args.source_repository,
-                ref=args.source_ref,
-                commit=args.source_commit,
-            )
+            evidence = build_evidence(args.results_dir, work_dir=Path(temporary), **options)
     else:
         args.work_dir.mkdir(parents=True, exist_ok=True)
-        evidence = build_evidence(
-            args.results_dir,
-            work_dir=args.work_dir,
-            repository=args.source_repository,
-            ref=args.source_ref,
-            commit=args.source_commit,
-        )
+        evidence = build_evidence(args.results_dir, work_dir=args.work_dir, **options)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(evidence, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False)
     args.out.write_text(text + "\n", encoding="ascii")
-    identical = all(
-        evidence[k] for k in ("answers_identical", "runs_identical", "models_identical")
+    held = (
+        evidence["answers_identical"]
+        and evidence["models_identical"]
+        and evidence["store_identical"]
+        and evidence["differences_only_in_columns_not_held"]
+        and evidence["ledger_held"]
     )
     print(
         f"{evidence['rows']} answer rows, {evidence['runs']} runs, {evidence['models']} models; "
-        f"answers, runs and models identical: {identical}; "
-        f"store identical: {evidence['store_identical']}; wrote {args.out}"
+        f"answers and models identical, store identical, every difference in a column not "
+        f"held and every cause-table column held: {held}; {evidence['difference_count']} "
+        f"differences in "
+        f"{len(evidence['differences_by_column'])} columns; wrote {args.out}"
     )
-    return 0 if identical and evidence["store_identical"] else 1
+    return 0 if held else 1
 
 
 if __name__ == "__main__":
