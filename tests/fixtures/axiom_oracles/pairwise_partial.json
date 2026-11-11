@@ -1,0 +1,245 @@
+{
+ "schema_version": "axiom.comparison_report.v2.1",
+ "suite": "invented-pairwise-cut",
+ "population": "invented-population",
+ "locales": [
+  "ZZ"
+ ],
+ "scope": {
+  "geoid": "ZZ",
+  "type": "country"
+ },
+ "engines": {
+  "left": "axiom",
+  "right": "policyengine",
+  "versions": {
+   "axiom_rules_engine": "9.9.1",
+   "policyengine": "0.0.7",
+   "policyengine_core": "0.0.3",
+   "policyengine_us": "0.0.42"
+  }
+ },
+ "provenance": {
+  "generated_at": "2031-02-03T04:05:06Z",
+  "run_kind": "manual",
+  "engine": {
+   "axiom_rules_engine_sha": "0000000000000000000000000000000000000000",
+   "axiom_rules_engine_version": "9.9.1"
+  },
+  "oracle": {
+   "name": "policyengine",
+   "policyengine_us": "0.0.42",
+   "policyengine_package": "policyengine==0.0.7"
+  },
+  "rulespecs": [
+   {
+    "repo": "Invented/rulespec-zz",
+    "sha": "1111111111111111111111111111111111111111"
+   },
+   {
+    "repo": "Invented/rulespec-zz-extra",
+    "sha": null
+   }
+  ],
+  "schema": "axiom_oracles.provenance.v1"
+ },
+ "case_count": 40,
+ "concepts": [
+  {
+   "id": "zz:invented/benefit#monthly_amount",
+   "comparison": "amount",
+   "tolerance": 1,
+   "relative_tolerance": 0,
+   "description": "Invented monthly benefit",
+   "category": "cash",
+   "components": [],
+   "parent": null,
+   "priority": "high"
+  },
+  {
+   "id": "zz:invented/benefit#is_eligible",
+   "comparison": "eligibility",
+   "tolerance": 0,
+   "relative_tolerance": 0,
+   "description": "Invented eligibility flag",
+   "category": "cash",
+   "components": [],
+   "parent": null,
+   "priority": "high"
+  },
+  {
+   "id": "zz:invented/tax#credit",
+   "comparison": "amount",
+   "tolerance": 0.5,
+   "relative_tolerance": 0.01,
+   "description": "Invented credit",
+   "category": "tax",
+   "components": [],
+   "parent": null,
+   "priority": "normal"
+  }
+ ],
+ "cases": [
+  {
+   "case_id": "inv-case-2",
+   "left_engine": "axiom",
+   "right_engine": "policyengine",
+   "left_errors": [],
+   "right_errors": [],
+   "metadata": {
+    "dataset": "invented://dataset/v0",
+    "population": "invented-population",
+    "axiom_inputs": {
+     "zz:in#size": 3
+    }
+   },
+   "match_rate": 66.66666666666667,
+   "mismatches": [
+    {
+     "concept": "zz:invented/benefit#monthly_amount",
+     "description": "Invented monthly benefit",
+     "kind": "amount_difference",
+     "left": 75.0,
+     "right": 90.0,
+     "difference": -15.0,
+     "tolerance": 1,
+     "relative_tolerance": 0,
+     "parent": null
+    }
+   ]
+  },
+  {
+   "case_id": "inv-case-3",
+   "left_engine": "axiom",
+   "right_engine": "policyengine",
+   "left_errors": [],
+   "right_errors": [],
+   "metadata": {
+    "dataset": "invented://dataset/v0",
+    "population": "invented-population"
+   },
+   "match_rate": 33.333333333333336,
+   "mismatches": [
+    {
+     "concept": "zz:invented/benefit#is_eligible",
+     "description": "Invented eligibility flag",
+     "kind": "eligibility_difference",
+     "left": false,
+     "right": true,
+     "difference": null,
+     "tolerance": 0,
+     "relative_tolerance": 0,
+     "parent": null
+    },
+    {
+     "concept": "zz:invented/tax#credit",
+     "description": "Invented credit",
+     "kind": "missing_value",
+     "left": null,
+     "right": 12.25,
+     "difference": null,
+     "tolerance": 0.5,
+     "relative_tolerance": 0.01,
+     "parent": null
+    }
+   ]
+  }
+ ],
+ "mismatches": [
+  {
+   "case_id": "inv-case-2",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/benefit#monthly_amount",
+   "description": "Invented monthly benefit",
+   "kind": "amount_difference",
+   "left": 75.0,
+   "right": 90.0,
+   "difference": -15.0,
+   "tolerance": 1,
+   "relative_tolerance": 0,
+   "parent": null,
+   "disposition": {
+    "id": "invented-size-bridge",
+    "disposition": "bridge_artifact",
+    "linked_issue": "https://example.org/issues/1"
+   }
+  },
+  {
+   "case_id": "inv-case-3",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/benefit#is_eligible",
+   "description": "Invented eligibility flag",
+   "kind": "eligibility_difference",
+   "left": false,
+   "right": true,
+   "difference": null,
+   "tolerance": 0,
+   "relative_tolerance": 0,
+   "parent": null,
+   "disposition": {
+    "id": "invented-open-question",
+    "disposition": "unexplained"
+   }
+  },
+  {
+   "case_id": "inv-case-3",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/tax#credit",
+   "description": "Invented credit",
+   "kind": "missing_value",
+   "left": null,
+   "right": 12.25,
+   "difference": null,
+   "tolerance": 0.5,
+   "relative_tolerance": 0.01,
+   "parent": null,
+   "disposition": {
+    "id": "invented-open-question",
+    "disposition": "unexplained"
+   }
+  },
+  {
+   "case_id": "inv-case-9",
+   "concept": "zz:invented/benefit#monthly_amount",
+   "description": "Invented monthly benefit",
+   "kind": "amount_difference",
+   "left": 300.0,
+   "right": 200.0,
+   "difference": 100.0,
+   "tolerance": 1,
+   "relative_tolerance": 0,
+   "parent": null,
+   "disposition": {
+    "id": "invented-cut-case",
+    "disposition": "explained_residual"
+   }
+  }
+ ],
+ "errors": [],
+ "summary": {
+  "comparison_count": 120,
+  "match_count": 100,
+  "mismatch_count": 20,
+  "stored_mismatch_example_count": 4,
+  "dispositioned": {
+   "counts": {},
+   "dispositions_file": "dispositions/invented-suite.yaml",
+   "schema_version": "axiom_oracles.dispositions.v1"
+  }
+ },
+ "dashboard_truncation": {
+  "total_mismatches": 20,
+  "shown_mismatches": 4,
+  "total_case_rows": 40,
+  "shown_case_rows": 2
+ }
+}

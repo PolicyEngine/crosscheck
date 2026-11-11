@@ -1,0 +1,19 @@
+{
+ "schema_version": "axiom.comparison_report.v2.1",
+ "suite": "invented-stage",
+ "engines": {
+  "left": "axiom",
+  "right": "policyengine"
+ },
+ "cases": [
+  {
+   "case_id": "s1",
+   "stage": "eligibility",
+   "matched": true,
+   "weight": 1.0,
+   "yrmonth": "203101"
+  }
+ ],
+ "mismatches": [],
+ "summary": {}
+}

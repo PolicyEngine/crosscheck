@@ -1,0 +1,112 @@
+{
+ "schema_version": "axiom.comparison_report.v2",
+ "suite": "invented-uk-licence",
+ "concept": "zz-uk:invented/licence#net_cost",
+ "population": "case-grid",
+ "validation_year": 2031,
+ "locales": [
+  "ZZ-UK"
+ ],
+ "scope": {
+  "type": "country",
+  "geoid": "ZZ-UK"
+ },
+ "engines": {
+  "axiom": "zz-uk:invented/licence#net_cost",
+  "policyengine": "zz_licence"
+ },
+ "tolerance": {
+  "absolute": 0.01,
+  "relative": 2e-07
+ },
+ "case_count": 3,
+ "summary": {
+  "comparison_count": 6,
+  "match_count": 5,
+  "mismatch_count": 1,
+  "policyengine_matches": 5,
+  "axiom_vs_policyengine_match_rate": 0
+ },
+ "mismatches": [],
+ "errors": [],
+ "cases": [
+  {
+   "case_id": "lic-full",
+   "concept": "zz-uk:invented/licence#net_cost",
+   "scenario": "full-fee",
+   "older_person": false,
+   "axiom": 150.0,
+   "policyengine": 150.0,
+   "axiom_vs_policyengine": {
+    "difference": 0.0,
+    "match": true
+   }
+  },
+  {
+   "case_id": "lic-full",
+   "concept": "zz-uk:invented/licence#concession_value",
+   "scenario": "full-fee",
+   "older_person": false,
+   "axiom": 0.0,
+   "policyengine": 0.0,
+   "axiom_vs_policyengine": {
+    "difference": 0.0,
+    "match": true
+   }
+  },
+  {
+   "case_id": "lic-half",
+   "concept": "zz-uk:invented/licence#net_cost",
+   "scenario": "half-fee",
+   "older_person": false,
+   "axiom": 75.0,
+   "policyengine": 75.0,
+   "axiom_vs_policyengine": {
+    "difference": 0.0,
+    "match": true
+   }
+  },
+  {
+   "case_id": "lic-half",
+   "concept": "zz-uk:invented/licence#concession_value",
+   "scenario": "half-fee",
+   "older_person": false,
+   "axiom": 75.0,
+   "policyengine": 75.000001,
+   "axiom_vs_policyengine": {
+    "difference": -9.999999974752427e-07,
+    "match": true
+   }
+  },
+  {
+   "case_id": "lic-free",
+   "concept": "zz-uk:invented/licence#net_cost",
+   "scenario": "free",
+   "older_person": true,
+   "axiom": 0.0,
+   "policyengine": 0.0,
+   "axiom_vs_policyengine": {
+    "difference": 0.0,
+    "match": true
+   }
+  },
+  {
+   "case_id": "lic-free",
+   "concept": "zz-uk:invented/licence#concession_value",
+   "scenario": "free",
+   "older_person": true,
+   "axiom": 150.0,
+   "policyengine": 149.5,
+   "axiom_vs_policyengine": {
+    "difference": 0.5,
+    "match": false
+   }
+  }
+ ],
+ "provenance": {
+  "generated": "2031-07-07",
+  "generator": "scripts/generate_invented.py",
+  "axiom_engine": "invented engine over invented rules",
+  "policyengine_uk": "0.9.9"
+ }
+}

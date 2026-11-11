@@ -1,0 +1,139 @@
+{
+ "schema_version": "axiom.comparison_report.v2.1",
+ "suite": "invented-state-tax",
+ "concept": "zz-st:invented/income_tax#liability",
+ "population": "case-grid",
+ "engines": {
+  "axiom": "zz-st:invented/income_tax",
+  "policyengine": "zz_state_income_tax",
+  "taxsim": "siitax"
+ },
+ "validation_year": 2031,
+ "taxsim_law_year": 2024,
+ "tolerance": {
+  "absolute": 2.0,
+  "relative": 0.01
+ },
+ "case_count": 3,
+ "provenance": {
+  "generated_at": "2031-05-06T07:08:09Z",
+  "engine": {},
+  "run_kind": "affected-rerun",
+  "oracle": {
+   "name": "policyengine",
+   "policyengine_us": "0.0.43"
+  },
+  "rulespecs": [
+   {
+    "repo": "Invented/rulespec-zz",
+    "sha": "2222222222222222222222222222222222222222"
+   }
+  ]
+ },
+ "cases": [
+  {
+   "case_id": "st-single-10000",
+   "concept": "zz-st:invented/income_tax#liability",
+   "employment_income": 10000,
+   "filing_status": "single",
+   "axiom": 100.0,
+   "policyengine": 101.5,
+   "taxsim_2024": 100.0,
+   "axiom_vs_policyengine": {
+    "difference": -1.5,
+    "match": true
+   },
+   "axiom_vs_taxsim_2024": {
+    "difference": 0.0,
+    "match": true
+   }
+  },
+  {
+   "case_id": "st-single-50000",
+   "concept": "zz-st:invented/income_tax#liability",
+   "employment_income": 50000,
+   "filing_status": "single",
+   "axiom": 2000.0,
+   "policyengine": 2010.0,
+   "taxsim_2024": 2500.0,
+   "axiom_vs_policyengine": {
+    "difference": -10.0,
+    "match": true
+   },
+   "axiom_vs_taxsim_2024": {
+    "difference": -500.0,
+    "match": false
+   }
+  },
+  {
+   "case_id": "st-joint-90000",
+   "concept": "zz-st:invented/income_tax#liability",
+   "employment_income": 90000,
+   "filing_status": "joint",
+   "axiom": 4100.25,
+   "policyengine": 3900.0,
+   "taxsim_2024": 4140.0,
+   "axiom_vs_policyengine": {
+    "difference": 200.25,
+    "match": false
+   },
+   "axiom_vs_taxsim_2024": {
+    "difference": -39.75,
+    "match": true
+   }
+  }
+ ],
+ "mismatches": [
+  {
+   "case_id": "st-single-50000",
+   "concept": "zz-st:invented/income_tax#liability",
+   "engines": [
+    "axiom",
+    "taxsim"
+   ],
+   "kind": "amount_difference",
+   "left": 2000.0,
+   "left_engine": "axiom",
+   "right": 2500.0,
+   "right_engine": "taxsim",
+   "difference": -500.0,
+   "disposition": {
+    "id": "invented-taxsim-st-single-50000",
+    "disposition": "explained_residual"
+   }
+  },
+  {
+   "case_id": "st-joint-90000",
+   "concept": "zz-st:invented/income_tax#liability",
+   "engines": [
+    "axiom",
+    "policyengine"
+   ],
+   "kind": "amount_difference",
+   "left": 4100.25,
+   "left_engine": "axiom",
+   "right": 3900.0,
+   "right_engine": "policyengine",
+   "difference": 200.25,
+   "disposition": {
+    "id": "invented-policyengine-st-joint-90000",
+    "disposition": "axiom_encoding_gap"
+   }
+  }
+ ],
+ "errors": [],
+ "summary": {
+  "comparison_count": 6,
+  "match_count": 4,
+  "mismatch_count": 2,
+  "policyengine_matches": 2,
+  "taxsim_2024_matches": 2,
+  "axiom_vs_policyengine_match_rate": 0,
+  "axiom_vs_taxsim_2024_match_rate": 0,
+  "dispositioned": {
+   "counts": {},
+   "dispositions_file": "dispositions/invented-state-tax.yaml",
+   "schema_version": "axiom_oracles.dispositions.v1"
+  }
+ }
+}
