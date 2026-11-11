@@ -1,0 +1,10 @@
+case_id,quantity,key_value,key_source,law_year,status,status_detail,contested_reasons,agreeing_runs,apart_runs,reproduction_scope,interim
+case_a,income_tax_line,1200.00,committed_key,2026,reproduced,key_salt_amount_itemized,,beta-2.0-2026,,,yes
+case_a,credit_line,0.00,committed_key,2026,resting_on_one_model,no_other_run_takes_a_fact,,,beta-2.0-2026,,yes
+case_a,state_payroll_line,35.10,invented_payroll_split,2026,resting_on_one_model,no_other_model_has_quantity,,,,,yes
+case_b,income_tax_line,0.00,committed_key,2026,reproduced,no_input_from_key_run,,beta-2.0-2026,,,yes
+case_b,credit_line,512.25,committed_key,2026,contested,turns_on_unstated_fact,turns_on_unstated_fact,beta-2.0-2026,,,yes
+case_b,state_payroll_line,0.00,invented_payroll_split,2026,resting_on_one_model,no_other_model_has_quantity,,,,,yes
+case_c,income_tax_line,98765.43,committed_key,2026,resting_on_one_model,no_other_run_takes_a_fact,,,beta-2.0-2026,,yes
+case_c,credit_line,0.00,committed_key,2026,resting_on_one_model,unexplained,,,,,yes
+case_c,state_payroll_line,,invented_payroll_split,2026,resting_on_one_model,no_other_model_has_quantity,,,,,yes

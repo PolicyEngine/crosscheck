@@ -1,0 +1,130 @@
+{
+ "schema_version": "axiom.comparison_report.v2.1",
+ "suite": "invented-federal-grid",
+ "concept": "zz:invented/federal#credit_amount",
+ "population": "case-grid",
+ "validation_year": 2031,
+ "engines": {
+  "left": "axiom",
+  "right": "policyengine"
+ },
+ "engine_bindings": {
+  "axiom": {
+   "output": "zz:invented/federal#credit_amount",
+   "module": "zz:invented/federal"
+  },
+  "policyengine": {
+   "outputs": [
+    "zz_credit"
+   ]
+  }
+ },
+ "concepts": [
+  {
+   "id": "zz:invented/federal#credit_amount",
+   "comparison": "amount",
+   "tolerance": 0.01,
+   "relative_tolerance": 0.0,
+   "description": "Invented federal credit"
+  }
+ ],
+ "tolerance": {
+  "absolute": 0.01,
+  "relative": 0.0
+ },
+ "case_count": 3,
+ "cases": [
+  {
+   "case_id": "fed-1",
+   "concept": "zz:invented/federal#credit_amount",
+   "filing_status": "single",
+   "axiom": 1000.0,
+   "policyengine": 1000.004,
+   "difference": -0.004000000000019099,
+   "match": true,
+   "inputs": {
+    "magi": 20000,
+    "household_size": 2
+   },
+   "axiom_fixture_inputs": {
+    "zz:invented/federal#input.magi": 20000
+   },
+   "policyengine_components": {
+    "zz_credit": 1000.004
+   }
+  },
+  {
+   "case_id": "fed-2",
+   "concept": "zz:invented/federal#credit_amount",
+   "filing_status": "joint",
+   "axiom": 2500.0,
+   "policyengine": 2400.0,
+   "difference": 100.0,
+   "match": false,
+   "inputs": {
+    "magi": 45000,
+    "household_size": 2
+   },
+   "axiom_fixture_inputs": {
+    "zz:invented/federal#input.magi": 45000
+   },
+   "policyengine_components": {
+    "zz_credit": 2400.0
+   }
+  },
+  {
+   "case_id": "fed-3",
+   "concept": "zz:invented/federal#credit_amount",
+   "filing_status": "joint",
+   "axiom": 0.0,
+   "policyengine": 0.0,
+   "difference": 0.0,
+   "match": true,
+   "inputs": {
+    "magi": 300000,
+    "household_size": 2
+   },
+   "axiom_fixture_inputs": {
+    "zz:invented/federal#input.magi": 300000
+   },
+   "policyengine_components": {
+    "zz_credit": 0.0
+   }
+  }
+ ],
+ "mismatches": [
+  {
+   "case_id": "fed-2",
+   "concept": "zz:invented/federal#credit_amount",
+   "kind": "amount_difference",
+   "left": 2500.0,
+   "right": 2400.0,
+   "difference": 100.0,
+   "disposition": {
+    "id": "invented-federal-gap",
+    "disposition": "axiom_encoding_gap",
+    "linked_issue": "https://example.org/issues/2"
+   }
+  }
+ ],
+ "errors": [],
+ "provenance": {
+  "generated_at": "2031-08-09T10:11:12Z",
+  "engine": {},
+  "oracle": {
+   "name": "policyengine",
+   "policyengine_us": "0.0.44"
+  },
+  "run_kind": "manual"
+ },
+ "summary": {
+  "comparison_count": 3,
+  "match_count": 2,
+  "mismatch_count": 1,
+  "dispositioned": {
+   "counts": {},
+   "dispositions_file": "dispositions/invented-suite.yaml",
+   "schema_version": "axiom_oracles.dispositions.v1"
+  }
+ }
+}

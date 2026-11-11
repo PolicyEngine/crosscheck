@@ -1,0 +1,4 @@
+run,model,release,period,conventions,input_map,input_map_author,inputs_from_other_runs,shares_with_other_runs,source,note
+alpha-1.0-2026,policyengine-us,1.0,2026,Alpha's invented conventions (conv/alpha.py),Alpha's own builder,Invented Alpha maintainers (the invented builder),,the invented key itself,Example/invented@0000000:out/alpha_2026.csv,The invented key
+beta-2.0-2026,taxcalc,2.0,2026,Beta's current law; exact=True,maps/map_beta.py 2026-01-01.1 on maps/unit.py 2026-01-01.1; an invented deduction shared from alpha-1.0-2026,an invented session (Claude Fable 5.2) wrote it; two Claude Opus 5.5 agents reviewed it,"an invented deduction paid, from alpha-1.0-2026",the invented deduction with alpha-1.0-2026,results/beta/beta_2026.csv,"Two passes, the second with ""quotes"""
+alpha-1.1-2025,policyengine-us,1.1,2025,,maps/map_alpha.py 2026-01-01.1 on maps/unit.py 2026-01-01.1,,,,results/alpha/alpha_2025.csv,

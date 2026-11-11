@@ -1,0 +1,129 @@
+{
+ "schema_version": "axiom.comparison_report.v2.1",
+ "suite": "invented-eu-pit",
+ "population": "synthetic",
+ "locales": [
+  "ZZ-EU"
+ ],
+ "scope": null,
+ "engines": {
+  "left": "euromod",
+  "right": "axiom",
+  "versions": {
+   "axiom_rules_engine": "9.9.2"
+  }
+ },
+ "provenance": {
+  "generated_at": "2031-09-10T11:12:13Z",
+  "engine": {
+   "axiom_rules_engine_version": "9.9.2",
+   "binary": "/invented/path/engine"
+  },
+  "oracle": {
+   "name": "euromod",
+   "euromod_release": "Z9.9",
+   "euromod_system": "ZZ_2031",
+   "euromod_dataset": "ZZ_invented",
+   "euromod_country": "ZZ"
+  },
+  "run_kind": "manual"
+ },
+ "case_count": 2,
+ "concepts": [
+  {
+   "id": "zz-eu:invented/pit#tax",
+   "comparison": "amount",
+   "tolerance": 0.01,
+   "relative_tolerance": 0,
+   "description": "Invented personal income tax"
+  }
+ ],
+ "cases": [
+  {
+   "case_id": "eu-case-1",
+   "left_engine": "euromod",
+   "right_engine": "axiom",
+   "left_errors": [],
+   "right_errors": [],
+   "match_rate": 100.0,
+   "metadata": {
+    "euromod_inputs": [
+     {
+      "idperson": 1,
+      "yem": 1000
+     }
+    ],
+    "euromod_to_axiom_input_bridge_applied": {
+     "Person[head]::zz-eu:invented/pit#input.gross": 1000.0,
+     "Person[head]::zz-eu:invented/pit#input.age": 40
+    },
+    "scope": {
+     "geoid": "ZZ-EU",
+     "type": "country"
+    }
+   },
+   "mismatches": [],
+   "matches": [
+    {
+     "concept": "zz-eu:invented/pit#tax",
+     "left": 100.0,
+     "right": 100.0
+    }
+   ]
+  },
+  {
+   "case_id": "eu-case-2",
+   "left_engine": "euromod",
+   "right_engine": "axiom",
+   "left_errors": [],
+   "right_errors": [],
+   "match_rate": 0.0,
+   "metadata": {
+    "euromod_inputs": [
+     {
+      "idperson": 1,
+      "yem": 1000
+     }
+    ],
+    "euromod_to_axiom_input_bridge_applied": {
+     "Person[head]::zz-eu:invented/pit#input.gross": 1000.0,
+     "Person[head]::zz-eu:invented/pit#input.age": 40
+    },
+    "scope": {
+     "geoid": "ZZ-EU",
+     "type": "country"
+    }
+   },
+   "mismatches": [
+    {
+     "concept": "zz-eu:invented/pit#tax",
+     "kind": "amount_difference",
+     "left": 250.0,
+     "right": 260.0,
+     "difference": -10.0,
+     "tolerance": 0.01,
+     "relative_tolerance": 0
+    }
+   ],
+   "matches": []
+  }
+ ],
+ "mismatches": [
+  {
+   "case_id": "eu-case-2",
+   "concept": "zz-eu:invented/pit#tax",
+   "kind": "amount_difference",
+   "left": 250.0,
+   "right": 260.0,
+   "difference": -10.0,
+   "tolerance": 0.01,
+   "relative_tolerance": 0
+  }
+ ],
+ "errors": [],
+ "summary": {
+  "comparison_count": 2,
+  "match_count": 1,
+  "mismatch_count": 1
+ }
+}

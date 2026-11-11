@@ -1,0 +1,8 @@
+case_id,quantity,key_run,class
+case_a,income_tax_line,alpha-1.0-2026,invented
+case_a,credit_line,alpha-1.0-2026,invented
+case_a,state_payroll_line,alpha-1.0-2026,invented
+case_b,income_tax_line,alpha-1.0-2026,invented
+case_b,credit_line,alpha-1.0-2026,invented
+case_c,income_tax_line,alpha-1.0-2026,invented
+case_c,credit_line,alpha-1.0-2026,invented

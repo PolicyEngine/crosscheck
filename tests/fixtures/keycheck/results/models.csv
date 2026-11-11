@@ -1,0 +1,3 @@
+model,kind,maintainer,lineage,note
+policyengine-us,rules model,Invented Alpha maintainers,policyengine,"An invented model, for tests."
+taxcalc,rules model,Invented Beta group,beta-engine,

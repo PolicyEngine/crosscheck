@@ -1,0 +1,173 @@
+{
+  "$defs": {
+    "BorrowedInput": {
+      "additionalProperties": false,
+      "description": "An input that another run computed and this binding took.",
+      "properties": {
+        "bears_on_answer": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "False when the borrowed input does not affect this case's answer; null when not stated."
+        },
+        "quantities": {
+          "default": [],
+          "description": "Quantity ids the input bears on; empty means every quantity.",
+          "items": {
+            "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "run": {
+          "description": "The Run id that computed the input.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+          "type": "string"
+        },
+        "what": {
+          "description": "Which input, in words.",
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run",
+        "what"
+      ],
+      "title": "BorrowedInput",
+      "type": "object"
+    },
+    "ScopedNote": {
+      "additionalProperties": false,
+      "description": "A note on a binding that bears on some quantities, or on every quantity.",
+      "properties": {
+        "quantities": {
+          "default": [],
+          "description": "Quantity ids the note bears on; empty means every quantity.",
+          "items": {
+            "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "text": {
+          "description": "The note.",
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "ScopedNote",
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/binding.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "How one case became one run's inputs. Key: (case_set, case_id, policy_world, run).\n\nA binding never borrows an input from its own run.",
+  "properties": {
+    "case_id": {
+      "description": "The case id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "case_set": {
+      "description": "The case set.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+      "type": "string"
+    },
+    "facts_not_taken": {
+      "default": [],
+      "description": "Stated facts the model could not take.",
+      "items": {
+        "$ref": "#/$defs/ScopedNote"
+      },
+      "type": "array"
+    },
+    "input_map_author": {
+      "default": "",
+      "description": "Who wrote the input map.",
+      "type": "string"
+    },
+    "input_map_author_kind": {
+      "default": "unknown",
+      "description": "What kind of author wrote the input map.",
+      "enum": [
+        "person",
+        "ai_model",
+        "rules_model",
+        "harness",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "input_maps": {
+      "default": [],
+      "description": "Ids (with version) of every map layer that turned the case's facts into the model's inputs.",
+      "items": {
+        "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "inputs_from_runs": {
+      "default": [],
+      "description": "Inputs that other runs computed.",
+      "items": {
+        "$ref": "#/$defs/BorrowedInput"
+      },
+      "type": "array"
+    },
+    "note": {
+      "default": "",
+      "description": "Anything else about the binding.",
+      "type": "string"
+    },
+    "policy_world": {
+      "description": "The PolicyWorld id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "rendered_input": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The model's own input for this case as text (JSON), when the source keeps it."
+    },
+    "run": {
+      "description": "The Run id.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@=-]*$",
+      "type": "string"
+    },
+    "transform": {
+      "default": [],
+      "description": "What the map did to this case.",
+      "items": {
+        "$ref": "#/$defs/ScopedNote"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "case_set",
+    "case_id",
+    "policy_world",
+    "run"
+  ],
+  "title": "Binding",
+  "type": "object"
+}

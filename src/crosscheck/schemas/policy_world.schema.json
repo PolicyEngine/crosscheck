@@ -1,0 +1,51 @@
+{
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/policy_world.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "The law a case is answered under: a jurisdiction read at a date, with stated conventions.",
+  "properties": {
+    "conventions": {
+      "default": [],
+      "description": "Conventions the world states (take-up, uprating).",
+      "items": {
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "description": {
+      "default": "",
+      "description": "What the world is, in words.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The policy world's id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "description": "The jurisdiction as a free-text id (\"us\", \"us-wi\", \"de\"); \"\" when not stated.",
+      "pattern": "^(?:\\S(?:[\\s\\S]*\\S)?)?$",
+      "type": "string"
+    },
+    "law_as_of": {
+      "anyOf": [
+        {
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The date or year the law is read at; null when the source does not state it."
+    }
+  },
+  "required": [
+    "id",
+    "jurisdiction"
+  ],
+  "title": "PolicyWorld",
+  "type": "object"
+}

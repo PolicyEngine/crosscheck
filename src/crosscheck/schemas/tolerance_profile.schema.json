@@ -1,0 +1,70 @@
+{
+  "$defs": {
+    "ToleranceRule": {
+      "additionalProperties": false,
+      "description": "The absolute and relative tolerance a profile applies to one quantity, or to all (\"*\").",
+      "properties": {
+        "absolute": {
+          "default": 0.0,
+          "description": "Absolute tolerance, in the quantity's unit.",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "quantity": {
+          "description": "A Quantity id, or \"*\" for every quantity.",
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+          "type": "string"
+        },
+        "relative": {
+          "default": 0.0,
+          "description": "Relative tolerance, as a fraction.",
+          "minimum": 0.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "quantity"
+      ],
+      "title": "ToleranceRule",
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/PolicyEngine/crosscheck/schemas/tolerance_profile.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A named tolerance applied on read. Key: id. It holds at most one rule per quantity.",
+  "properties": {
+    "description": {
+      "default": "",
+      "description": "What the profile is for, in words.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The profile's id.",
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "type": "string"
+    },
+    "method": {
+      "default": "isclose",
+      "description": "How two amounts are compared under a rule.",
+      "enum": [
+        "isclose",
+        "abs_or_ratio"
+      ],
+      "type": "string"
+    },
+    "rules": {
+      "default": [],
+      "description": "At most one rule per quantity string.",
+      "items": {
+        "$ref": "#/$defs/ToleranceRule"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "title": "ToleranceProfile",
+  "type": "object"
+}
