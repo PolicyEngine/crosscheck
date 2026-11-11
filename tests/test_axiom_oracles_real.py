@@ -14,7 +14,9 @@ from pathlib import Path
 
 import pytest
 
-from crosscheck.exporters.axiom_oracles import census_file
+from crosscheck.exporters.axiom_oracles import UnsupportedReport, census_file, export_report
+from crosscheck.registry import known_model
+from crosscheck.table import Table
 
 pytestmark = pytest.mark.realdata
 
@@ -62,6 +64,7 @@ def test_every_file_classifies_and_every_export_round_trips(path, tmp_path: Path
         assert entry["ok"], {k: v for k, v in entry.items() if k != "sha256"}
         assert entry["counts"]["missing"] == 0 and entry["counts"]["extra_rows"] == 0
         assert entry["counts"]["verdict_differences"] == 0
+        assert entry["counts"]["error_row_differences"] == 0
     else:
         print(f"\n{entry['name']}: {entry['status']} ({entry['reason']})")
         assert entry["reason"]
@@ -81,3 +84,25 @@ def test_named_reports_export_with_full_evidence_and_round_trip(name: str, tmp_p
     assert all(leg["counts_agree"] for leg in entry["legs"])
     assert entry["counts"]["values_in_rows"] == entry["counts"]["values_in_report"] > 0
     print(f"\n{name}: legs {entry['legs']}")
+
+
+def test_every_export_merges_into_one_table_that_passes_check() -> None:
+    """The exports of every supported report merge into one table (models from the registry,
+    releases joined) and that table passes `check()`."""
+    directory = _data_dir()
+    if directory is None:
+        pytest.skip(SKIP_REASON)
+    tables = []
+    for path in sorted(directory.glob("*.json")):
+        try:
+            tables.append(export_report(path).table)
+        except UnsupportedReport:
+            continue
+    assert tables, f"no report in {directory} exports"
+    merged = Table.merge(*tables).check()
+    assert all(model == known_model(model.id, model.releases) for model in merged.models)
+    assert len(merged.values) == sum(len(table.values) for table in tables)
+    print(
+        f"\nmerged {len(tables)} exports: {len(merged.runs)} runs, {len(merged.values)} values, "
+        f"{len(merged.models)} models, table {merged.content_sha256()}"
+    )

@@ -17,13 +17,33 @@ tax-benefit engines case by case. This module reads three shapes of it:
   scripts, whose rule is `abs_or_ratio` with the report's top-level `tolerance`.
 
 Anything else raises `UnsupportedReport`, whose `reason` names why. The exporter never fills
-a gap: a tolerance, a release or a maintainer the report does not state stays unstated, or
-the report is unsupported when the gap would change a verdict.
+a gap: a tolerance or a release the report does not state stays unstated, or the report is
+unsupported when the gap would change a verdict.
+
+Model records come from `crosscheck.registry`, so that tables from other tools merge with
+these: the report's engine names `axiom`, `taxsim`, `taxcalc`, `euromod` and `gettsim` map
+to registry ids through `registry_id`, and `policyengine` maps to `policyengine-us`,
+`policyengine-uk` or `policyengine` by the country package the report names. An engine name
+the registry cannot resolve makes the report unsupported (`unknown_engine`).
+
+Engine errors: report.py lists each engine's errors on the case row (`left_errors`,
+`right_errors`) and again in the top-level `errors`, one row per case, side and error
+(`_error_rows`). The comparator turns every comparison of a case with an engine error into a
+mismatch (`comparator.py` `HouseholdComparison.__post_init__`). Every value of an errored
+engine side in that case gets status `error`, keeps its `raw` text and names the errors in
+`status_detail`, so a comparison recomputed from the rows disagrees, as the report says.
+
+Every value carries `producer="not_stated"`: the exporter reads nothing that says, value by
+value, whether an engine returned the number or code around the engine computed it. In a
+pairwise report the comparator sums an engine's outputs when a concept's mapping names a list
+of targets (`comparator.py` `_mapped_value`), and the case rows do not mark which values
+those are.
 
 `check_round_trip` walks the report again and proves, against a table (typically one read
 back from a store), that every compared value of the report sits in the rows, that every
-verdict the report records recomputes under the report's own tolerance, and that every
-stated count recomputes when the report holds every comparison.
+verdict the report records recomputes under the report's own tolerance, that every stated
+count recomputes when the report holds every comparison, and that every top-level error row
+matches an error its case row lists and a value row of that engine holds.
 """
 
 from __future__ import annotations
@@ -34,6 +54,7 @@ import json
 import math
 import re
 import sys
+from collections import Counter
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -52,8 +73,6 @@ from crosscheck.records import (
     Fact,
     LedgerCell,
     LedgerEntry,
-    Model,
-    ModelKind,
     PolicyWorld,
     Quantity,
     RecordError,
@@ -67,12 +86,13 @@ from crosscheck.records import (
     ValueStatus,
     ValueType,
 )
+from crosscheck.registry import known_model, registry_id
 from crosscheck.table import IntegrityError, Table
 from crosscheck.tolerance import ToleranceError, agree
 
 __all__ = [
-    "KNOWN_ENGINES",
-    "NOT_RECORDED",
+    "PRODUCER",
+    "SOURCE_ROLE",
     "TOOL",
     "ExpectedComparison",
     "ExportResult",
@@ -87,20 +107,16 @@ __all__ = [
 ]
 
 TOOL = "axiom-oracles"
-NOT_RECORDED = "not recorded in the source report"
 REPORT_SCHEMA_PREFIX = "axiom.comparison_report."
 DISPOSITIONS_AUTHOR = "axiom-oracles dispositions"
-
-# Engine name -> (model name, maintainer, engine family). PolicyEngine's model id and
-# engine family depend on the country package the report names (see `_policyengine_id`).
-KNOWN_ENGINES: dict[str, tuple[str, str, str]] = {
-    "axiom": ("Axiom", "The Axiom Foundation", "axiom-rules-engine"),
-    "policyengine": ("PolicyEngine", "PolicyEngine", "policyengine"),
-    "taxsim": ("TAXSIM", "NBER", "taxsim"),
-    "taxcalc": ("Tax-Calculator", "Tax-Calculator maintainers, PSLmodels", "taxcalc"),
-    "euromod": ("EUROMOD", NOT_RECORDED, "euromod"),
-    "gettsim": ("GETTSIM", NOT_RECORDED, "gettsim"),
-}
+# What the report file is to each run it yields (`Source.role`).
+SOURCE_ROLE = "the report crosscheck read"
+# `Value.producer` on every exported value: the exporter reads nothing that says, value by
+# value, whether an engine returned the number or code around it computed it.
+PRODUCER = "not_stated"
+# The engine name a report gives PolicyEngine; its registry id depends on the country
+# package the report names (see `_policyengine_id`).
+POLICYENGINE = "policyengine"
 
 # Disposition word (axiom_oracles.dispositions.v1) -> ledger cause kind.
 DISPOSITION_KINDS: dict[str, CauseKind] = {
@@ -172,8 +188,9 @@ class ExportResult:
 @dataclass(frozen=True)
 class RoundTrip:
     """The result of `check_round_trip`. `ok` is True only when nothing is missing, there are
-    no extra rows, no verdict differs, and every stated count that can be recomputed equals
-    its recomputed value."""
+    no extra rows, no verdict differs, every stated count that can be recomputed equals its
+    recomputed value, and every top-level error row matches (`error_row_differences` is
+    empty)."""
 
     ok: bool
     values_in_report: int
@@ -185,6 +202,8 @@ class RoundTrip:
     legs: tuple[dict, ...]
     match_count_recomputable: bool
     notes: tuple[str, ...]
+    error_rows_in_report: int = 0  # rows of the report's top-level `errors`
+    error_row_differences: tuple[str, ...] = ()  # error rows with no matching error
 
 
 # Small helpers
@@ -287,12 +306,26 @@ def _load(report: Mapping | str | Path) -> tuple[Mapping[str, Any], str | None]:
     return loaded, hashlib.sha256(data).hexdigest()
 
 
+def _known_engine(name: Any) -> bool:
+    """True when the registry resolves a report's engine name to a model."""
+    return name == POLICYENGINE or (isinstance(name, str) and registry_id(TOOL, name) is not None)
+
+
+def _require_known_engine(name: Any, where: str) -> None:
+    if not _known_engine(name):
+        raise UnsupportedReport(
+            "unknown_engine", f"{where} {name!r}: the registry holds no model for it"
+        )
+
+
 def classify_report(report: Mapping[str, Any]) -> str:
     """Return the report's shape ("pairwise", "pairwise_rows" or "grid"), or raise.
 
     Raises `UnsupportedReport` with reason "not_a_report" for a file without an
     axiom.comparison_report schema version, and with another reason for a report whose
-    shape this exporter does not read.
+    shape this exporter does not read. A non-empty top-level `errors` is read only in a
+    pairwise report, whose case rows list each engine's errors (report.py `_case_rows`,
+    `_error_rows`); any other shape that lists errors raises ("report_errors").
     """
     version = report.get("schema_version")
     if not isinstance(version, str) or not version.startswith(REPORT_SCHEMA_PREFIX):
@@ -309,14 +342,12 @@ def classify_report(report: Mapping[str, Any]) -> str:
         if not isinstance(left, str) or not isinstance(right, str):
             raise UnsupportedReport("malformed_engines", "engines.left or engines.right")
         for name in (left, right):
-            if name not in KNOWN_ENGINES:
-                raise UnsupportedReport("unknown_engine", f"engine {name!r}")
+            _require_known_engine(name, "engine")
         if left == right:
             raise UnsupportedReport("same_engine_both_sides", f"engine {left!r}")
     else:
         for name, variable in _grid_engines(report).items():
-            if name not in KNOWN_ENGINES:
-                raise UnsupportedReport("unknown_engine", f"engine {name!r}")
+            _require_known_engine(name, "engine")
             if not isinstance(variable, str):
                 raise UnsupportedReport("non_text_engine_variable", f"engines[{name!r}]")
     _concept_rows(report)  # raises for a comparison word the exporter does not read
@@ -325,17 +356,32 @@ def classify_report(report: Mapping[str, Any]) -> str:
     cases = report["cases"]
     if not isinstance(cases, list) or not all(isinstance(r, Mapping) for r in cases):
         raise UnsupportedReport("malformed_cases", "cases is not a list of objects")
-    if report.get("errors"):
-        raise UnsupportedReport("report_errors", "the report lists run-level errors")
+    errors = report.get("errors")
+    if errors is not None and (
+        not isinstance(errors, list) or not all(isinstance(r, Mapping) for r in errors)
+    ):
+        raise UnsupportedReport("malformed_errors", "errors is not a list of objects")
     if not pairwise:
+        _refuse_errors_outside_case_rows(errors)
         return "grid"
     if any("stage" in r and "matched" in r for r in cases):
         raise UnsupportedReport("stage_rows", "case rows hold stage verdicts, not values")
     if any("left_engine" in r for r in cases) or not cases:
         return "pairwise"
     if all(left in r and right in r and "match" in r for r in cases):
+        _refuse_errors_outside_case_rows(errors)
         return "pairwise_rows"
     raise UnsupportedReport("unknown_case_rows", "case rows of no known pairwise shape")
+
+
+def _refuse_errors_outside_case_rows(errors: Any) -> None:
+    """A grid or row grid has no case-row error lists, so its errors have nothing to match."""
+    if errors:
+        raise UnsupportedReport(
+            "report_errors",
+            "the report lists run-level errors, and its case rows do not say which case and "
+            "engine each belongs to",
+        )
 
 
 # Internal model of what a report holds
@@ -665,6 +711,17 @@ def _read_pairwise(
                     all_mismatch_rows.append(item)
         _bindings_from_metadata(held, case, metadata, left, right)
 
+    for i, item in enumerate(report.get("errors") or []):
+        # report.py `_error_rows` writes one row per case, side and error; a dashboard copy
+        # keeps them all even when it cuts case rows (`_slim_report_for_dashboard`), so a
+        # row can name a case whose values the report no longer holds.
+        case = _case_id(item.get("case_id"), f"errors[{i}]")
+        if case not in seen_rows:
+            raise UnsupportedReport(
+                "error_row_without_case_row",
+                f"errors[{i}] names case {case!r}, which the report holds no case row for",
+            )
+
     for i, item in enumerate(top_rows):
         if "output" in item:
             raise UnsupportedReport("output_within_concept", f"mismatches[{i}]")
@@ -829,7 +886,7 @@ def _engine_binding_aliases(report: Mapping[str, Any]) -> dict[str, tuple]:
             name = output
         elif isinstance(outputs, list) and len(outputs) == 1 and isinstance(outputs[0], str):
             name = outputs[0]
-        if name is not None and engine in KNOWN_ENGINES:
+        if name is not None and _known_engine(engine):
             found.append(Alias(tool=_model_id(engine, report), name=name))
     return {concept: tuple(found)} if found else {}
 
@@ -993,7 +1050,15 @@ def _read_grid(report: Mapping[str, Any], held: _Held) -> None:
 
 
 def _model_id(name: str, report: Mapping[str, Any]) -> str:
-    return _policyengine_id(report) if name == "policyengine" else name
+    """The registry id of a report's engine name; raises for a name it cannot resolve."""
+    if name == POLICYENGINE:
+        return _policyengine_id(report)
+    model_id = registry_id(TOOL, name)
+    if model_id is None:
+        raise UnsupportedReport(
+            "unknown_engine", f"engine {name!r}: the registry holds no model for it"
+        )
+    return model_id
 
 
 def _policyengine_id(report: Mapping[str, Any]) -> str:
@@ -1181,13 +1246,13 @@ def _build(
         uri=source_uri,
         sha256=file_sha,
         schema_version=report.get("schema_version"),
+        role=SOURCE_ROLE,
     )
     produced_at = _produced_at(report)
 
     runs: dict[str, Run] = {}
     engine_runs: dict[str, str] = {}
-    releases: dict[str, set[str]] = {}
-    model_of: dict[str, str] = {}  # model id -> engine name
+    releases: dict[str, set[str]] = {}  # registry model id -> releases its runs state
     for column in held.columns:
         name = held.engine_name[column]
         model_id = _model_id(name, report)
@@ -1202,19 +1267,15 @@ def _build(
             engines=links,
             switches=tuple(switches),
             rows_complete=held.evidence == "full",
-            source=source,
+            sources=(source,),
             produced_at=produced_at,
             note=f"axiom-oracles report column {column!r}" if column != name else "",
         )
         engine_runs[column] = run_id
-        model_of[model_id] = name
         releases.setdefault(model_id, set())
         if release is not None:
             releases[model_id].add(release)
-    models = [
-        _model(model_id, name, tuple(sorted(releases[model_id])))
-        for model_id, name in model_of.items()
-    ]
+    models = [known_model(model_id, sorted(found)) for model_id, found in releases.items()]
     if len({r.id for r in runs.values()}) != len(runs):
         raise UnsupportedReport("run_id_collision", "two engine columns clean to one run id")
 
@@ -1247,6 +1308,7 @@ def _build(
             quantity=concept,
             run=runs[column].id,
             raw=_raw(raw_value),
+            producer=PRODUCER,
         )
         where = f"case {case!r}, concept {concept!r}, engine {column!r}"
         if errors:
@@ -1331,26 +1393,6 @@ def _build(
     )
 
 
-def _model(model_id: str, name: str, releases: tuple[str, ...]) -> Model:
-    model_name, maintainer, family = KNOWN_ENGINES[name]
-    note = ""
-    if name == "policyengine":
-        family = model_id
-        if model_id == "policyengine":
-            note = "The report does not state which PolicyEngine country package ran."
-        else:
-            model_name = f"PolicyEngine {model_id.rsplit('-', 1)[1].upper()}"
-    return Model(
-        id=model_id,
-        name=model_name,
-        kind=ModelKind.rules_model,
-        maintainer=maintainer,
-        engine=family,
-        releases=releases,
-        note=note,
-    )
-
-
 def _stated_counts(
     report: Mapping[str, Any], shape: str, right: str, single_leg: bool
 ) -> tuple[int | None, int | None, int | None]:
@@ -1425,6 +1467,7 @@ def _ledger(
             case_id=case,
             policy_world=held.world_of[left],
             quantity=concept,
+            run=None,  # a disposition explains the difference between the leg's two runs
         )
         group["cells"][(case, held.world_of[left], concept)] = cell
     entries = []
@@ -1455,7 +1498,7 @@ def _expected_value(
     value: Value | None, report_value: Any, errors: tuple[str, ...] | None, quantity: Quantity
 ) -> bool:
     """True when the row holds exactly what the exporter's rules make of the report value."""
-    if value is None or value.raw != _raw(report_value):
+    if value is None or value.raw != _raw(report_value) or value.producer != PRODUCER:
         return False
     if errors:
         return (
@@ -1549,6 +1592,54 @@ def _walk_report(
     return values, errors, verdicts
 
 
+def _error_row_differences(
+    report: Mapping[str, Any],
+    shape: str,
+    errored: Mapping[tuple[str, str], set[str | None]],
+    run_of: Mapping[str, str],
+) -> tuple[int, list[str]]:
+    """Check each row of the report's top-level `errors` against its case row and the rows.
+
+    report.py `_error_rows` writes one row `{case_id, side, engine, error}` per case, side and
+    error, from the same lists `_case_rows` writes as `left_errors` and `right_errors`. So
+    each error row must match one error its case row lists on that side, for the engine that
+    side names (two equal rows need two equal errors), and the table must hold a value of that
+    case and that engine's run with status `error` whose `status_detail` joins that side's
+    errors. `errored` maps (case, run) to the status details of the run's error-status values
+    in the case. Returns the number of error rows and one sentence per row that does not match.
+    """
+    error_rows = report.get("errors") or []
+    if not isinstance(error_rows, list):
+        return 0, ["the report's errors is not a list"]
+    first_rows: dict[str, Mapping[str, Any]] = {}
+    for row in report.get("cases") or []:
+        if isinstance(row, Mapping):
+            first_rows.setdefault(str(row.get("case_id")), row)
+    listed: Counter = Counter()
+    if shape == "pairwise":
+        for case, row in first_rows.items():
+            for side in ("left", "right"):
+                for error in row.get(f"{side}_errors") or []:
+                    listed[(case, side, _raw(row.get(f"{side}_engine")), _raw(error))] += 1
+    differences: list[str] = []
+    for i, item in enumerate(error_rows):
+        if not isinstance(item, Mapping):
+            differences.append(f"errors[{i}] is not an object")
+            continue
+        case, side, engine = str(item.get("case_id")), item.get("side"), item.get("engine")
+        label = f"errors[{i}] (case {case!r}, side {side!r}, engine {engine!r})"
+        key = (case, side, _raw(engine), _raw(item.get("error")))
+        if side not in ("left", "right") or listed[key] == 0:
+            differences.append(f"{label} matches no error its case row lists")
+            continue
+        listed[key] -= 1
+        joined = "; ".join(str(e) for e in first_rows[case].get(f"{side}_errors") or [])
+        run = run_of.get(engine) if isinstance(engine, str) else None
+        if run is None or joined not in errored.get((case, run), set()):
+            differences.append(f"{label}: no value row of that engine holds the error")
+    return len(error_rows), differences
+
+
 def check_round_trip(
     report: Mapping[str, Any], result: ExportResult, *, table: Table | None = None
 ) -> RoundTrip:
@@ -1558,8 +1649,10 @@ def check_round_trip(
     value up in the table (by case, quantity and the run of its engine column), recomputes
     every comparison the report records with `crosscheck.tolerance.agree` under the table's
     tolerance profile `result.profile_id`, and, when the evidence is full, recomputes the
-    counts the report's summary states (per leg, and for a grid also in total). Pass a table
-    read back from a store to prove the stored rows.
+    counts the report's summary states (per leg, and for a grid also in total). A value row
+    must also carry `producer="not_stated"`. Each row of the report's top-level `errors` must
+    match an error its case row lists and a value row with status `error` (see
+    `_error_row_differences`). Pass a table read back from a store to prove the stored rows.
     """
     table = table if table is not None else result.table
     columns = list(result.engine_runs)
@@ -1568,12 +1661,16 @@ def check_round_trip(
     profile = table.tolerance_profile(result.profile_id)
     run_ids = set(run_of.values())
     rows: dict[tuple[str, str, str], Value] = {}
+    errored: dict[tuple[str, str], set[str | None]] = {}
     row_count = 0
     for value in table.values:
         if value.run in run_ids:
             rows[(value.case_id, value.quantity, value.run)] = value
             row_count += 1
+            if value.status is ValueStatus.error:
+                errored.setdefault((value.case_id, value.run), set()).add(value.status_detail)
     report_values, report_errors, report_verdicts = _walk_report(report, result.shape, columns)
+    error_rows, error_differences = _error_row_differences(report, result.shape, errored, run_of)
 
     missing: list[str] = []
     used: set[tuple[str, str, str]] = set()
@@ -1643,7 +1740,7 @@ def check_round_trip(
         legs_out.append(entry)
 
     checked = totals[0]
-    ok = not missing and extra_rows == 0 and not differences and counts_ok
+    ok = not missing and extra_rows == 0 and not differences and counts_ok and not error_differences
     if extra_rows:
         notes.append(
             f"{extra_rows} value rows of this export's runs trace to nothing in the report"
@@ -1660,6 +1757,8 @@ def check_round_trip(
         legs=tuple(legs_out),
         match_count_recomputable=recomputable,
         notes=tuple(notes),
+        error_rows_in_report=error_rows,
+        error_row_differences=tuple(error_differences),
     )
 
 
@@ -1746,6 +1845,8 @@ def census_file(path: str | Path, work_dir: str | Path) -> dict[str, Any]:
             "extra_rows": trip.extra_rows,
             "comparisons_checked": trip.comparisons_checked,
             "verdict_differences": len(trip.verdict_differences),
+            "error_rows": trip.error_rows_in_report,
+            "error_row_differences": len(trip.error_row_differences),
         },
         match_count_recomputable=trip.match_count_recomputable,
         legs=[
@@ -1816,6 +1917,7 @@ def summary_lines(result: ExportResult, trip: RoundTrip) -> list[str]:
         f"missing {len(trip.missing)}, extra rows {trip.extra_rows}",
         f"comparisons checked {trip.comparisons_checked}, verdict differences "
         f"{len(trip.verdict_differences)}",
+        f"error rows {trip.error_rows_in_report}, unmatched {len(trip.error_row_differences)}",
     ]
     for leg in trip.legs:
         who = f"{leg['left_run']} against {leg['right_run']}" if "left_run" in leg else "report"
@@ -1830,5 +1932,6 @@ def summary_lines(result: ExportResult, trip: RoundTrip) -> list[str]:
     lines += [f"note: {n}" for n in trip.notes]
     lines += [f"missing: {m}" for m in trip.missing[:20]]
     lines += [f"verdict differs: {d}" for d in trip.verdict_differences[:20]]
+    lines += [f"error row unmatched: {d}" for d in trip.error_row_differences[:20]]
     lines.append("round trip ok" if trip.ok else "round trip FAILED")
     return lines

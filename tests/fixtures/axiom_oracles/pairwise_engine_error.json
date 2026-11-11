@@ -1,0 +1,377 @@
+{
+ "schema_version": "axiom.comparison_report.v2.1",
+ "suite": "invented-engine-error",
+ "population": "invented-errors",
+ "engines": {
+  "left": "policyengine",
+  "right": "axiom"
+ },
+ "locales": [
+  "ZZ-UK"
+ ],
+ "scope": {
+  "geoid": "ZZ-UK",
+  "type": "country"
+ },
+ "provenance": {
+  "generated_at": "2031-09-10T11:12:13Z",
+  "run_kind": "manual",
+  "oracle": {
+   "name": "policyengine",
+   "policyengine_uk": "0.7.7"
+  }
+ },
+ "concepts": [
+  {
+   "id": "zz:invented/aid#amount",
+   "comparison": "amount",
+   "tolerance": 0.5,
+   "relative_tolerance": 0,
+   "description": "Invented aid amount",
+   "category": "cash",
+   "components": [],
+   "parent": null,
+   "priority": "high"
+  },
+  {
+   "id": "zz:invented/aid#is_eligible",
+   "comparison": "eligibility",
+   "tolerance": 0,
+   "relative_tolerance": 0,
+   "description": "Invented aid eligibility",
+   "category": "cash",
+   "components": [],
+   "parent": null,
+   "priority": "high"
+  }
+ ],
+ "case_count": 4,
+ "summary": {
+  "match_count": 3,
+  "mismatch_count": 5,
+  "comparison_count": 8,
+  "error_count": 3,
+  "errors_by_engine": {
+   "policyengine": 1,
+   "axiom": 2
+  },
+  "engine_error_count": 4,
+  "dispositioned": {
+   "counts": {},
+   "dispositions_file": "dispositions/invented-engine-error.yaml",
+   "schema_version": "axiom_oracles.dispositions.v1"
+  }
+ },
+ "mismatches": [
+  {
+   "case_id": "err-case-2",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/aid#amount",
+   "description": "Invented aid amount",
+   "kind": "engine_error",
+   "left": null,
+   "right": 40.0,
+   "difference": null,
+   "tolerance": 0.5,
+   "relative_tolerance": 0,
+   "parent": null,
+   "error": {
+    "engine": "policyengine",
+    "side": "left",
+    "signature": "invented-signal",
+    "messages": [
+     "policyengine-crash:invented-signal"
+    ]
+   },
+   "disposition": {
+    "id": "invented-crash",
+    "disposition": "upstream_engine_gap"
+   }
+  },
+  {
+   "case_id": "err-case-2",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/aid#is_eligible",
+   "description": "Invented aid eligibility",
+   "kind": "engine_error",
+   "left": null,
+   "right": false,
+   "difference": null,
+   "tolerance": 0,
+   "relative_tolerance": 0,
+   "parent": null,
+   "error": {
+    "engine": "policyengine",
+    "side": "left",
+    "signature": "invented-signal",
+    "messages": [
+     "policyengine-crash:invented-signal"
+    ]
+   }
+  },
+  {
+   "case_id": "err-case-3",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/aid#amount",
+   "description": "Invented aid amount",
+   "kind": "engine_error",
+   "left": 55.0,
+   "right": 55.0,
+   "difference": 0.0,
+   "tolerance": 0.5,
+   "relative_tolerance": 0,
+   "parent": null,
+   "error": {
+    "engine": "axiom",
+    "side": "right",
+    "signature": "unclassified",
+    "messages": [
+     "invented rules failure",
+     "invented second failure"
+    ]
+   }
+  },
+  {
+   "case_id": "err-case-3",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/aid#is_eligible",
+   "description": "Invented aid eligibility",
+   "kind": "engine_error",
+   "left": true,
+   "right": true,
+   "difference": null,
+   "tolerance": 0,
+   "relative_tolerance": 0,
+   "parent": null,
+   "error": {
+    "engine": "axiom",
+    "side": "right",
+    "signature": "unclassified",
+    "messages": [
+     "invented rules failure",
+     "invented second failure"
+    ]
+   }
+  },
+  {
+   "case_id": "err-case-4",
+   "scenario": null,
+   "yearly_earned_income": null,
+   "ages": null,
+   "pregnant_head": null,
+   "concept": "zz:invented/aid#amount",
+   "description": "Invented aid amount",
+   "kind": "amount_difference",
+   "left": 10.0,
+   "right": 20.0,
+   "difference": -10.0,
+   "tolerance": 0.5,
+   "relative_tolerance": 0,
+   "parent": null
+  }
+ ],
+ "errors": [
+  {
+   "case_id": "err-case-2",
+   "side": "left",
+   "engine": "policyengine",
+   "error": "policyengine-crash:invented-signal"
+  },
+  {
+   "case_id": "err-case-3",
+   "side": "right",
+   "engine": "axiom",
+   "error": "invented rules failure"
+  },
+  {
+   "case_id": "err-case-3",
+   "side": "right",
+   "engine": "axiom",
+   "error": "invented second failure"
+  }
+ ],
+ "cases": [
+  {
+   "case_id": "err-case-1",
+   "left_engine": "policyengine",
+   "right_engine": "axiom",
+   "left_errors": [],
+   "right_errors": [],
+   "metadata": {
+    "dataset": "invented://dataset/v1",
+    "population": "invented-errors"
+   },
+   "match_rate": 100.0,
+   "mismatches": [],
+   "matches": [
+    {
+     "concept": "zz:invented/aid#amount",
+     "left": 100.0,
+     "right": 100.2
+    },
+    {
+     "concept": "zz:invented/aid#is_eligible",
+     "left": true,
+     "right": true
+    }
+   ]
+  },
+  {
+   "case_id": "err-case-2",
+   "left_engine": "policyengine",
+   "right_engine": "axiom",
+   "left_errors": [
+    "policyengine-crash:invented-signal"
+   ],
+   "right_errors": [],
+   "metadata": {
+    "dataset": "invented://dataset/v1",
+    "population": "invented-errors"
+   },
+   "match_rate": 0.0,
+   "mismatches": [
+    {
+     "concept": "zz:invented/aid#amount",
+     "description": "Invented aid amount",
+     "kind": "engine_error",
+     "left": null,
+     "right": 40.0,
+     "difference": null,
+     "tolerance": 0.5,
+     "relative_tolerance": 0,
+     "parent": null,
+     "error": {
+      "engine": "policyengine",
+      "side": "left",
+      "signature": "invented-signal",
+      "messages": [
+       "policyengine-crash:invented-signal"
+      ]
+     }
+    },
+    {
+     "concept": "zz:invented/aid#is_eligible",
+     "description": "Invented aid eligibility",
+     "kind": "engine_error",
+     "left": null,
+     "right": false,
+     "difference": null,
+     "tolerance": 0,
+     "relative_tolerance": 0,
+     "parent": null,
+     "error": {
+      "engine": "policyengine",
+      "side": "left",
+      "signature": "invented-signal",
+      "messages": [
+       "policyengine-crash:invented-signal"
+      ]
+     }
+    }
+   ],
+   "matches": []
+  },
+  {
+   "case_id": "err-case-3",
+   "left_engine": "policyengine",
+   "right_engine": "axiom",
+   "left_errors": [],
+   "right_errors": [
+    "invented rules failure",
+    "invented second failure"
+   ],
+   "metadata": {
+    "dataset": "invented://dataset/v1",
+    "population": "invented-errors"
+   },
+   "match_rate": 0.0,
+   "mismatches": [
+    {
+     "concept": "zz:invented/aid#amount",
+     "description": "Invented aid amount",
+     "kind": "engine_error",
+     "left": 55.0,
+     "right": 55.0,
+     "difference": 0.0,
+     "tolerance": 0.5,
+     "relative_tolerance": 0,
+     "parent": null,
+     "error": {
+      "engine": "axiom",
+      "side": "right",
+      "signature": "unclassified",
+      "messages": [
+       "invented rules failure",
+       "invented second failure"
+      ]
+     }
+    },
+    {
+     "concept": "zz:invented/aid#is_eligible",
+     "description": "Invented aid eligibility",
+     "kind": "engine_error",
+     "left": true,
+     "right": true,
+     "difference": null,
+     "tolerance": 0,
+     "relative_tolerance": 0,
+     "parent": null,
+     "error": {
+      "engine": "axiom",
+      "side": "right",
+      "signature": "unclassified",
+      "messages": [
+       "invented rules failure",
+       "invented second failure"
+      ]
+     }
+    }
+   ],
+   "matches": []
+  },
+  {
+   "case_id": "err-case-4",
+   "left_engine": "policyengine",
+   "right_engine": "axiom",
+   "left_errors": [],
+   "right_errors": [],
+   "metadata": {
+    "dataset": "invented://dataset/v1",
+    "population": "invented-errors"
+   },
+   "match_rate": 50.0,
+   "mismatches": [
+    {
+     "concept": "zz:invented/aid#amount",
+     "description": "Invented aid amount",
+     "kind": "amount_difference",
+     "left": 10.0,
+     "right": 20.0,
+     "difference": -10.0,
+     "tolerance": 0.5,
+     "relative_tolerance": 0,
+     "parent": null
+    }
+   ],
+   "matches": [
+    {
+     "concept": "zz:invented/aid#is_eligible",
+     "left": false,
+     "right": false
+    }
+   ]
+  }
+ ]
+}

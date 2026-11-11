@@ -18,6 +18,8 @@
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -50,7 +52,7 @@
    "sha256": "4aed3317ab74ccc549e9d78e4c9ca02c2875d509d5983560e06d4b999ad0b177",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "17cf1bf86d38b8b9f38811e77db0c7b66d2edf29f2856cca1d8c54b826dcb00f"
+   "table_sha256": "488b2ff594bbea0b5fcae90af6f982d41d814954de07a9f3f55bc5b59a898ae0"
   },
   {
    "name": "axiom-euromod-be-capital-income-tax.json",
@@ -69,6 +71,8 @@
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -101,13 +105,15 @@
    "sha256": "47834b070dbf64738eb6ec4c19f52c7f49f91687bc9786158a8974b96da36ffa",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "bd70e2d81a34eaab6844036c923fcc9aa0dd2a3bbff47c3efd640c80c4a046c9"
+   "table_sha256": "f30b65910e41b1c5b8fd8664f698e1e3e79c93fe94f91fe31e8c5ea019959173"
   },
   {
    "counts": {
     "bindings": 14,
     "cases": 7,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -140,13 +146,15 @@
    "sha256": "d5ce0e1f481fbbf56a74585ab977ae9874b36f9a2d0ec5566b2e0ebd728aeddf",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "24a400bbab2b24ebd8cf2003560ca3cd7aabb4c2d803ea2a0d7d0bd27d19852f"
+   "table_sha256": "6bfe282cc8837b235d4032cd9f96579439c6e1d3425d3a2f1ed69ba5bf8ecbb5"
   },
   {
    "counts": {
     "bindings": 34,
     "cases": 17,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -179,7 +187,7 @@
    "sha256": "cef61c2d139046b3dd93b7669ec8468720032b3f13e4d804ee2dddae1c0e1094",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "28c8e6795613439744f7af986084dbad20fd9cb2a418d7a0f236b98ce97427a1"
+   "table_sha256": "596048db22028b5c3969683f55be82db927c863dfef30688f15fe2fb48a5cc8b"
   },
   {
    "name": "axiom-euromod-be-family-child-benefit-brussels-same-age-household.json",
@@ -204,6 +212,8 @@
     "bindings": 16,
     "cases": 8,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -236,13 +246,15 @@
    "sha256": "acd0a61d6d104a84d1c02266318a1172d66b715b8698be1d4d9854b11c51da58",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "95b9b4a6cf982a6070343be0bbb6bcc8cb57d3e8f2c2c8c2a6e332f92e0509ad"
+   "table_sha256": "c60630d29af38fe71f649e9d760f12a0935e5a25bc7ad95cdb3e0e1ecd52cafd"
   },
   {
    "counts": {
     "bindings": 14,
     "cases": 7,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -275,7 +287,7 @@
    "sha256": "66bf0d0ba9d149484acfbc06f153ed29b72a52ba594714593c3351e4fecaf073",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "56c38ecff3f6b1421fdd03397764cf020f85b8518ca1b420c6f4df2ceceb6a8b"
+   "table_sha256": "bc8795cf487effbe34322267484fc45dc31255982b9f52edb1d4da05494eb656"
   },
   {
    "name": "axiom-euromod-be-flemish-social-protection-premium.json",
@@ -294,6 +306,8 @@
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -326,7 +340,7 @@
    "sha256": "2091cbff76ee963826333d614d635eef6a763a93a294275034b9dd5df30b3661",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "69f3259b9276c73df169fc8b07808bf54f6a224f130c8dda1265fb5b123694e2"
+   "table_sha256": "ec87827008540740d590c4be472cf0aafca666078fd8588071c801ba82fdfad0"
   },
   {
    "name": "axiom-euromod-be-maternity-leave.json",
@@ -345,6 +359,8 @@
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 10,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -377,7 +393,7 @@
    "sha256": "85f225f912bd964684e1192c2c6452f934585364f0865499eb436b84dcaffadb",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "7568cf8342af1c9f3a146b66491bebe31902710f5b706ec1777b2c977902e1aa"
+   "table_sha256": "4f8e91932fe78202cfe3f99b7633d02ea23f5d9880a6b540babe0715bf53d8a8"
   },
   {
    "name": "axiom-euromod-be-property-tax.json",
@@ -396,6 +412,8 @@
     "bindings": 10,
     "cases": 5,
     "comparisons_checked": 9,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -428,13 +446,15 @@
    "sha256": "b45f3fe27e7fcd47924a48b7b0ded305707bd190908d4534fd5a02cae801a73c",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "597cb0a69071c64faf3743c0bfbcad49bf3f06718f057f2be66da103a25884f0"
+   "table_sha256": "5e6742cfd2f342d486f6eb3bf21c6d04e2e1d7deb9b08d2e54e5231065b523ee"
   },
   {
    "counts": {
     "bindings": 14,
     "cases": 7,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -467,13 +487,15 @@
    "sha256": "bb7098e272306021b56a12c33a6bfb909a99473ee039d7882f0d7e22015891bc",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "f746363fe15c819dccba2f0e8c80c3fe2d3446c01be65ae95c7b9700a1a301ab"
+   "table_sha256": "1c4fd7b5b879dea8756b2a64311b6414c1fd1c6c1ed1d255548aab68db08adf2"
   },
   {
    "counts": {
     "bindings": 10,
     "cases": 5,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -506,7 +528,7 @@
    "sha256": "3e1e6949a65708530ab29e062f3c32242c8f926540597de3e23e11f6067b9662",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "dcd9b304999631acd96dd1970393cc694d5e1b36e230685201668b95fda9ef90"
+   "table_sha256": "1d59b8bc5ab63bb4c6cba92830867f5423de07bcc3b576fd849af79a7ec46585"
   },
   {
    "name": "axiom-euromod-be-social-assistance.json",
@@ -519,6 +541,8 @@
     "bindings": 14,
     "cases": 7,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 4,
     "missing": 0,
@@ -551,7 +575,7 @@
    "sha256": "0ae9fa2add4cdc6b5f0082e343c847d7ce0d01c6dac4410b77b35397436160de",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "b45b29db72734f5b69002911a2bd3bf1d2cd29a4dc88a96f6972326b96965f72"
+   "table_sha256": "df4aa0e73882019350631128d3125a03c30573ebb5346151a8080f2b0bf677c5"
   },
   {
    "name": "axiom-euromod-be-study-allowance.json",
@@ -564,6 +588,8 @@
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 4,
     "missing": 0,
@@ -596,13 +622,15 @@
    "sha256": "13e3edc696ddef96280f8b759dc06fbb949d8ce5c0b9450ddc3767cb0798bbb5",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "592c605443bdfdb1f5b5e027877afc19d44a1e22d7de47bca727580a1c21a3ce"
+   "table_sha256": "d1fe1b46e511005b10a07e5fbc389e200f012d28d5cb697338131f75cb45ff08"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -635,7 +663,7 @@
    "sha256": "b317f28a6fe9d129415ebc0c86e5d14a047bf5b5b4f632bce588e106adb69f88",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "6fd439ef3c92c02c689863416dc8a419556c388b996ddf1a0256fcd1126bb09a"
+   "table_sha256": "654448170746708e992675d35d63f1afc9ef03be575622c66dcf00da785fdda8"
   },
   {
    "name": "axiom-euromod-be-worker-disposable-income-list.json",
@@ -648,6 +676,8 @@
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -680,13 +710,15 @@
    "sha256": "fa9748943283c027ceb63f90850ae6fe80da97eccd09e7b56dd89114026a8a48",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "7408782359717fb3b0d0f194037787d474240bdc8a58422e4dfcd832bdde3129"
+   "table_sha256": "e3712f08ea3b6efa758b658d19c61d12b5e0521d280381fbc44c2f857dcbb369"
   },
   {
    "counts": {
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -719,7 +751,7 @@
    "sha256": "d098027482d74f6a6fee509c1cf21337d769f0d01218344c0a61fae2ef690c9d",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "cc358260ffe4df58e528536d7ee7dd683b8aaa20cb6f19463fc7a72a4e255800"
+   "table_sha256": "e4e01d409a140977513bde739cd18b75227bd0dda73248d5367b9373ce9236ab"
   },
   {
    "name": "axiom-euromod-be-worker-tax-income-list.json",
@@ -732,6 +764,8 @@
     "bindings": 0,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -764,13 +798,15 @@
    "sha256": "c403ee3d0289d5a7bd9ae85ee69bbbd05eef1b048a02a1950691272e05363d58",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "c86ff0ae9ae73d54fb9455d34b8f9e8455aab4381cd4b2aa4584f32858e7dc2e"
+   "table_sha256": "362a6c974ae5e9862659e83883d5aba366223226f53b93c494926b7c98275f39"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -803,13 +839,15 @@
    "sha256": "72cd4704a53d6486a4dadfdf3eb362009affa060acde0ea205ef66135666235a",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "555403e75727655dc9424dc58a0ea8adfa53be5eb4799e0e6c9da96386f9d97d"
+   "table_sha256": "632c5f63a6ecb497092ba198c3fcf7c3aa8033e1ba39dd7380a2740a65867ab9"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -842,13 +880,15 @@
    "sha256": "80771304e541efd91760004f486d84929c9a899ffe26ab9826b333c16ac6ca4f",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "0ec545070e20c15e334c9110b884354ffde10d347402494cad2e31492cafab3e"
+   "table_sha256": "705d74a3461c7cd718f2a1ec2c1be8a5dc7ce77673271c348144b06305447638"
   },
   {
    "counts": {
     "bindings": 10,
     "cases": 5,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -881,13 +921,15 @@
    "sha256": "b455403a7b5ba442f069b09ca60961de6b82119f2465e3c1e54a9e9bd3bd682a",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "a6705f67d4d0cd36b2821912edd6095778f1cbef9968d0a74b826d851a98cd5a"
+   "table_sha256": "6cc56f7a6cf8a0cbe07b2b4a190d1e8acd239dc9e03360098fc902e26f39b2ea"
   },
   {
    "counts": {
     "bindings": 10,
     "cases": 5,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -920,13 +962,15 @@
    "sha256": "9731ab0663d96d8e35638a3448e5d75882c8c2a0244afd5ceae26c77ce339c73",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "f76917452c8d11467ac09e001fcba94a98f7548ca85f76fea825de33ed031d59"
+   "table_sha256": "3f163df4a3c085189e1e6ead4e906dd266ef2ab39aecc2d2c56cabb8b6f5a479"
   },
   {
    "counts": {
     "bindings": 16,
     "cases": 8,
     "comparisons_checked": 8,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -959,13 +1003,15 @@
    "sha256": "97494f136cb8a8dddcd52e86b7cf9f03fd6e38262c18fe210c977ea0ce079e19",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "1cb0362c1f2d69166369d92431947c38c1676d0d7caafaa3e1560d763730d6cb"
+   "table_sha256": "557b9f91435dc95fc38fb87392c40fe0a2091fe05645cff07fd9848cf675b191"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -998,13 +1044,15 @@
    "sha256": "1e44a1323630c17f38cca43929c714568ff1ce9dde971808e82f128625bd4bf7",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "a79d24820aeb09bd03c184d368381301c4315d86bbeac38d27f4f5decd863de6"
+   "table_sha256": "2bc2e002ea7bcc5e0e1391c3c4c8b9bce837f9ef9f22143eb287147ad5ca120c"
   },
   {
    "counts": {
     "bindings": 10,
     "cases": 5,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1037,13 +1085,15 @@
    "sha256": "dc981339f9f99057bf56bf0851b0b7b7503756a14589b58e5763530923b27ed2",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "20e154340bdcf6695272cde7465d750b1969ad67ed695e7f436bea1a53f12c23"
+   "table_sha256": "28e2c5fe483730efcbe66e2b99db70e5f0e6da2b3b78420c249d98184bd14a5c"
   },
   {
    "counts": {
     "bindings": 12,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1076,13 +1126,15 @@
    "sha256": "166c0af268e3e5e3090aa8fc3e57fda624887f089eb039f6504b59e65d95d5f5",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "65559e0c0102cc6e1b7869b79d1bb03fb18d9ffe1db21ef81d75d0a52f16f6ce"
+   "table_sha256": "6148135215676ada9c4e117aff7477c5cae80e5f8db748fd3c7f103ac6f0f7f2"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1115,13 +1167,15 @@
    "sha256": "fad97fe2f2ef18bef3e57eff825c8c6f03aa3f0219bcaa187a16967a5dca4ad1",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "017256b0d61d470437294a02c224f795c3f429f6d35ae3b7c8832daa09dfd105"
+   "table_sha256": "9316a950d0999cfc847640c321bd52b3dc452109af0b97fe1ac54d58e0492d27"
   },
   {
    "counts": {
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1154,13 +1208,15 @@
    "sha256": "ececbf3ea8570ea0eda85a26da72c7199a7afe2ac913ffb0d52d6f0c0bf4d030",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "1840789408b392d6f6944458d80240537017bf5e7f1c49fe98ff1aaac9d7684f"
+   "table_sha256": "189a5a8c12f35cf6fc1b9ba0dc3f9f000330f45d7b5f2a6250df0f1aef601fd4"
   },
   {
    "counts": {
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1193,13 +1249,15 @@
    "sha256": "97085af27d93c0f5fbc96f8356f3158447f808e5767358250b01fa49a4c164da",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "bce76d81eea47792a0dc4924a6d24509682499c903ca2428c4c0df4a31d14a13"
+   "table_sha256": "43840c125f799a79851511bec82ecc67cb7d5e2e088ccb7bf4147f85b8d15f89"
   },
   {
    "counts": {
     "bindings": 22,
     "cases": 11,
     "comparisons_checked": 11,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -1232,13 +1290,15 @@
    "sha256": "6e0f95f8ff0f781898953b5f7e29856ecd2cda01f23ef360dd22e69c1cdedcba",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "34dbea129d09a515256d3e387bad56434cd6511eef18e2c7cc637e32b11c43b0"
+   "table_sha256": "1cd804fc0ecdd7837ce66741aa24eef0a55a067b8cbf0f34e764d16bb9e233b6"
   },
   {
    "counts": {
     "bindings": 16,
     "cases": 8,
     "comparisons_checked": 10,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1271,13 +1331,15 @@
    "sha256": "8f3d2a7e96efeea732ad1baed440120e76efefe116c5f919e1563d9dc558470e",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "9c97000cbaffdd74b38a065a8ff3a07c712ecaae9ae1d3f1d04652715f6e3e3b"
+   "table_sha256": "5dc030258b0c98b9d12d65a3ba9369c0c087dbd7f3402be1396cf495710a5a8b"
   },
   {
    "counts": {
     "bindings": 12,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1310,13 +1372,15 @@
    "sha256": "e3ba7833c8974281cd870c572ee75782ca6739179b0c8708fdf2a8e99de6b095",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "5ccc1a114626d7ebeed9a386afb4247f7bc7f77335691db4c9ea84cdde8b460c"
+   "table_sha256": "717069f5c34a0eae468f4c83d2842ff501e080e1211652d909c6985526a8d69c"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 8,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1349,13 +1413,15 @@
    "sha256": "b82dc711f92d49b292a162f18d8f02053548b928368b7da13689b79efb909303",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "e576c209c843b1b3686bc88bb8c7fd6062cf4473c684c998fbfcd9df77e00098"
+   "table_sha256": "b6090178cb9ef0ea66cc1d80d33115ff495ec2807d022f088e48fb9f4dc14fa3"
   },
   {
    "counts": {
     "bindings": 2,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1388,13 +1454,15 @@
    "sha256": "342a64fff876e1d537dbc792485466886f2a9e7a9fa4818ba9f489b021b0286d",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "831c2686649c636779cc7fbc4368c99bcbdb45ab8a6434dc0248fd96846b0293"
+   "table_sha256": "c642b7292f0c99c255366b1142d3c764b9a000171989e1dc86189d2d8748ed99"
   },
   {
    "counts": {
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1427,13 +1495,15 @@
    "sha256": "8a6a43f4b8e34b72a245663e39c91dfa09d237879e216911a6781b689b0cbccb",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "e0e52f7d2a512bcf4ffb47e39ea36bea1212b2853a130d4c9c900d9c8fb55e97"
+   "table_sha256": "1b19a58626c5e6b1054f2e54ac61dbe21ee265c4461f7635272eb7a348b4f505"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1466,13 +1536,15 @@
    "sha256": "296260819ee4b526bcd6db62519a8492e369439df53a2ca095d94e17ff1b1ed8",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "1ab848ba228cbd6904c7231532aa20782ca47e819a8834ca8652f0e2ced6b6a4"
+   "table_sha256": "e7360e65f6fe4d123805e2b131037c33e5edb4dc475ba67e1f6215bbacee94ca"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 20,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1505,13 +1577,15 @@
    "sha256": "ef6e3c7cd9923336c4a5dce321446457df69503f49fa028b8da720ccfdffcab4",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "95fbebf04633076becf58a1e7bd1a20505db26793ba8a5793303c2a42c4def6a"
+   "table_sha256": "88cb8e63e41ed4b56bc594454f86e4ae8f37afffa88778c5192be9dbe968e003"
   },
   {
    "counts": {
     "bindings": 12,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1544,13 +1618,15 @@
    "sha256": "70e200223b2c75aa2f062ef8ee72badbb83435478fa98d7a90bf4f1b169cfd41",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "743ddfb47f1d71f462927c819a37d15c84d74704c22f1b447aea335d76c7ce6c"
+   "table_sha256": "39babeac440fc423ad7697e375da1b81a615098756e2b2ec4977fb25a0789eee"
   },
   {
    "counts": {
     "bindings": 12,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1583,13 +1659,15 @@
    "sha256": "ce36972b35c16db57cbdf33debf8f735877fae67d4d0e919d00de7344cf3653f",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "1a2757dd7c5edfba18ae44b62b5ee823d9a2f5f56d2a740b25aab8f58b7cadf6"
+   "table_sha256": "4f2a203b13556ab399ea53294bb365d7304fdf5034edd43c4ca4062c34260313"
   },
   {
    "counts": {
     "bindings": 14,
     "cases": 7,
     "comparisons_checked": 7,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1622,13 +1700,15 @@
    "sha256": "465d0e08b0bee6d1bd3585890bb2526ed03a8e1316b22064e3a1203d598f6903",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "3ca20b08a5fbfb691e00ec441829511238554ab50bb56e590df2ac7161e22c81"
+   "table_sha256": "2d08310473cbecfcbebea25a347084514f74e9a4ffd829f3250c72f531e64da8"
   },
   {
    "counts": {
     "bindings": 16,
     "cases": 8,
     "comparisons_checked": 8,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1661,13 +1741,15 @@
    "sha256": "85d6f699238b80adac2cce40706286ce5792490c06b13dee697aba2a4807d6c1",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "9aa586f546941d7f9a638b0036cb7f0e0b8e3b9b4d1b045afc91b0532542d411"
+   "table_sha256": "c04be3c636f0ecc6f7d0345eb609db0a6938b312304e8129c3c19ca1e78e2856"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1700,13 +1782,15 @@
    "sha256": "d6ccd892b92d31c06ee29ea73704cd13deb9276f4b0c4bedf59b6c5bcac15e63",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "5aa888780729a948a6aaa386bc8d8295e17ff089d430e2dcc1647a32293b03e1"
+   "table_sha256": "e5b1ff14d8ce35355ee2fe5ee3c4199250d33ae96c5f2f70446953f6e476798f"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1739,13 +1823,15 @@
    "sha256": "950f3624221d31e44d4ae2655b4f650c110d28d4c5eb1613d8c40d2028eaa2b4",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "88dcc926f17e6581444fd5844669002357b30f6d911796cc9278551d255b7670"
+   "table_sha256": "42b773fd45fb43a33944f0b34b2cd94b308ac1855bfea929353f4d3508e855bc"
   },
   {
    "counts": {
     "bindings": 20,
     "cases": 10,
     "comparisons_checked": 10,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1778,13 +1864,15 @@
    "sha256": "2197b67b7f851cd87bdd3748fc46af13bef26c7331fbea5839f612e88e46f5be",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "d4743ac03cf2009919c522b151beba89b171d7b0acbad4bf61fea2a7060f4f18"
+   "table_sha256": "dd2a79068164711f9925c8f85dcddd0c2b6aeca57a0f1a3466c54ce6180b270e"
   },
   {
    "counts": {
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1817,13 +1905,15 @@
    "sha256": "8b6cdfb8b90617b54415d12f441ad30d776268f90e8d70be58018cc838096d48",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "d5b294f9e41deb00768b7b82177fc2d51fbe636c7a6f45d8c46d3e5af4807ab5"
+   "table_sha256": "fec6b061ef9c76c77a2ebe9f03a918f7cebf09c8585bbee81cd706cf6271f7b6"
   },
   {
    "counts": {
     "bindings": 24,
     "cases": 12,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1856,13 +1946,15 @@
    "sha256": "ded1f39720bb98cd9b1300799e75561575bcf25462097f0bbf827c34e9d13de4",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "b4a60a28365dd61e467bd5c8ac3916b775895730d1611cbe29a883efd47459b5"
+   "table_sha256": "4fae2094f8d9e8555d57ed3d027783480b2c66ce3e7c38e6f11277fa6c48d1bc"
   },
   {
    "counts": {
     "bindings": 12,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1895,13 +1987,15 @@
    "sha256": "3a93fe5661f85f02499bb87a419f957cabc8141624ac259e2ce936c5fa16ab57",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "70ced3484ab4c6048631f48a824febd216209de446e295e8ae9057c37a606be6"
+   "table_sha256": "4d1f43412479599159fdca56248fdfc6cc5272b5d25b963bb60d285373d0840c"
   },
   {
    "counts": {
     "bindings": 20,
     "cases": 10,
     "comparisons_checked": 10,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1934,13 +2028,15 @@
    "sha256": "1447f8cbbdee9bda522f059fef4952bdde0169b863b7fb68e882d3eeffd60b8a",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "c834468f7900b8475890903febcdcfd8d74f853e0c3254dc4e8f376d318aaea2"
+   "table_sha256": "4e648ba5f23fe1adae2bd5838e618378c35f60d26cbbf21f26dbb75010d649c7"
   },
   {
    "counts": {
     "bindings": 20,
     "cases": 10,
     "comparisons_checked": 10,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -1973,13 +2069,15 @@
    "sha256": "31e06e923d4c33b7aafcd1f397cbd88a9d8cd983d0b198d1a66ac951651b5998",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "05ec1a4ace4ed90ab034337e0f7a92259ea572433c7aa2cdb3946ddcf03d1b8e"
+   "table_sha256": "2db7f821429894c284b8c9f9bfd0d15d4985dee25a57be03c216ae806373eb8e"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2012,13 +2110,15 @@
    "sha256": "0a7920cece0528bd160d202e0cb6c3a06de829369f0cd9c828533e05a2744ada",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "194fef723bc336f9d07e88b15e67d14bca3865e7faa2ad4483daf382c2cf619a"
+   "table_sha256": "80cf2063a65b7cdee32225fbc3d78b20bee01f4039a3128e11cd810a921bd2ed"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2051,13 +2151,15 @@
    "sha256": "a8698da5ff90c4ba3b68d774c5d86082f383bac1ea82c2e24c75ca40a859b5e9",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "135fa465a94d456de85dbb723260047f8499bed864cb96480e921d3388c196d4"
+   "table_sha256": "9380a787d922b41d22a2b54a332770cca1be0e2f85ec85a0d8fdb9b9ed34cec4"
   },
   {
    "counts": {
     "bindings": 2,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2090,7 +2192,7 @@
    "sha256": "9fcfc52c63c48a42adef51753d892df57237150bfcc51955ce7434e4d650e0dd",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "88a6d680ad8e66b6aa73e4a29487e19436678266942c7464de5a77b33546a23d"
+   "table_sha256": "ea1c8dee4dc7120aeb4ba8f6c0ce3955e9661252f5668d34bd50b7575ca2aae8"
   },
   {
    "name": "axiom-euromod-uk-benefit-cap.json",
@@ -2121,6 +2223,8 @@
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -2153,7 +2257,7 @@
    "sha256": "8680b5d442ed083ad3fb66ba6462348ffb5d36fbbe6da4d1eb9c3db1662b1426",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "a052c0e692798e5927e05499d79f353ac061b954f2913c6e0717eae659ec8eac"
+   "table_sha256": "8b6f28c98f408a5a659e547dfd3670e429a4e3e6c4244c6deb8fb2db5b2c8310"
   },
   {
    "name": "axiom-euromod-uk-employer-nic.json",
@@ -2172,6 +2276,8 @@
     "bindings": 10,
     "cases": 5,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -2204,7 +2310,7 @@
    "sha256": "f7f14c195225c32248ee3d7205854c13c9eb36c95926fbfca30d03333e45e011",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "6832fb0d1880670e2c226782e0689a4db25841be1ddf784c06ffcabc787075bf"
+   "table_sha256": "564212569401abd8943574d1e7926069406ed0d42d1296ffc3cf566e4995629e"
   },
   {
    "name": "axiom-euromod-uk-income-tax-dividend.json",
@@ -2217,6 +2323,8 @@
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -2249,7 +2357,7 @@
    "sha256": "22e8b4218028884e38c8fbe15a37f3dc654cb28c671e541b26f9ad55f5303b12",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "41eb41fe2a86929420740f8e51bac6d8abee99682012b2f7807672ebab1bed67"
+   "table_sha256": "e9d1e9f2933e7d6cfe79c12f9082468fb5dc13153691bd7aeb221a98c82c2264"
   },
   {
    "name": "axiom-euromod-uk-income-tax-savings.json",
@@ -2274,6 +2382,8 @@
     "bindings": 24,
     "cases": 12,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 4,
     "missing": 0,
@@ -2306,7 +2416,7 @@
    "sha256": "fc02226264bb27af66dca210c02b729cfdb84f934dcf481dfc19821f8a04a949",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "37e4a3f413f0f21e0ec6dc5cab2d2740662837ae34b0a2b556d2a5135af05f2b"
+   "table_sha256": "dcaf5ebf914dbcba254b221022c120996f445c5076a087e5ee001bd9d6bb556f"
   },
   {
    "name": "axiom-euromod-uk-personal-allowance.json",
@@ -2319,6 +2429,8 @@
     "bindings": 2,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -2351,13 +2463,15 @@
    "sha256": "d50cef4e5c1e422d01230b841302179bd5b298927bdd667b875dac5cb2a952d2",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "604eb6cad8780c98073037eb765e31e40a12dceb9f4a2f0b5022d0754d08b005"
+   "table_sha256": "7f098be0ea7491df8748a62d31518e0c4071ba57005d3c956dd966a0453f57f0"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -2390,7 +2504,7 @@
    "sha256": "1c45434ec953af137f0f3b49db96f9e79a4de239eaa853896ae2ede824658030",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "58716bf1489e30596e398654abad01d6d1a023ec0131002aef861d277f7b03b6"
+   "table_sha256": "bbacb58425880dfa0fdcabcc412d2229de4612622c01716effd32bd30d9e7154"
   },
   {
    "name": "axiom-euromod-uk-self-employed-nic.json",
@@ -2421,6 +2535,8 @@
     "bindings": 38,
     "cases": 19,
     "comparisons_checked": 11,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 11,
     "missing": 0,
@@ -2453,7 +2569,7 @@
    "sha256": "c1afd63ec593b136e3ad838ab5aa50e5a3b6e7d4ec42a338a3c93cc67dfa8c34",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "e1e2193d817b6d3440068117fb71a66ae1a732f23f9df34b35ab023e9d7e97b1"
+   "table_sha256": "1111fb44d42a25cbe7a4a51c014c2de19cd097b52bd5789f6c14f9b90c23c128"
   },
   {
    "name": "axiom-euromod-uk-winter-fuel.json",
@@ -2478,6 +2594,8 @@
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2510,13 +2628,15 @@
    "sha256": "89e9da5c8b91b7c24ec9fef1307bd676f6811837e3914295ae38b6df115c5034",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "456aad077cfdcfd897151312e56e26fea9fc9aa77f18d29d255ba4218b87e9e3"
+   "table_sha256": "597fd954938cfda4bf8e02acc37d62fd8833e39e0173c87debbb5782e97c3dc0"
   },
   {
    "counts": {
     "bindings": 8,
     "cases": 4,
     "comparisons_checked": 4,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2549,13 +2669,15 @@
    "sha256": "6a54e1affc70aa055cd40541aa6d65b61d475f45f5a817229a3776b1874be2f2",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "ff9be933dc5542f0cb528cff248228fe19e424c20f4f932efcdcfe0d3640fedf"
+   "table_sha256": "79fea9b07581324554ad6d376659c08ba69061d74de9dfd65a64299f378a2b8e"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2588,13 +2710,15 @@
    "sha256": "c4431a814753296058fd5be7f975cf5ac437088f0a15ba10d4bca5b7a9d40108",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "23b986ee5edda144c43a22b96f5a161b349263bb0c8527b26c4b6d84958c598e"
+   "table_sha256": "9c34b15f109070a2be33f76f4f218525583dbee8aa4dbe830ace8c619bc624ba"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2627,13 +2751,15 @@
    "sha256": "6a7c8a288af4c9035b676638dd681ec6018394150629c35d9af352fc94f71f19",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "772630f90d6f5506b5264032b1f409bada0f3467fa58bcb91c7ecf3e642e1ce6"
+   "table_sha256": "cc5a34a140aabdc0273c846b5b7b874cb3b1ac3a7c21d07d2bc8bf06d2a6e957"
   },
   {
    "counts": {
     "bindings": 16,
     "cases": 8,
     "comparisons_checked": 8,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2666,13 +2792,15 @@
    "sha256": "1b74791e45cc8c2e0368bad2917145f64e4f128435da6a0f5d60707cb96eb7b4",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "067b7803582d84d0046f89a280ee6bd5c3d5556798a791ab9c671b717d0d2d1f"
+   "table_sha256": "bfafa1b02fb9dca95fad58eb980d62288c979fcee70b5b731fbf7095e14d1c8a"
   },
   {
    "counts": {
     "bindings": 4,
     "cases": 2,
     "comparisons_checked": 2,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2705,13 +2833,15 @@
    "sha256": "dbd0c8612f856b8c7f7196299bf593b34ef6e8e104b8ee2326a091502fe27082",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "0f09f46a9642669e1e9d1a5c1fe785a8809ffbc2fd01409644d3b8a5f8849e2d"
+   "table_sha256": "4dc449f7f536844ad2881e9a3bf04117e5e59d9c46ce41d3da4a74989162ed9d"
   },
   {
    "counts": {
     "bindings": 10,
     "cases": 5,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2744,13 +2874,15 @@
    "sha256": "887ec2a6c3dee3d976bdb824e0e61c2f3db1dda9c7b5be4a221708ad2466d480",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "34cd52648185314d3607afed994f1053aabba86d68e181a357baa51af32deead"
+   "table_sha256": "bdce29aabdf664e6b763d191befb0513b5b80cc0d8e19fcf984c72648737d256"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -2783,7 +2915,7 @@
    "sha256": "bf9fb46be5f65fe997e378719ff1a59c5f450a6e1e0a6efec3f7648c51b1ba2a",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "b4f8a866430d7c0f36910302e999a2921380b6f6427cc23d252b13cedb0608b7"
+   "table_sha256": "9291aff44143cb67da0ad8e5a4c4675d4597e036dac8f896087eaa0f68ea5fd2"
   },
   {
    "name": "axiom-policyengine-ak-apa-state-supplement.json",
@@ -2808,6 +2940,8 @@
     "bindings": 0,
     "cases": 27,
     "comparisons_checked": 54,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 26,
     "missing": 0,
@@ -2840,13 +2974,15 @@
    "sha256": "7f84ff274e6ef6d23117af63d22e833493b47eb09bee88467f3a44b1e0397a3c",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "23e5d8b1633be2d303a60cfdcd13785aead12c184243c3c588ed0313d46b27cf"
+   "table_sha256": "47200252a9dd568ff0ec66ab0a6806a5442740c30228e1c5cfb1aebf0b95f96e"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -2879,7 +3015,7 @@
    "sha256": "a4caa06f2910ef799be9d2b70c5c61f0877f6a6f814e215fd4881beb9d31590b",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "13e5743a8e8f0a6d20b9b083abc98b8abc60c8a5f26923eeb887c7b0a68998f8"
+   "table_sha256": "69b28943950f33abf69af96a59bd26b06e66a9319a06534773d20933e1a3aed1"
   },
   {
    "name": "axiom-policyengine-al-tanf-payment-standards.json",
@@ -2904,6 +3040,8 @@
     "bindings": 0,
     "cases": 306,
     "comparisons_checked": 612,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -2936,7 +3074,7 @@
    "sha256": "3ca65a6e2b5386db0b5f427e3dfb053c0238c1e2ad5b4afa056e7f3f9bc2dcf2",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "0f09193038a6d44891d41dc77a48770b115f822eb6b2ac25fedcdeafc34f5e3f"
+   "table_sha256": "485688f4d43f0782d45a55a584824aeb03c38513acf8bef13d7417235b25d0d4"
   },
   {
    "name": "axiom-policyengine-az-tanf-deductions.json",
@@ -2967,6 +3105,8 @@
     "bindings": 0,
     "cases": 362,
     "comparisons_checked": 484,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 288,
     "missing": 0,
@@ -2999,13 +3139,15 @@
    "sha256": "d298f48a8c225d5f6919e3f8dcf7aaad2bbc8befba7363f632d281756f36b4f8",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "b56d69711037cdbe24bb2458bb7d5c86766d8d79d3501b69847dfee0a78da147"
+   "table_sha256": "63460d857ca216d8c69a15b16e7e63d0291967a865df44ebce0011fb7da64a23"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 177,
     "comparisons_checked": 177,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -3038,7 +3180,7 @@
    "sha256": "30a36604fc2c5390dca52a419ce399ad5474906d912bba456ee96443063e9431",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "9f61ad4fc84074e9cbdddc5938eb5ad1cf2f24038b71de018cd21ad3e0df0e6d"
+   "table_sha256": "b7f7d1cd82df88aaac9f53b8ef8eef0178b51919f0afad0e99f55695e3114def"
   },
   {
    "name": "axiom-policyengine-co-health-thresholds.json",
@@ -3057,6 +3199,8 @@
     "bindings": 0,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -3089,13 +3233,15 @@
    "sha256": "696efc8883e20afcc80ec69345b46ab88127f50f4a104757c6bc0a903a268a90",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "087077ab173e7161745de094c99435968ca95d2d827d58f4958bf0d32ffd7745"
+   "table_sha256": "3ef68db5e3cb10ed6d77941bf237aea6976eb03f4bacfbc2ee7342c54625db27"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 31,
     "comparisons_checked": 31,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -3128,7 +3274,7 @@
    "sha256": "634f61b75a91675fe073b1ff59ecb0576df4c2633bbba6b73e2b9dd516db9311",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "0f125e7e43eaeec510d9efe34d53ec09c6d279ac27dd5219d6e6dcfde18bb29a"
+   "table_sha256": "b3239a893b4190b12ebf92e7c79bec7454d73d3ea76fe30bd91fee405e4af46f"
   },
   {
    "name": "axiom-policyengine-co-state-supplement.json",
@@ -3147,6 +3293,8 @@
     "bindings": 0,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -3179,7 +3327,7 @@
    "sha256": "26c889286f5a6d8db5cf15380994070c5edc9a2861c2cfd58e6c4f2612219173",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "7c50a54acb663371590ac8dc6b84c0c2f102b3e7e32f4854053ed88bfb5b0ad1"
+   "table_sha256": "f5edae27ac493eaa84014ee09561e98a38f26825dca29cc73d74a6c44b99d0e8"
   },
   {
    "name": "axiom-policyengine-csfp-parameters.json",
@@ -3210,6 +3358,8 @@
     "bindings": 0,
     "cases": 781,
     "comparisons_checked": 781,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -3242,7 +3392,7 @@
    "sha256": "e267932bc81930665402c3cc7b49ca5c69cf6186412ef5eebcbfcbe273c70aa1",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "db3d89db72cba1701bdb5d7fa3d03ea4dc4279f12dce95a86d6134ad6ad36830"
+   "table_sha256": "0931816d410923c3eb4015bf1b83a37e7d0bee896e3cca58452e9c1e463348a4"
   },
   {
    "name": "axiom-policyengine-fiit-ecps.json",
@@ -3255,6 +3405,8 @@
     "bindings": 0,
     "cases": 437,
     "comparisons_checked": 874,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 40,
     "missing": 0,
@@ -3287,7 +3439,7 @@
    "sha256": "a8d5f26d7df88864c7578a09871cfca027943808ba6a6700984389b2922621b9",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "8a276fc9bbd75c8c03450dcb9b04514e2b1ada96ed1ed04f9a40c9cf02c209b5"
+   "table_sha256": "0f22a87e4b3c4d7805d5c069dbc46718001a4b10d3ba6ad0c7626d3e8e82360b"
   },
   {
    "name": "axiom-policyengine-fl-tca-standards.json",
@@ -3312,6 +3464,8 @@
     "bindings": 0,
     "cases": 141,
     "comparisons_checked": 282,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 47,
     "missing": 0,
@@ -3344,13 +3498,15 @@
    "sha256": "1dc237a085a0b9c8c86438b71d7752e7cd3ebf904a680a997a5d6647edcd8d49",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "afb0990e9dcd7646f46e7415282e1313929645b5ebbfeb42966a3d86dba7820c"
+   "table_sha256": "469f045a05512f2adcc13697ba993170978abc61a3bb1d6533f305f8ec02eb8b"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 1,
     "comparisons_checked": 1,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -3383,7 +3539,7 @@
    "sha256": "3d9eca1961ae2861b9d17d28a068fadfa0f123ede308823a6b6c1c60450f05d2",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "967763e25e14566f92f8e4c43a5bc95bd14bf47d0de4b2e6e79f27cc322fdb93"
+   "table_sha256": "441ece3ef0a91637a554a2b4d90c20b7a2708b13ee55e116e3cab4f8113b9d50"
   },
   {
    "name": "axiom-policyengine-ga-tanf-standards.json",
@@ -3444,6 +3600,8 @@
     "bindings": 0,
     "cases": 861,
     "comparisons_checked": 861,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 13,
     "missing": 0,
@@ -3476,7 +3634,7 @@
    "sha256": "1132d023920d768577617e074b914cd17c89a057dd7fd893c5052454b4a33532",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "1a58388d10778bda62332c3c5dbd6df98fba5a53b81b6fa51b2e4437ea68f4d1"
+   "table_sha256": "e1bdd390c35087f22285045ec5504bf101cb810276c8073e6a04847d1c9d5ea6"
   },
   {
    "name": "axiom-policyengine-ky-income-tax-populace.json",
@@ -3501,6 +3659,8 @@
     "bindings": 0,
     "cases": 157,
     "comparisons_checked": 314,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 45,
     "missing": 0,
@@ -3533,7 +3693,7 @@
    "sha256": "b7b8c1b74c7c13cdd82d44c2096a1975df0ad3eccc12b014bf8020741d83f847",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "7d10690e64fd1bf60a446996a45c8a2338f5bcd478bbaca3fc6c15c3f151f479"
+   "table_sha256": "a31f8274956bd5012d6e9f9bb03e4c55ddce70c4fec963f3694fe79eee869aae"
   },
   {
    "name": "axiom-policyengine-md-tca-payments.json",
@@ -3552,6 +3712,8 @@
     "bindings": 0,
     "cases": 45,
     "comparisons_checked": 270,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -3584,7 +3746,7 @@
    "sha256": "eda4ca7ac9297f0e756333212f8b19f22bd2ad328668bbfae7c596d594e4ef7e",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "19a01c4b9d8ef640577ed6aeefaba4e86aed650cafcdb981e03ed697ea118699"
+   "table_sha256": "20568003832b0554184d339d6889b1aec7bae0141fe7c2addd536bf6de480495"
   },
   {
    "name": "axiom-policyengine-medicaid-thresholds-states.json",
@@ -3615,6 +3777,8 @@
     "bindings": 0,
     "cases": 991,
     "comparisons_checked": 991,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -3647,7 +3811,7 @@
    "sha256": "1c444cbbc0756db6e805e4821a180965a89fd293e7acc65d257c991c8f4d9e31",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "b136be1d57c084854f3f18d04cac09d163dce98a7e9b5d643c20eb334f130b4a"
+   "table_sha256": "9f04cbaf6335f75250352363853218a317777622fde9e53a35f9d7088fe69040"
   },
   {
    "name": "axiom-policyengine-ms-income-tax-populace.json",
@@ -3672,6 +3836,8 @@
     "bindings": 0,
     "cases": 62,
     "comparisons_checked": 124,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 37,
     "missing": 0,
@@ -3704,7 +3870,7 @@
    "sha256": "04b790650d367c78c9d990572b3fdb8288c0510e9fdba6237ac9684c493cc3e6",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "fbe7f697bcb781d6b679cda38329495d2283e8065dde340f81ada5d4f15a2fd4"
+   "table_sha256": "8a044d2804709478594e759a812cb7f320d9a70306ecc156a444311303d9a45b"
   },
   {
    "name": "axiom-policyengine-nj-income-tax-populace.json",
@@ -3729,6 +3895,8 @@
     "bindings": 0,
     "cases": 150,
     "comparisons_checked": 300,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 67,
     "missing": 0,
@@ -3761,13 +3929,15 @@
    "sha256": "4523b791db961586c4414b98f26af08341ed12b9a7a5c26350e9f4f5a5c90ac9",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "4020cbcd9df643f81175843ce4ff496682b1550ea5b4e193e790cd5c817ace3d"
+   "table_sha256": "24a8f26349d8ffde75d149e25db6105ae99a993405dc34ca55a565f64fcbc1bc"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 36,
     "comparisons_checked": 36,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -3800,7 +3970,7 @@
    "sha256": "ca843480061e44c419e4fc08dda432009a98a034a3f9c0e721c84310907c4ce9",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "d6f05937a0e42366b8265597e4e311e80b717cd1893fa590c15d153e46dfd99f"
+   "table_sha256": "a34b2637fe041982edac5c6667e6fd67c8c0824e1e1d00b469aef43a0846acd1"
   },
   {
    "name": "axiom-policyengine-ny-tanf-standards.json",
@@ -3861,6 +4031,8 @@
     "bindings": 0,
     "cases": 112,
     "comparisons_checked": 224,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 62,
     "missing": 0,
@@ -3893,7 +4065,7 @@
    "sha256": "a20f8326c42b035a997c5c163f7c469ac939cc9b1d634bcf2629d2530dfe02a8",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "9455d62010e97919d1620d10142abc048196335208189748c1b3e4fefbb98fc9"
+   "table_sha256": "5124c660f49144cfc95c2f0c48b870d93c732c45a4c08399897e581fa823fcb9"
   },
   {
    "name": "axiom-policyengine-ssa-parameters.json",
@@ -3906,6 +4078,8 @@
     "bindings": 0,
     "cases": 1000,
     "comparisons_checked": 1000,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -3938,7 +4112,7 @@
    "sha256": "0eb73772a9220a0cd0aaeb1ec174a43fab61bf33289f56c600202a1f7128399b",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "9e84120c4ac8d4b000487a3182453dfbf882d982b7495b1bae46d45b3e1d41e9"
+   "table_sha256": "38f7e5022a5a3dcc9da5176b2f9e1baf48c1aa6b9f47507184df1dd6d9c09f63"
   },
   {
    "name": "axiom-policyengine-ssi-parameters.json",
@@ -3951,6 +4125,8 @@
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4005,13 +4181,15 @@
    "sha256": "090f7bc6d4ceb132bd2c09e7f814b35320ed6fb1ac179ebc4e1b71e0a183d17b",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "91eb7b605cfffa4f811fbebdcc113a7598e3dcf8f476736a516fce8e5a5d255c"
+   "table_sha256": "662298293a057b40932460026fe4bfcd7fc2b9b4420d3fbca9b20f2125cf61dc"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -4066,13 +4244,15 @@
    "sha256": "2e3b5ddf7f49c4e8be68ec6ac17635e254777cd23efc06560c66d9e90c97dce7",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "f74c3768fbe9c71c77b636c9275f69b0209b4ab8147b6f4ebc40f34671ab8040"
+   "table_sha256": "8f5aa93f26fa0b05f08fa07e8a8bff47948fde1b1ca9f553d8cd16c9da6c5308"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4127,13 +4307,15 @@
    "sha256": "179128e2aa9cfd3e47af91bbcec6148502d43346d07441058c0e10d8b5a737c7",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "c5e40e7c8d030f0983f6d3bd4653533d230faaa68348f2e8a347db953658e661"
+   "table_sha256": "11b2ec94bf3acfb09c1d952fd349656dbc77b74c3b30c715f149f997da96b34d"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4188,13 +4370,15 @@
    "sha256": "30a0192791aa9253d375c74205714223e9e25617786606aa6d54f4c8b4b3f623",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "4e418b2ed843784e8b1a169d49a5c035e4cccbaeb41058ebafabdf569d2d79a1"
+   "table_sha256": "4d68257f25a3d2905b41d31452854e55f142161b09add8a64165da2f73e269e4"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4249,13 +4433,15 @@
    "sha256": "e1cd99fce1af3d274b82005cf6e0018b32f0299ee66126a25c99276508c8d9d0",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "a7536fb17b23cd22449e09cbe3792884f7fdcb4753bef53c4d74084b6ebe21e9"
+   "table_sha256": "ba421fdfa958de2724a96d099bebae33a791f66718d95d925d94bf9729478a02"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4310,13 +4496,15 @@
    "sha256": "80bcfb3f84947d093c0f4cf08ce0f98fe8f0b0d987965375f807e1a3fff6db99",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "86fd8b371210986b4c796e9053165d7a8f70a966336406bac53ba4d7ea239352"
+   "table_sha256": "4ba9bc040957b4c03acb5ddacd5132b901d027f7041125d292c7645795a4d319"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4371,13 +4559,15 @@
    "sha256": "fa9039812d75339f107c9b59770645f010eb75219680dd1c81bd4dcde8cdfb90",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "e05ffbc6e90f823d7e97447841c0ea953d34ac76cd73b31e4a95aaeaaa1f79fb"
+   "table_sha256": "fae2f2272d1b34f1d5dfcfe8401ec7dd456d35d348d35e7787731b7aa8ab99fa"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -4432,13 +4622,15 @@
    "sha256": "4ef018cb303047356c7ff8a806a7b383fd4899296741072d6d795751d6f71508",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "e2c22fd9bb4175d31fac6db32fe4e15f0ec24578358ed35f847ef4177c9a2d29"
+   "table_sha256": "8cc2768ef2beedd38ef72e0ab6d07a9ea49b6de960a1e72069a06854fb0fc1a8"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -4493,13 +4685,15 @@
    "sha256": "ba665b830f8a8a90e57076089876ff7533170d2caf646c04662bcbe5d52f29e3",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "015871d61262090b226925681fe7a7868e5d09e8be29802c17a2c29f8ca7a96d"
+   "table_sha256": "984c34810ed5ef079ceed6c4a5c943b131f6b6b33c56dec29876b8f00ac0cc72"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4554,13 +4748,15 @@
    "sha256": "9fba76f6f1a2127f27a2f94e3556d0f3f2b4f883b185bc4a5f01d43cdb6ee17b",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "040c7c1b5d8c34332ef85ccb8c15f7e900346f2dd7dca8002b041dd07d48d114"
+   "table_sha256": "c66c674c9acba53ac352851cd802205a792b1f9926576dde2a2e0879eaa03e13"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4615,13 +4811,15 @@
    "sha256": "a1defec58f8116c844441d4b36d4f2a92d2862b66843266ce0dd5be1b2f38cfe",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "2430ec5f0a31d3ae2377f9786321278b68d5c8de1534b667026e8f00cdf2e6d3"
+   "table_sha256": "6be7f931577a6d714fa96c228d1e1d97a4d4902415884f56981cad45028f3f59"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4676,13 +4874,15 @@
    "sha256": "89224402f7012d7d595b6152cd0f86070dd0748ef951eb5797067bb4f5454168",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "95d34a629ed2b6a02ec79a574fb91e196426bb38beed9827dc607681d2e358be"
+   "table_sha256": "76fa2a223b41da42b9bcb5ac6bbc768767dfb8a497c1a8faa4512a3db89e24c8"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4737,13 +4937,15 @@
    "sha256": "868978675b63a1ce853c8916ad8dbee55dd92a0ce8747cee9870f8abc0592014",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "37418b8025ab28079fcb544f56afaffa58ad63ae6aaa99750bde13592d9250dc"
+   "table_sha256": "769f03507b7a174194622416432eb05d7cf66f00e73b2a87a798b68b9435a5fd"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -4798,13 +5000,15 @@
    "sha256": "744bf6b9abdee8b4f3a4f0afd832a71c81fefe02de3ca9bd324345c230c53459",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "3e6a8ab00b13ba2f0b8838e013b0f4ebde81edae0721867d1ff466db6f5d6ea1"
+   "table_sha256": "b56456a7b25e3428d4f198c7a172397fb4a27b4577a484dccdc9be962c4b2c7e"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -4859,13 +5063,15 @@
    "sha256": "36678b3d70f4a3e855f8545f9e3eec7912d5428e7e778cb5d93fba2c27efc557",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "36448f8662718a2d15238bc938e0a37e9dca6c6f1344a987f580a924b02d6442"
+   "table_sha256": "6837de2400c00f934f5a40e38c16f009e75a9664c31e3cf639f70fdb17da3286"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -4920,13 +5126,15 @@
    "sha256": "a4b50f868d742ce25df43b011b15d9580c40e103e57bad129cd9a3de7a6938ca",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "f94ccd4de246b61e29f5a3fe6c0898f708fd7e5d57cc803018191769fadc2a0a"
+   "table_sha256": "b4f374ea21206ba4da583b4c4a9d0660efe3f04fd730778ce9143a4ccfa3a800"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -4981,13 +5189,15 @@
    "sha256": "2cbc83f2731c3d1be773be854e9e925ab67c312f29dca8a73720d9d102dbb764",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "0389a59b8c9b34f981f3dee797cdacc5aeaf61ab343ebb15d268aa436139c916"
+   "table_sha256": "3324fb02682b179d83c43736f6add837f0634e507be9a0851d692293fa16de7e"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -5042,13 +5252,15 @@
    "sha256": "da30de5d1539f0c369d35deab33ebad6ef83979e7f3308f872a738e0feece05a",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "36fb421209b308050f6f5c9cdd45e01b5b7d99dc67dca512e2f408ff74ac059c"
+   "table_sha256": "6e2c16fec5eccb6c339ae5644599105d2539dfbfeb1eca797fda33566847a078"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5103,13 +5315,15 @@
    "sha256": "52ff9fda0ff75c5e92bc8991c9071c45ae224b3583b8161e5b4f3fec312e6ded",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "6a481fbdfa3ad325b7795b733755334c4ee90d63cb6896b90dc956f9308a1218"
+   "table_sha256": "924da3cc7c27ff6441e5889788a5c42dc31bf3b946f0f38bc748990154d6b021"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5164,13 +5378,15 @@
    "sha256": "1d164b0b548b030dd30fa51cfbb4f8f482b6eb76b01bebf53656dc7ae5e2e4b4",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "dd92f5c96190e72fb8e55ff8776d483b280a781eb2d2ce44ea8bca5daa6ff8c7"
+   "table_sha256": "d46caa546903255179828745cf503b53191e7b18330796471c8f5dd52dd5e099"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5225,13 +5441,15 @@
    "sha256": "bbf19652a11bfed5296f224faaac03c679b055f647a52390bdc74752721884d5",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "55474c3515e3fa69fe191a61364adf44f46e5f317ccbfb0003f82f59bb210901"
+   "table_sha256": "92db462bcf58b4343617e48c7ffc8000c4eeb8ba5baa66fc53a63396f824b665"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5286,13 +5504,15 @@
    "sha256": "7ac3300e14a95c66002c901625d7c8e64b16a778da6158b3f8aabf0c63902c2d",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "79993850680bf815a63beebb7d8e42b5b5b609997fd0693b0e9f6ef1c24d970f"
+   "table_sha256": "bd68fb31e7e3ae3f915670dcee5ae2261d151d51725c4f84030675e2353506f6"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 5,
     "missing": 0,
@@ -5347,13 +5567,15 @@
    "sha256": "29b6a28c8916c422c77e85db011f11fa0c6c41acd4dd65cbdcaf72eb637adf5c",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "9592457b3488b3c448c6ffbdffd56352e7aeafc53465676e15327a88cc02322c"
+   "table_sha256": "e9f2542ff6b5f0448554900e2e4e11368d931c140c0d267c8961da1f0caaac5f"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5408,13 +5630,15 @@
    "sha256": "f9bdd6a211636218f2f8c78759b07061281e8855cc786f3e56450ca2855fc77a",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "6c9f1bf4623a9a31b0b912ececcd2bbac7b8fd7aaa51cf27a9e3fb63ba3e0b56"
+   "table_sha256": "9281024808775ec55e3ac1676c1c887c5c05fdd94dc2db76f0227ff2611927cd"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -5469,13 +5693,15 @@
    "sha256": "8710130241bce313f85ff5219a5b1ce243ad943549702ca3c237e883c643ddb8",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "1237f0697dc02c89e8b9afca238085cef792e303ccfd374a2e8a7d560b024681"
+   "table_sha256": "0f034e6cbd7ba61b3015fefccb1f3b7448b51ddf2d75bf83544950bca5de08d7"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5530,13 +5756,15 @@
    "sha256": "5e4ca469ae2be1ca78bda735139784b9ea5b2bbe3a95f16932f344368d8d4789",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "4c91b6db19fc4bb0967a91478d959bd175fa97babf3addeeda538b84f0a32b29"
+   "table_sha256": "7150e38574aca809fef478d9a5239cb207ca1a400a16256ea87d24063c1fd501"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -5591,13 +5819,15 @@
    "sha256": "df78efa400663397fe9034e022e175664c39dbec82902203d7e1c925bb65b9ba",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "ed0211368e0a42cccec12cdd0f0bffedd93b6fe1b6d6a0a65faac0d39ccdf095"
+   "table_sha256": "3b8a1c32040d737eb8d8c0fa53a1db03081f2ecac0373853df59ca58a41e190a"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5652,13 +5882,15 @@
    "sha256": "67f7ee79be5fa01aeb52bff60f66aec3b6fa9721b81a1ca0e50b9a9966515fbe",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "4c72be064f5a285808bec89a1f87de7fcd275f7497afcef4cfeebb29e75438c7"
+   "table_sha256": "4144d44f1d9d527cf1ac060b2254aba7e2f44446d2c755e537e7b0d97ef125a6"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5713,13 +5945,15 @@
    "sha256": "b1518eb35eac67ac5236b557515758e3983ffda1b06cf3e55a26ffa466a14d3f",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "e491be287043978a4e0e33f6f5d09b00d83f7636a73caa85518011edd7dd8bcb"
+   "table_sha256": "5e23b7d6920fcb0291eb86436e4f94461513c506309f3f87dd63c91c742f5ef1"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 7,
     "missing": 0,
@@ -5774,13 +6008,15 @@
    "sha256": "bfcf1b3298199cec4080316430677137d05551e75833b6312aff581884a9d759",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "fdfb187d3c42e2626e34ce02b3a45eb7c2f9e5f74014ff00be828e730704c110"
+   "table_sha256": "0cfd6dde8a6aa64cfde20dad7bc56326228260f25251106538f0b64c01fd17e4"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -5835,13 +6071,15 @@
    "sha256": "e21b9885b18badf394b3167f4ff54b5ce39b7e6a2207f3491250e6d4dd717dc3",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "0e6ad8cb499bb5670a5eaeff73509306325a52baafb978d86372b433bf75b747"
+   "table_sha256": "dd1ccd010ef6e70ecbfab047604de9e6f4c2575b11acecde7d807a0c860e5688"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 8,
     "missing": 0,
@@ -5896,13 +6134,15 @@
    "sha256": "a391c1d08c06fed291b446bb16d9b64a821bed8bc9880f72800d09801fcc871e",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "bbbcc844b1a56d2b2cb161ca01bf7995c4ba2ec7b6369548c3742d631634503c"
+   "table_sha256": "d00c8cc2f61f488769dd475b03e773886372d0b2f05841633b95e5b1e9f353fd"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -5957,13 +6197,15 @@
    "sha256": "7a3defb62e668f076dd9e540061ee473aa6ebf2e9b8840a9e560fae877ec7934",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "3db003c20d188dc482d2be7e7eceeaeb5bcb32619167bde7269d79c6f6d038d6"
+   "table_sha256": "e08c0f7bd2059191ba14ea0c4ec2d3f2cf27b1ba7f29879afdfd47daed1fe3bb"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -6018,13 +6260,15 @@
    "sha256": "fd70af9f274f513a820ab99601f9317b1a34d56d570728e6d2ca3d4161bef4a6",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "f1b62e5d9d6097e6aa133c2e7218b1989ea211c4e16f325c90e8ae94d31984fc"
+   "table_sha256": "cec1ef21600aa74bfed909f6a5b14005fb056d2f729954d607df5170b7719f9f"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -6079,13 +6323,15 @@
    "sha256": "4e567064f2c824a5dba73ce54fcd30312cb7ff509b30291d770fb3050acc940b",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "321a57077ebc3b038367a10a072e9e278b1c8d8f46e6280d2d97fe0ead3c435a"
+   "table_sha256": "77b2c2bccf4d5f550b5f458137a7db5e39b7d99217087d4bd33936904b4c5f37"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -6140,13 +6386,15 @@
    "sha256": "2ce67f80fcfcf99f43e365a71f450733feef7cc8f0c522fb69aa4b35927cc06b",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "596a1a6ae547376db94487c5893f0174b7ccf88e5d77f1863901e57ab90e858d"
+   "table_sha256": "e541d236049ad45c2b1f957daa07c5d4868d0c3e50e6cd625c84f9683a46c1d5"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -6201,13 +6449,15 @@
    "sha256": "72b6bbb763790b1baf584eca27e080c42ede001b64615e895c2d3705abb1321f",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "000bcdae0199fe7960f8e73dec5496508bd0a086a79da6599747cce655b94c9b"
+   "table_sha256": "0c828e4b7aa44d7e4efa35dca3b781bb8da815235eab8a9dee55db4effb400b5"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 10,
     "missing": 0,
@@ -6262,13 +6512,15 @@
    "sha256": "1924038d6006e59e95e7a702766879747732462326273cca258ac8561dd7580b",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "ac639e969425b885d19a2ec0a91a592b5fda33d2833a7b725613983673e348c6"
+   "table_sha256": "d71787dcb5dc157416cf8b70627477cf9fac97b5953bca308e2149bd69798ae6"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -6323,13 +6575,15 @@
    "sha256": "3cb64d46f4c79314bd58df4033b29855ddf4b543c2c3dee76b3e9443944891f7",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "5756a5e72b28a6f1d7f291883ce527b0e28d05cb60c94a48fcdb0c1ea340f7f6"
+   "table_sha256": "1d5f21ff87a3067ab603fe33559db08992281cf9c6274c921acb03acd84e15c7"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 62,
     "comparisons_checked": 124,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 45,
     "missing": 0,
@@ -6362,7 +6616,7 @@
    "sha256": "36af581f73a55851de0d23b3ca672e4ecc914c4a70b8815e4480df950fbd96a8",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "84c1519b30c29364914e648f239437e2481149b8f137831135c269726ad996c8"
+   "table_sha256": "be3dc771db186e7988c218f977e3c8cb1d57a938d41c8d708ad9ae277ea10980"
   },
   {
    "name": "axiom-policyengine-tx-tanf-parameters.json",
@@ -6375,6 +6629,8 @@
     "bindings": 0,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6418,13 +6674,15 @@
    "sha256": "18f18227f9b51299dcb82bd57e3d05d3a3c0e5383b818f818b37afa665228c26",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "ba9e95037bebcb0f89a00ef5befb63cbea947214fc323d675252608dfc8ffb09"
+   "table_sha256": "1874a85b50096123177be92acacc2b2385a118c8160f06da7e3c21f444ed7157"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6468,13 +6726,15 @@
    "sha256": "290993cbc766f10fc0c7a010ab101cbe40f36bc757cabe20d931670afb749226",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "2900479e2422591f60cc48d7c7afe4cc46b2c4ea456a1d651f99af5ea75b1aef"
+   "table_sha256": "ee79611e1846bf04b50c8543db9ee3a437aa597d950f09eaa23cb7692a21e929"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6518,13 +6778,15 @@
    "sha256": "3151791a1753f940eb1c2e91fec2774d32816736d2f5e2a27556491811ff43bc",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "8a12919167fad6c493b82044bc2eaa553c923fc125abea09895af9bc44bba330"
+   "table_sha256": "111c990be5d9f0c65bbca65317b6116524c217f365e4c2a2c156f907d270c8cb"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 11,
     "comparisons_checked": 11,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6568,13 +6830,15 @@
    "sha256": "4302a8f8f890beb2aeb930f70dbdafa845901e9d1eb7df33a8feb4db574c8442",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "c52f8bc366d222fb5debfcd90ce6544c91ee5bb931d90ccc56cfe1f5df6c437c"
+   "table_sha256": "d0659759992a08c76f0cccd22af1c5c7a5941956ebc7e03dc345f73115486dbc"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 9,
     "comparisons_checked": 9,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6618,13 +6882,15 @@
    "sha256": "0588b98f089014232c34c06e8b27c3704746d35969f033ef61c9c4e56a897cf2",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "fcc8f8135041b6cb41d915100ae95611df6b82658f78b38e2d8517a62aab44dc"
+   "table_sha256": "0aaf9070bef21c8218acbc1ffc884870202ed33320f6e200028f8c8a1d5ca072"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 12,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 6,
     "missing": 0,
@@ -6668,13 +6934,15 @@
    "sha256": "f7bb4c5a6a3e517a74c07b8653a9bfcb9218dc22507c24c96619322aee5e7c8a",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "8d4962b4a87a1ba4a2de7466bfda51731de50236c42888e24f1c5dbdce9ec9fe"
+   "table_sha256": "42c93b3d8b1f5355d651e230baa8ea6ba0fe4d6d946df7d7fca4ba9aa05621ff"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 166,
     "comparisons_checked": 232,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 4,
     "missing": 0,
@@ -6707,13 +6975,15 @@
    "sha256": "54e28fa4196f4424e458388bcdd65d0b527256e35f1a83b10c4834b3baa8cee3",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "0d5af4f8e923b652823284943613b0d1fc281d4e91cd6e8ac2a07d5f459b9fa7"
+   "table_sha256": "7dcbadb0e2426aa9a96889002a76d3d5190e7569f4bd19b2c42395159e12f751"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 3,
     "comparisons_checked": 3,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6757,13 +7027,15 @@
    "sha256": "77a421bfc959b480d334ed858723e3a1076fdc422a7134decac58daa105b7dd9",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "e70a73802173256207181f3d371a0ce623f1b5dedd126e42f41795a6e25c72a3"
+   "table_sha256": "21d9a4492b7967f4561f24ab4cff63706c6c83a29f332820501a35019d178acb"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 9,
     "comparisons_checked": 18,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6807,7 +7079,7 @@
    "sha256": "4a30e6f35e14f3b30f81fec5e6db8eea0da5ce109db702e365fe1d13a80de690",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "def33ee43bfcd15b0e1f7c68dd4bbfacb0bc4f3f23f736ff8eeabffa25908c2c"
+   "table_sha256": "0f471148f88c3b1437998dda8a8bb6fdbd9c063cae6b880c86e5bd8c990dcdad"
   },
   {
    "name": "axiom-policyengine-uk-universal-credit-efrs.json",
@@ -6820,6 +7092,8 @@
     "bindings": 0,
     "cases": 9,
     "comparisons_checked": 9,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6863,13 +7137,15 @@
    "sha256": "943741669c023bba78f636121d5878dfeaa694a8ec02a2c341ba6af505824075",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "d9ae96004d98657f40a91985e68b896caf83541d0816516d02e5aaa8201d7f64"
+   "table_sha256": "443cc4051342526ed6e6d145f4cfe300f711efe92d0a2fe28f20e88b92b279e1"
   },
   {
    "counts": {
     "bindings": 0,
     "cases": 7,
     "comparisons_checked": 7,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6913,13 +7189,15 @@
    "sha256": "3b7469c6a436582e42d474d5dd77b2c4470976eac0d962c133de41e927488e67",
    "shape": "grid",
    "status": "exported",
-   "table_sha256": "25829d317b86645e81d758db8b202b931dda99e3de00a4bb2ce5ee46edabce06"
+   "table_sha256": "19870403b8d8583350d81764a812fb8d5db90c33a7f49fdfe155b537d41dc824"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6952,13 +7230,15 @@
    "sha256": "4bc6c1fd78d1a6f814f0b6006133be47a9642b0e7a0f3561b2c705759d15328a",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "c29ad4aebf137343c31eae9a33248ceabfabb05d4c8d871fb19f8e87cf7678af"
+   "table_sha256": "7187f664802dee8a8775d2807653355d25e142ef70e6f94fb932592ffdb69081"
   },
   {
    "counts": {
     "bindings": 5,
     "cases": 5,
     "comparisons_checked": 5,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -6991,13 +7271,15 @@
    "sha256": "68fdf6f6fa31bd5d379e21361728da44af4cc76116e8d123e0535c46adc93b9f",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "b9fe07d27a177f76f6f2a6c7ff763e7ac7de49ca5b770063fc6ca1f2b65af3e6"
+   "table_sha256": "3000428fc3f14b885676a89f0a2d8fab4293342c963bdac0e79cbbbcc4e7670f"
   },
   {
    "counts": {
     "bindings": 9,
     "cases": 9,
     "comparisons_checked": 9,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -7030,13 +7312,15 @@
    "sha256": "5d60586914c1e4fb5b78dfc97cafd7d967d35177f3dedf7ead03ab15acb1b256",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "4aa491ee118b0479950c979392d1cfb13267e78ad05076dec59a352187c01bea"
+   "table_sha256": "9d31882ee600c9f91ee80cec1386021730d142ad2f4050c2569f65601faf51f8"
   },
   {
    "counts": {
     "bindings": 17,
     "cases": 17,
     "comparisons_checked": 17,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 2,
     "missing": 0,
@@ -7069,13 +7353,15 @@
    "sha256": "64c9f50b730b92e4d5a31b707a7cdbca27f0de515bfae26982751a999829e23b",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "3c579b23587177ef936086b41237ead6508761530173085fd878304b8f406918"
+   "table_sha256": "ab02cdf55ea5875bc6d97d8c683248f092f55a19e1813f57167b3a35a62e89cc"
   },
   {
    "counts": {
     "bindings": 12,
     "cases": 12,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -7108,13 +7394,15 @@
    "sha256": "ce17489c559dbd0c4b6e133a8d1dbbf274097db8bbf33b28640cb287f305cba3",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "5fc845797c5f091891fd5babf75e92b62e6e287f6a9e4c1abd56e4c92b8f77e2"
+   "table_sha256": "225b48a68b9fee49c9e652b2d4920cce8820402a2ef1e65565b8b2da961c5587"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -7147,13 +7435,15 @@
    "sha256": "56ed1c8640c370f8dd5297bd901999f981340490c22cb6be293e89690bc24bfa",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "3bd4d634dcfe49e6a450cfc8bc73c6785e4ca1534030d31f290094d819393278"
+   "table_sha256": "147d8ce7d2453a0dcf6c6459db94ffdd6a3ac2a409a2ff072544c04fd47acb2a"
   },
   {
    "counts": {
     "bindings": 11,
     "cases": 11,
     "comparisons_checked": 11,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -7186,13 +7476,15 @@
    "sha256": "02a4daa68ecdfc18b2d840721ecb00b1e9c251c28e8a1789caeac55ec4536b3d",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "d8a2c6bb9206457cba80bebd733b4c60001728d6e84afb3d54eb97ac3b1d577a"
+   "table_sha256": "b8fafe3e2d7b8cc7e7127715dd847480da1cc7b042814a695ff10a266f736430"
   },
   {
    "counts": {
     "bindings": 16,
     "cases": 16,
     "comparisons_checked": 16,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -7225,13 +7517,15 @@
    "sha256": "63dad68a30b381f5e05fcc5a6f2038af334101ead02ce99169186acee35ea44e",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "ccb7d1d6f29888710a7fb60e75f7a1c5de96c654d37d65843deebe65dc9b288a"
+   "table_sha256": "6f634e9d0e908dd1320fd2893d1742bba9131754d22d5c2c95ae4d6b78341404"
   },
   {
    "counts": {
     "bindings": 34,
     "cases": 34,
     "comparisons_checked": 34,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 1,
     "missing": 0,
@@ -7264,13 +7558,15 @@
    "sha256": "4f8908e52e810c4b197a335a996f66ddf861cff8eade8f489f007b1693557439",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "7db427f55fa0be86fba1af7a507aa1ba7788585373d43369b878c49845c39b0e"
+   "table_sha256": "978c1c8fa0ed2b28c37e61966aa7dd246b80642d124ac994ee8d0316a8f382fd"
   },
   {
    "counts": {
     "bindings": 6,
     "cases": 6,
     "comparisons_checked": 6,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -7303,7 +7599,7 @@
    "sha256": "613fdde642742e4c922f685a4e6915adccfa4c46dbdcc145609e65cdd72dbf68",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "729567f7ab9e143ed8e73fc932efbbf9523b2d97ff7770d6ab5dfc15bd067931"
+   "table_sha256": "f2460a8c8e85146091101d91946b85b09fa21ae5005030ca598417b9e21092d6"
   },
   {
    "name": "axiom-policyengine-us-snap-abawd-grid.json",
@@ -7316,6 +7612,8 @@
     "bindings": 14,
     "cases": 14,
     "comparisons_checked": 14,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -7348,7 +7646,7 @@
    "sha256": "51e45e083cfefe6ed47c037e5b7c9c0492808197531f0107e8471e7ec22cf6de",
    "shape": "pairwise_rows",
    "status": "exported",
-   "table_sha256": "070565a0202db0a0e218c49f1ea8642a8e31a791ecbe5c6daff93cba61ba6c51"
+   "table_sha256": "e5568a11cf1243ab6401597c253b59527b39af50228e2e253e4ca99feec2f34c"
   },
   {
    "name": "axiom-policyengine-ut-income-tax-populace.json",
@@ -7451,6 +7749,8 @@
     "bindings": 530,
     "cases": 530,
     "comparisons_checked": 530,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 4,
     "missing": 0,
@@ -7483,13 +7783,15 @@
    "sha256": "2e86416e2e17462c7c409b2f6368ada1e6a7c88910ba11657e037a107a9e2aa0",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "af0bf3735770b49ab140d643d74d0b9a78a30b8e3f54dad8fbe0d3aef08f2a2c"
+   "table_sha256": "ec2a60d04de13f06be0d24d1d2cf1ab14acdd93e63433448d7ad628bc44f2d48"
   },
   {
    "counts": {
     "bindings": 688,
     "cases": 688,
     "comparisons_checked": 2117,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 51,
     "missing": 0,
@@ -7522,13 +7824,15 @@
    "sha256": "2bfe4e557e1fb461b747b836635b9f7c1e9ee2e64a283911b3b22e3f4bd0d09a",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "78ee1feb1abe816c7db82a0ce70c6911ade2ee9611d2fc26a55c99e39460a316"
+   "table_sha256": "ace95c019adf21628aa5176a70b39db0ec90bb7d7938149ddaedfeef04a8b2a1"
   },
   {
    "counts": {
     "bindings": 956,
     "cases": 956,
     "comparisons_checked": 1000,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 9,
     "missing": 0,
@@ -7561,7 +7865,7 @@
    "sha256": "00ba24a179c5a22de241ad79ab2c7915b598e7b3c260cf31ccb7cdb978c9d660",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "9f6dd51f7c3eeba9c979848094f421ec2b63d1f1b1fdc62a786b0a174495e122"
+   "table_sha256": "48dd713dc63787d4203aabc8bdddc18c9721cdf2954ebabe0bf13108abd7ceca"
   },
   {
    "name": "axiom-usitc-us-tariff.json",
@@ -7646,6 +7950,8 @@
     "bindings": 16,
     "cases": 8,
     "comparisons_checked": 8,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 0,
     "missing": 0,
@@ -7678,13 +7984,15 @@
    "sha256": "e8b22fda6f8d0808d9781eaa33ab1b7d065f1b37398bba59bf859ae1bf8ca930",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "f3dabce84ecf4a5269afbeb503899755c4db5e8521b7d2e4dd94f45ba0fe7a43"
+   "table_sha256": "f86cce716082a70d617a26f81fc63111c510e86cc151e6e380335c53a31fcba6"
   },
   {
    "counts": {
     "bindings": 26,
     "cases": 13,
     "comparisons_checked": 12,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 3,
     "missing": 0,
@@ -7717,7 +8025,7 @@
    "sha256": "2f27b71f1df9c3df51540ee3595d13ecb1f7d20bbbd93edf37042ccbd484c0f5",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "34967867f8e06dad06ff8ccffd277778c9e3b00dab0fa59f26cced4762ffba47"
+   "table_sha256": "1b24785c04056ca742673a30cd6c21f267cea0c9da7fb19a34d340c988f8886b"
   },
   {
    "name": "euromod-issues.json",
@@ -7814,6 +8122,8 @@
     "bindings": 31,
     "cases": 31,
     "comparisons_checked": 248,
+    "error_row_differences": 0,
+    "error_rows": 0,
     "extra_rows": 0,
     "ledger_entries": 10,
     "missing": 0,
@@ -7846,16 +8156,38 @@
    "sha256": "2cc274bb5e920051a1d3b44be1bf408e005a6b8c021a7213520116a2dadd69da",
    "shape": "pairwise",
    "status": "exported",
-   "table_sha256": "baedb1020b2d50e94c9c9cce7cfab9488a2f4cbfa9be037432a271d9c41af5a6"
+   "table_sha256": "9c66b1d4d869f0991e294917b257da31a656bf8b31f94a7b11845f3c701b4b7a"
   }
  ],
  "holds": "counts and hashes only; no value from any report",
  "merge_of_all_exports": {
-  "by_record_type": {
-   "Model": 3
+  "check_passes": true,
+  "conflicting_keys": 0,
+  "counts": {
+   "bindings": 3051,
+   "cases": 9058,
+   "ledger": 1023,
+   "models": 8,
+   "policy_worlds": 178,
+   "quantities": 190,
+   "runs": 349,
+   "tolerance_profiles": 155,
+   "values": 25204
   },
-  "conflicting_keys": 3,
-  "ok": false
+  "model_releases": {
+   "axiom": 3,
+   "euromod": 2,
+   "gettsim": 1,
+   "policyengine": 0,
+   "policyengine-uk": 1,
+   "policyengine-us": 3,
+   "tax-calculator": 1,
+   "taxsim": 0
+  },
+  "ok": true,
+  "problems": 0,
+  "table_sha256": "7e440f0686a2d73036754851d0bca7af3a855aee4cfc773520d61820ba13ecd9",
+  "tables": 155
  },
  "named_reports": {
   "axiom-euromod-be-pensioner-pit.json": {
@@ -7966,6 +8298,7 @@
  },
  "totals": {
   "comparisons_checked": 12719,
+  "error_rows": 0,
   "exported": 155,
   "exported_by_shape_and_evidence": {
    "grid/full": 49,

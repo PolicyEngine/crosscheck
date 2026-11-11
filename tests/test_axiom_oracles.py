@@ -21,13 +21,15 @@ from hypothesis import strategies as st
 
 from crosscheck.cli import main
 from crosscheck.exporters.axiom_oracles import (
-    NOT_RECORDED,
+    PRODUCER,
+    SOURCE_ROLE,
+    TOOL,
     UnsupportedReport,
     check_round_trip,
     classify_report,
     export_report,
 )
-from crosscheck.lineage import share_directly
+from crosscheck.lineage import lineages, share_directly
 from crosscheck.records import (
     AuthorKind,
     CauseKind,
@@ -39,14 +41,17 @@ from crosscheck.records import (
     ValueStatus,
     ValueType,
 )
+from crosscheck.registry import NOT_RECORDED, TOOL_NAMES, known_model, registry_id
 from crosscheck.store import read_store, write_store
 from crosscheck.table import Table
+from crosscheck.tolerance import compare_runs
 
 FIXTURES = Path(__file__).parent / "fixtures" / "axiom_oracles"
 
 SUPPORTED = {
     "pairwise_full.json": ("pairwise", "full"),
     "pairwise_partial.json": ("pairwise", "partial"),
+    "pairwise_engine_error.json": ("pairwise", "full"),
     "grid_three_engine.json": ("grid", "full"),
     "grid_two_engine.json": ("grid", "full"),
     "pairwise_rows.json": ("pairwise_rows", "full"),
@@ -96,6 +101,26 @@ def test_fixture_round_trips_through_a_store(name: str, tmp_path: Path) -> None:
     assert trip.values_in_rows == trip.values_in_report > 0
     assert trip.comparisons_checked == len(result.expected)
     assert trip.match_count_recomputable is (result.evidence == "full")
+    assert trip.error_rows_in_report == len(report.get("errors") or [])
+    assert trip.error_row_differences == ()
+
+
+@pytest.mark.parametrize("name", sorted(SUPPORTED))
+def test_every_record_follows_the_fix_round_rules(name: str) -> None:
+    """Producer not stated, one source with its role, ledger cells name no run, and every
+    model is the registry's record with the releases the runs state."""
+    result = export_report(FIXTURES / name, source_uri="invented://report")
+    table = result.table
+    assert {v.producer for v in table.values} == {PRODUCER} == {"not_stated"}
+    for run in table.runs:
+        (source,) = run.sources
+        assert (source.tool, source.uri, source.role) == (TOOL, "invented://report", SOURCE_ROLE)
+        assert source.role == "the report crosscheck read"
+    assert all(cell.run is None for entry in table.ledger for cell in entry.cells)
+    for model in table.models:
+        assert model == known_model(model.id, model.releases)
+        used = {run.release for run in table.runs if run.model == model.id} - {None}
+        assert set(model.releases) == used
 
 
 @pytest.mark.parametrize("name", sorted(UNSUPPORTED))
@@ -110,8 +135,8 @@ def test_a_mapping_and_a_path_give_the_same_rows_and_only_the_path_carries_a_sha
     from_path = export_report(FIXTURES / "pairwise_full.json", source_uri="repo@abc:file.json")
     from_mapping = export_report(load("pairwise_full.json"), source_uri="repo@abc:file.json")
     sha = hashlib.sha256((FIXTURES / "pairwise_full.json").read_bytes()).hexdigest()
-    assert {r.source.sha256 for r in from_path.table.runs} == {sha}
-    assert {r.source.sha256 for r in from_mapping.table.runs} == {None}
+    assert {s.sha256 for r in from_path.table.runs for s in r.sources} == {sha}
+    assert {s.sha256 for r in from_mapping.table.runs for s in r.sources} == {None}
     assert from_path.table.values == from_mapping.table.values
     assert from_path.engine_runs == from_mapping.engine_runs
 
@@ -140,9 +165,12 @@ def test_pairwise_runs_models_and_switches(full) -> None:
     assert (pe.model, pe.release) == ("policyengine-us", "0.0.42")
     assert axiom.rows_complete and pe.rows_complete
     assert axiom.produced_at == "2031-02-03T04:05:06Z"
-    assert axiom.source.tool == "axiom-oracles"
-    assert axiom.source.uri == "invented://report"
-    assert axiom.source.schema_version == "axiom.comparison_report.v2.1"
+    (source,) = axiom.sources
+    assert source.tool == "axiom-oracles"
+    assert source.uri == "invented://report"
+    assert source.schema_version == "axiom.comparison_report.v2.1"
+    assert source.role == "the report crosscheck read"
+    assert pe.sources == axiom.sources
     switches = {s.name: s.value for s in axiom.switches}
     assert switches["rulespec.Invented/rulespec-zz"] == "1" * 40
     assert switches["rulespec.Invented/rulespec-zz-extra"] == "null"
@@ -154,7 +182,8 @@ def test_pairwise_runs_models_and_switches(full) -> None:
     assert pe_switches["versions.policyengine_core"] == "0.0.3"
     assert not any(name.startswith("rulespec.") for name in pe_switches)
     axiom_model = full.table.model("axiom")
-    assert (axiom_model.maintainer, axiom_model.engine) == (
+    assert (axiom_model.name, axiom_model.maintainer, axiom_model.engine) == (
+        "Axiom rules engine",
         "The Axiom Foundation",
         "axiom-rules-engine",
     )
@@ -162,9 +191,10 @@ def test_pairwise_runs_models_and_switches(full) -> None:
     pe_model = full.table.model("policyengine-us")
     assert (pe_model.name, pe_model.engine, pe_model.releases) == (
         "PolicyEngine US",
-        "policyengine-us",
+        "policyengine",
         ("0.0.42",),
     )
+    assert pe_model == known_model("policyengine-us", ["0.0.42"])
 
 
 def test_pairwise_world_cases_and_quantities(full) -> None:
@@ -388,6 +418,240 @@ def test_euromod_bridge_borrows_from_the_euromod_run_and_links_lineage() -> None
     )
 
 
+# Models come from the registry
+
+
+def _renamed_left_engine(name: str) -> dict:
+    """pairwise_full with its left engine (axiom) renamed, in the engines and the case rows."""
+    report = load("pairwise_full.json")
+    report["engines"]["left"] = name
+    for row in report["cases"]:
+        row["left_engine"] = name
+    return report
+
+
+@pytest.mark.parametrize("name", sorted(TOOL_NAMES[TOOL]))
+def test_each_engine_name_the_registry_lists_maps_to_its_registry_model(name: str) -> None:
+    result = export_report(_renamed_left_engine(name))
+    run = result.table.run(result.engine_runs[name])
+    assert run.model == registry_id(TOOL, name)
+    assert result.table.model(run.model) == known_model(
+        run.model, result.table.model(run.model).releases
+    )
+    assert check_round_trip(_renamed_left_engine(name), result).ok
+
+
+def test_taxcalc_becomes_tax_calculator_and_keeps_its_own_name_in_the_run_id() -> None:
+    result = export_report(_renamed_left_engine("taxcalc"))
+    run = result.table.run(result.engine_runs["taxcalc"])
+    assert run.model == "tax-calculator"
+    assert run.id == f"ao.invented-pairwise.taxcalc.{FULL_STAMP}"
+    model = result.table.model("tax-calculator")
+    assert (model.name, model.maintainer, model.engine) == (
+        "Tax-Calculator",
+        "Tax-Calculator maintainers (PSLmodels)",
+        "tax-calculator",
+    )
+
+
+def test_policyengine_takes_the_registry_id_of_the_country_package_the_report_names() -> None:
+    us = export_report(FIXTURES / "pairwise_full.json")
+    uk = export_report(FIXTURES / "pairwise_engine_error.json")
+    assert us.table.run(us.engine_runs["policyengine"]).model == "policyengine-us"
+    assert uk.table.run(uk.engine_runs["policyengine"]).model == "policyengine-uk"
+    report = load("pairwise_full.json")
+    del report["engines"]["versions"]["policyengine_us"]
+    del report["provenance"]["oracle"]["policyengine_us"]
+    bare = export_report(report)
+    run = bare.table.run(bare.engine_runs["policyengine"])
+    assert (run.model, run.release) == ("policyengine", None)
+    assert bare.table.model("policyengine") == known_model("policyengine")
+    assert {m.engine for t in (us, uk, bare) for m in t.table.models if "policy" in m.id} == {
+        "policyengine"
+    }
+
+
+def test_exports_at_different_releases_merge_and_policyengine_runs_share_a_lineage() -> None:
+    first = export_report(FIXTURES / "pairwise_full.json")
+    report = load("pairwise_full.json")
+    report["suite"] = "invented-pairwise-later"
+    report["engines"]["versions"].update(axiom_rules_engine="9.9.2", policyengine_us="0.0.43")
+    report["provenance"]["engine"]["axiom_rules_engine_version"] = "9.9.2"
+    report["provenance"]["oracle"]["policyengine_us"] = "0.0.43"
+    second = export_report(report)
+    uk = export_report(FIXTURES / "pairwise_engine_error.json")
+    merged = Table.merge(first.table, second.table, uk.table).check()
+    assert merged.model("axiom").releases == ("9.9.1", "9.9.2")
+    assert merged.model("policyengine-us").releases == ("0.0.42", "0.0.43")
+    assert merged.model("policyengine-uk").releases == ("0.7.7",)
+    policyengine_runs = [r.id for r in merged.runs if r.model.startswith("policyengine")]
+    assert len(policyengine_runs) == 3
+    assert lineages(merged, policyengine_runs) == (frozenset(policyengine_runs),)
+
+
+# Engine errors
+
+
+@pytest.fixture(scope="module")
+def errored():
+    return export_report(FIXTURES / "pairwise_engine_error.json")
+
+
+ERR_AMOUNT = "zz:invented/aid#amount"
+ERR_ELIGIBLE = "zz:invented/aid#is_eligible"
+
+
+def test_an_errored_side_exports_status_error_with_its_raw_text_and_errors(errored) -> None:
+    pe, axiom = errored.engine_runs["policyengine"], errored.engine_runs["axiom"]
+    crashed = value_of(errored.table, "err-case-2", ERR_AMOUNT, pe)
+    assert (crashed.status, crashed.raw, crashed.value) == (ValueStatus.error, "null", None)
+    assert crashed.status_detail == "policyengine-crash:invented-signal"
+    assert crashed.source_status is None
+    other_side = value_of(errored.table, "err-case-2", ERR_ELIGIBLE, axiom)
+    assert (other_side.status, other_side.value) == (ValueStatus.answered, False)
+    for quantity, raw in ((ERR_AMOUNT, "55.0"), (ERR_ELIGIBLE, "true")):
+        value = value_of(errored.table, "err-case-3", quantity, axiom)
+        assert (value.status, value.raw, value.value) == (ValueStatus.error, raw, None)
+        assert value.status_detail == "invented rules failure; invented second failure"
+        assert value_of(errored.table, "err-case-3", quantity, pe).status is ValueStatus.answered
+    statuses = [v.status for v in errored.table.values]
+    assert statuses.count(ValueStatus.error) == 4 and len(statuses) == 16
+
+
+def test_recomputed_verdicts_of_an_errored_case_disagree_and_counts_equal_the_stated(
+    errored,
+) -> None:
+    (leg,) = errored.legs
+    comparisons = compare_runs(errored.table, leg.left_run, leg.right_run, errored.profile_id)
+    by_case = {}
+    for comparison in comparisons:
+        by_case.setdefault(comparison.case_id, []).append(comparison.agrees)
+    # err-case-3's two values are equal on both sides, and still disagree: the engine erred
+    assert by_case["err-case-2"] == [False, False] and by_case["err-case-3"] == [False, False]
+    assert sum(c.agrees for c in comparisons) == leg.stated_match_count == 3
+    assert len(comparisons) == leg.stated_comparison_count == 8
+    trip = check_round_trip(load("pairwise_engine_error.json"), errored)
+    assert trip.ok, trip
+    assert (trip.legs[0]["recomputed_match_count"], trip.legs[0]["recomputed_mismatch_count"]) == (
+        3,
+        5,
+    )
+    assert trip.error_rows_in_report == 3
+
+
+def _changed_error_row(index: int, **changes) -> dict:
+    report = load("pairwise_engine_error.json")
+    report["errors"][index].update(changes)
+    return report
+
+
+ERROR_ROW_TAMPERING = {
+    "message": _changed_error_row(1, error="invented rules failure, reworded"),
+    "side": _changed_error_row(0, side="right"),
+    "engine": _changed_error_row(0, engine="axiom"),
+    "case without errors": _changed_error_row(0, case_id="err-case-1"),
+    "no side": _changed_error_row(2, side=None),
+}
+
+
+@pytest.mark.parametrize("change", sorted(ERROR_ROW_TAMPERING))
+def test_an_error_row_that_matches_no_case_row_error_fails_the_round_trip(
+    change: str, errored
+) -> None:
+    trip = check_round_trip(ERROR_ROW_TAMPERING[change], errored)
+    assert not trip.ok
+    assert len(trip.error_row_differences) == 1, trip.error_row_differences
+    assert trip.missing == () and trip.verdict_differences == ()
+
+
+def test_a_repeated_error_row_needs_a_repeated_error() -> None:
+    report = load("pairwise_engine_error.json")
+    report["errors"].append(dict(report["errors"][0]))
+    result = export_report(report)
+    trip = check_round_trip(report, result)
+    assert not trip.ok and len(trip.error_row_differences) == 1
+    for row in report["cases"]:
+        if row["case_id"] == "err-case-2":
+            row["left_errors"] = row["left_errors"] * 2
+    for row in report["mismatches"]:
+        if row["case_id"] == "err-case-2":
+            row["error"]["messages"] = row["error"]["messages"] * 2
+    assert check_round_trip(report, export_report(report)).ok
+
+
+def test_an_error_row_must_name_the_engine_of_its_side() -> None:
+    """When both sides of a case list the same error, an error row that pairs one side with
+    the other side's engine still matches nothing."""
+    report = load("pairwise_engine_error.json")
+    message = "policyengine-crash:invented-signal"
+    case = next(r for r in report["cases"] if r["case_id"] == "err-case-2")
+    case["right_errors"] = [message]
+    report["errors"].append(
+        {"case_id": "err-case-2", "side": "right", "engine": "axiom", "error": message}
+    )
+    result = export_report(report)
+    assert check_round_trip(report, result).ok
+    tampered = report["errors"].pop()
+    tampered["engine"] = "policyengine"  # the left side's engine
+    for position in (0, len(report["errors"])):  # before and after the left side's own row
+        rows = list(report["errors"])
+        rows.insert(position, tampered)
+        trip = check_round_trip({**report, "errors": rows}, result)
+        assert not trip.ok and len(trip.error_row_differences) == 1, position
+
+
+def test_an_error_no_value_row_carries_fails_the_round_trip() -> None:
+    """A case row that lists errors but holds no comparison leaves the error out of every value
+    row; only the error-row check sees that."""
+    report = load("pairwise_engine_error.json")
+    case = next(r for r in report["cases"] if r["case_id"] == "err-case-3")
+    case["mismatches"] = []
+    report["mismatches"] = [r for r in report["mismatches"] if r["case_id"] != "err-case-3"]
+    report["summary"].update(comparison_count=6, mismatch_count=3)
+    result = export_report(report)
+    trip = check_round_trip(report, result)
+    assert trip.missing == () and trip.verdict_differences == () and trip.extra_rows == 0
+    assert all(leg["counts_agree"] for leg in trip.legs)
+    assert not trip.ok and len(trip.error_row_differences) == 2
+    assert all("no value row" in d for d in trip.error_row_differences)
+
+
+def test_a_changed_status_detail_fails_the_round_trip(errored) -> None:
+    target = value_of(errored.table, "err-case-2", ERR_AMOUNT, errored.engine_runs["policyengine"])
+    table = _swap_value(errored.table, target, replace(target, status_detail="another error"))
+    trip = check_round_trip(load("pairwise_engine_error.json"), errored, table=table)
+    assert not trip.ok and len(trip.missing) == 1
+    both = replace(
+        errored.table,
+        values=tuple(
+            replace(v, status_detail="another error")
+            if (v.case_id, v.run) == ("err-case-2", errored.engine_runs["policyengine"])
+            else v
+            for v in errored.table.values
+        ),
+    )
+    trip = check_round_trip(load("pairwise_engine_error.json"), errored, table=both)
+    assert len(trip.missing) == 2 and len(trip.error_row_differences) == 1
+
+
+def test_the_values_come_from_the_case_rows_whether_or_not_error_rows_repeat_them(
+    errored,
+) -> None:
+    report = load("pairwise_engine_error.json")
+    del report["errors"]
+    result = export_report(report)
+    trip = check_round_trip(report, result)
+    assert trip.ok and trip.error_rows_in_report == 0
+    assert result.table.values == errored.table.values
+
+
+def test_a_changed_producer_fails_the_round_trip(errored) -> None:
+    target = next(v for v in errored.table.values if v.status is ValueStatus.answered)
+    table = _swap_value(errored.table, target, replace(target, producer="model"))
+    trip = check_round_trip(load("pairwise_engine_error.json"), errored, table=table)
+    assert not trip.ok and len(trip.missing) == 1 and trip.extra_rows == 1
+
+
 # Tampering makes the round trip fail
 
 
@@ -543,7 +807,24 @@ REFUSALS = [
         "conflicting_release",
     ),
     ("pairwise_full.json", _set(["concepts", 0, "comparison"], None), "comparison_not_supported"),
-    ("pairwise_full.json", _set(["errors"], ["run failed"]), "report_errors"),
+    ("pairwise_full.json", _set(["errors"], ["run failed"]), "malformed_errors"),
+    ("pairwise_full.json", _set(["errors"], {"case_id": "inv-case-4"}), "malformed_errors"),
+    (
+        "pairwise_full.json",
+        _set(["errors", 0, "case_id"], "inv-case-99"),
+        "error_row_without_case_row",
+    ),
+    (
+        "pairwise_partial.json",
+        _set(["errors"], [{"case_id": "inv-case-9", "side": "right", "engine": "policyengine"}]),
+        "error_row_without_case_row",
+    ),
+    (
+        "grid_three_engine.json",
+        _set(["errors"], [{"case_id": "st-single-10000", "engine": "taxsim", "error": "x"}]),
+        "report_errors",
+    ),
+    ("pairwise_rows.json", _set(["errors"], [{"case_id": "fed-1", "error": "x"}]), "report_errors"),
     (
         "pairwise_partial.json",
         _set(["mismatches", -1, "error"], {"right": ["boom"]}),
@@ -563,6 +844,9 @@ REFUSALS = [
     ),
     ("grid_three_engine.json", _set(["mismatches", 0, "left"], 1.0), "conflicting_values"),
     ("grid_two_engine.json", _set(["engines", "usitc_statutory"], "x"), "unknown_engine"),
+    # the registry knows the model as tax-calculator; axiom-oracles' own name is taxcalc
+    ("pairwise_full.json", _set(["engines", "left"], "tax-calculator"), "unknown_engine"),
+    ("grid_two_engine.json", _set(["engines", "policyengine-uk"], "x"), "unknown_engine"),
     ("pairwise_rows.json", _set(["tolerance", "absolute"], 5.0), "tolerance_conflict"),
     ("pairwise_rows.json", _set(["cases", 0, "match"], None), "verdict_not_boolean"),
 ]
@@ -679,7 +963,9 @@ AMOUNTS = st.one_of(
 
 
 @st.composite
-def pairwise_reports(draw) -> dict:
+def pairwise_reports(draw, *, force_error: bool = False) -> dict:
+    """A pairwise report as report.py writes it, with the comparator's verdicts. With
+    `force_error`, the first case has an engine error and the report lists its error rows."""
     concepts = []
     for i in range(draw(st.integers(1, 3))):
         comparison = draw(st.sampled_from(["amount", "amount", "eligibility"]))
@@ -696,7 +982,11 @@ def pairwise_reports(draw) -> dict:
     cases, top, held_matches = [], [], []
     counts = [0, 0]
     for n in range(draw(st.integers(1, 5))):
-        errors = draw(st.sampled_from([[], [], [], ["invented failure"]]))
+        some = st.sampled_from([["invented failure"], ["invented failure", "invented second"]])
+        if force_error and n == 0:
+            errors = draw(some)
+        else:
+            errors = draw(st.one_of(st.just([]), st.just([]), st.just([]), some))
         error_side = draw(st.sampled_from(["left_errors", "right_errors"]))
         matches, mismatches = [], []
         for c in concepts:
@@ -737,7 +1027,7 @@ def pairwise_reports(draw) -> dict:
     if keep_matches or not any(c["mismatches"] for c in cases):
         for case, matches in zip(cases, held_matches, strict=True):
             case["matches"] = matches
-    return {
+    report = {
         "schema_version": "axiom.comparison_report.v2.1",
         "suite": "prop-pairwise",
         "engines": {"left": "axiom", "right": "policyengine"},
@@ -752,6 +1042,15 @@ def pairwise_reports(draw) -> dict:
             "mismatch_count": counts[1],
         },
     }
+    if force_error or draw(st.booleans()):
+        # report.py `_error_rows`: one row per case, side and error
+        report["errors"] = [
+            {"case_id": case["case_id"], "side": side, "engine": case[f"{side}_engine"], "error": e}
+            for case in cases
+            for side in ("left", "right")
+            for e in case[f"{side}_errors"]
+        ]
+    return report
 
 
 @st.composite
@@ -853,6 +1152,38 @@ def test_the_exporter_keeps_the_reports_verdicts(report: dict) -> None:
     assert {(e.case_id, e.quantity): e.matches for e in result.expected} == verdicts
 
 
+ERROR_ROW_CHANGES = st.sampled_from(
+    [
+        ("error", "a message no case row lists"),
+        ("side", "middle"),
+        ("engine", "taxsim"),
+        ("case_id", "prop-404"),
+        ("duplicate", None),
+    ]
+)
+
+
+@settings(max_examples=60, deadline=None)
+@given(report=pairwise_reports(force_error=True), change=ERROR_ROW_CHANGES, data=st.data())
+def test_any_one_changed_error_row_fails_the_round_trip(report: dict, change, data) -> None:
+    """A report with engine errors exports, every comparison of an errored case recomputes as a
+    mismatch, and changing any one error row after export makes the round trip fail."""
+    result = export_report(copy.deepcopy(report))
+    trip = check_round_trip(report, result)
+    assert trip.ok, (trip.missing, trip.verdict_differences, trip.error_row_differences)
+    assert trip.error_rows_in_report == len(report["errors"]) > 0
+    errored_cases = {row["case_id"] for row in report["errors"]}
+    assert all(not e.matches for e in result.expected if e.case_id in errored_cases)
+    key, new = change
+    index = data.draw(st.integers(0, len(report["errors"]) - 1))
+    if key == "duplicate":
+        report["errors"].append(dict(report["errors"][index]))
+    else:
+        report["errors"][index][key] = new
+    trip = check_round_trip(report, result)
+    assert not trip.ok and len(trip.error_row_differences) == 1
+
+
 # The census pass (the same pass the real-data test and scripts/axiom_oracles_census.py run)
 
 
@@ -911,9 +1242,19 @@ def test_census_script_writes_the_evidence_file(tmp_path: Path) -> None:
     assert done.returncode == 0, done.stderr
     evidence = json.loads(out.read_text())
     totals = evidence["totals"]
-    assert (totals["files"], totals["exported"], totals["unsupported"]) == (10, 6, 4)
+    assert (totals["files"], totals["exported"], totals["unsupported"]) == (11, 7, 4)
     assert totals["exported_not_ok"] == 0 and totals["exported_partial_and_ok"] == 1
+    assert totals["error_rows"] == 5  # pairwise_full 2, pairwise_engine_error 3
     assert evidence["source"]["commit"] == "0" * 40
-    # the fixtures' Axiom runs state different releases, so their tables do not merge
-    assert evidence["merge_of_all_exports"]["ok"] is False
+    # the fixtures' Axiom runs state different releases; the merge joins them
+    merge = evidence["merge_of_all_exports"]
+    assert (merge["ok"], merge["check_passes"], merge["problems"]) == (True, True, 0)
+    assert merge["tables"] == 7 and merge["conflicting_keys"] == 0
+    tables = [export_report(FIXTURES / name).table for name in sorted(SUPPORTED)]
+    merged = Table.merge(*tables).check()
+    assert merge["table_sha256"] == merged.content_sha256()
+    assert merge["counts"]["values"] == sum(len(t.values) for t in tables)
+    assert merge["counts"]["models"] == len(merged.models) == 5
+    assert merge["model_releases"] == {m.id: len(m.releases) for m in merged.models}
+    assert merge["model_releases"]["axiom"] >= 2
     assert list(work.iterdir()) == []
